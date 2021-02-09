@@ -25,4 +25,13 @@ body::-webkit-scrollbar-thumb {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+  background: rgb(248, 214, 214);
+}
+
+.badge {
+  font-size: 9px;
+  padding: 3px;
+  border-radius: 4px;
+  width: 30px;
+  height: 20px;
 }

@@ -4,13 +4,14 @@ export const capitalize = (value: string) => {
   return fChar + oChars.join('');
 };
 
-export const theme = (type: 'white' | 'black') => {
+export const getTheme = (type: 'white' | 'black') => {
   if (type === 'white') {
     return {
       income: 'rgb(13, 221, 13)',
       incomeOverlay: 'rgb(29, 194, 29)',
-      expense: '',
+      expense: 'red',
       expenseOverlay: '',
+      transparentGray: 'rgb(0, 0, 0, 0.1)',
     };
   }
 
@@ -19,5 +20,6 @@ export const theme = (type: 'white' | 'black') => {
     incomeOverlay: 'rgb(29, 194, 29)',
     expense: '',
     expenseOverlay: '',
+    transparentGray: 'rgb(0, 0, 0, 0.1)',
   };
 };

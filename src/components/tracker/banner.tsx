@@ -9,7 +9,7 @@ interface Props {}
 function Banner(props: Props) {
   //   const {} = props;
 
-  const theme = util.theme('white');
+  const theme = util.getTheme('white');
 
   return (
     <Div className='banner' theme={theme}>
@@ -20,7 +20,7 @@ function Banner(props: Props) {
         Available budget in {new Date().getFullYear()}:
       </div>
 
-      <div className='display-3'>+ 0.00</div>
+      <div className='display-4'>+ 0.00</div>
 
       <div>
         <div className='banner-summary btn-lg banner-green'>
@@ -32,7 +32,7 @@ function Banner(props: Props) {
           <div className=''>expenses</div>
           <div className='banner-expenseContainer'>
             <div className='mr-3'>- 0.00</div>
-            <span className='banner-badge'>---</span>
+            <span className='banner-badge badge'>---</span>
           </div>
         </div>
       </div>
@@ -45,8 +45,10 @@ const Div = styled.div<{ theme: Theme }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   height: 270px;
   cursor: context-menu;
+  color: white;
 
   .banner-overlay {
     position: absolute;
@@ -77,11 +79,10 @@ const Div = styled.div<{ theme: Theme }>`
   }
   .banner-expenseContainer {
     display: flex;
+    align-items: center;
   }
   .banner-badge {
     background: rgb(255, 255, 255, 0.3);
-    font-size: 10px;
-    padding: 7px;
   }
   .banner-green {
     background: ${(props) => props.theme.income};
