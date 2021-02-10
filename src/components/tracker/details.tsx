@@ -9,7 +9,7 @@ interface Props {}
 
 const income = {
   description: 'feeding',
-  amount: 10_000,
+  amount: 1_160_060,
 };
 const expense = {
   description: 'feeding',
@@ -57,7 +57,9 @@ const Item = (props: { description: string; amount: number; type: number }) => {
         <div className='item-description'>{util.capitalize(description)}</div>
       </div>
       <div className='item-container-2'>
-        <div className='item-amount'>{amount}</div>
+        <div className='item-amount'>
+          {util.formatAmount(amount, type ? '+' : '-')}
+        </div>
         {!type && <span className='item-badge badge'>---</span>}
         <FontAwesomeIcon className='item-delete' icon={faTimesCircle} />
       </div>

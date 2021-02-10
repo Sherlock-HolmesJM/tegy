@@ -1,3 +1,16 @@
+export const formatAmount = (value: number, type: '+' | '-') => {
+  const head = (value + '').split('');
+  const tail: string[] = [];
+
+  for (let i = 0; i < head.length; i += 3) {
+    const index = head.length - 3;
+    const pt = head.splice(index, 3).join('');
+    tail.push(pt);
+  }
+
+  return `${type} ${head.join('')},${tail.join(',')}.00`;
+};
+
 export const capitalize = (value: string) => {
   let [fChar, ...oChars] = value.split('');
   fChar = fChar.toUpperCase();
