@@ -9,7 +9,7 @@ interface Props {}
 
 const income = {
   description: 'feeding',
-  amount: 1_160_060,
+  amount: 1_000_000_160_060,
 };
 const expense = {
   description: 'feeding',
@@ -58,7 +58,7 @@ const Item = (props: { description: string; amount: number; type: number }) => {
       </div>
       <div className='item-container-2'>
         <div className='item-amount'>
-          {util.formatAmount(amount, type ? '+' : '-')}
+          {`${type ? '+' : '-'} ${util.formatAmount(amount)}`}
         </div>
         {!type && <span className='item-badge badge'>---</span>}
         <FontAwesomeIcon className='item-delete' icon={faTimesCircle} />
@@ -84,9 +84,11 @@ const ItemDiv = styled.div<{ theme: Theme; color: string }>`
     display: flex;
     justify-content: space-around;
     align-items: center;
-    width: 150px;
     padding: 5px;
     color: ${(props) => props.color};
+  }
+  .item-container-2 > * {
+    margin-right: 7px;
   }
   .item-container-2:hover .item-delete {
     display: block;

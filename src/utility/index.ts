@@ -1,20 +1,19 @@
-export const formatAmount = (value: number, type: '+' | '-') => {
+export const formatAmount = (value: number) => {
   const head = (value + '').split('');
-  const tail: string[] = [];
+  const tails: string[] = [];
 
-  for (let i = 0; i < head.length; i += 3) {
+  for (let i = head.length; i > 3; i -= 3) {
     const index = head.length - 3;
-    const pt = head.splice(index, 3).join('');
-    tail.push(pt);
+    const tail = head.splice(index, 3).join('');
+    tails.push(tail);
   }
 
-  return `${type} ${head.join('')},${tail.join(',')}.00`;
+  return `${head.join('')},${tails.reverse().join(',')}.00`;
 };
 
 export const capitalize = (value: string) => {
   let [fChar, ...oChars] = value.split('');
-  fChar = fChar.toUpperCase();
-  return fChar + oChars.join('');
+  return fChar.toUpperCase() + oChars.join('');
 };
 
 export const getTheme = (type: 'white' | 'black') => {
