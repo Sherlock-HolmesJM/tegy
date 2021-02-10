@@ -9,6 +9,7 @@ interface Props {}
 function Banner(props: Props) {
   //   const {} = props;
 
+  const totalAmount = -1;
   const theme = util.getTheme('white');
 
   return (
@@ -20,18 +21,21 @@ function Banner(props: Props) {
         Available budget in {new Date().getFullYear()}:
       </div>
 
-      <div className='display-4'>+ 0.00</div>
+      <div className='display-4'>
+        {totalAmount > 0 ? '+' : totalAmount < 0 ? '' : '-'}{' '}
+        {util.formatAmount(totalAmount)}
+      </div>
 
       <div>
         <div className='banner-summary btn-lg banner-green'>
           <div>income</div>
-          <div className='mr-5'>+ 0.00</div>
+          <div className='mr-5'>+ {util.formatAmount(0)}</div>
         </div>
 
         <div className='banner-summary btn-lg btn-danger'>
           <div className=''>expenses</div>
           <div className='banner-expenseContainer'>
-            <div className='mr-3'>- 0.00</div>
+            <div className='mr-3'>- {util.formatAmount(0)}</div>
             <span className='banner-badge badge'>---</span>
           </div>
         </div>

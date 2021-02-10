@@ -8,6 +8,7 @@ export const formatAmount = (value: number) => {
     tails.push(tail);
   }
 
+  if (tails.length === 0) return `${head.join('')}.00`;
   return `${head.join('')},${tails.reverse().join(',')}.00`;
 };
 

@@ -13,7 +13,7 @@ const income = {
 };
 const expense = {
   description: 'feeding',
-  amount: 2_000,
+  amount: 200,
 };
 
 const incomes = [income, income];
