@@ -1,3 +1,5 @@
+export const clone = <T>(object: T): T => JSON.parse(JSON.stringify(object));
+
 export const formatAmount = (value: number) => {
   const head = (value + '').split('');
   const tails: string[] = [];
@@ -20,8 +22,8 @@ export const capitalize = (value: string) => {
 export const getTheme = (type: 'white' | 'black') => {
   if (type === 'white') {
     return {
-      income: 'rgb(13, 221, 13)',
-      incomeOverlay: 'rgb(29, 194, 29)',
+      income: 'rgb(14, 187, 172)',
+      incomeOverlay: 'rgb(20, 163, 151)',
       expense: 'red',
       expenseOverlay: '',
       transparentGray: 'rgb(0, 0, 0, 0.1)',

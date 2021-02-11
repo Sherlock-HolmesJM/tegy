@@ -9,7 +9,7 @@ interface Props {}
 function Banner(props: Props) {
   //   const {} = props;
 
-  const totalAmount = -1;
+  const availableAmount = -1;
   const theme = util.getTheme('white');
 
   return (
@@ -22,8 +22,8 @@ function Banner(props: Props) {
       </div>
 
       <div className='display-4'>
-        {totalAmount > 0 ? '+' : totalAmount < 0 ? '' : '-'}{' '}
-        {util.formatAmount(totalAmount)}
+        {availableAmount > 0 ? '+' : availableAmount < 0 ? '' : '-'}{' '}
+        {util.formatAmount(availableAmount)}
       </div>
 
       <div>

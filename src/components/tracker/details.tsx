@@ -4,23 +4,16 @@ import * as util from '../../utility';
 import { Theme } from '../../types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { Budget, Money } from '../../types';
 
-interface Props {}
-
-const income = {
-  description: 'feeding',
-  amount: 1_000_000_160_060,
-};
-const expense = {
-  description: 'feeding',
-  amount: 200,
-};
-
-const incomes = [income, income];
-const expenses = [expense, expense, expense, expense, expense, expense];
+interface Props {
+  budget: Budget;
+  handleDelete: (money: Money) => void;
+}
 
 function Details(props: Props) {
-  //   const {} = props;
+  const { incomes, expenses } = props.budget;
+  const { handleDelete } = props;
 
   return (
     <Div className='details' theme={util.getTheme('white')}>
@@ -28,7 +21,7 @@ function Details(props: Props) {
         <h4 className='details-title details-income-title'>incomes</h4>
         <div className='details-list'>
           {incomes.map((income, index) => (
-            <Item key={index} {...{ ...income, type: 1 }} />
+            <Item key={index} money={income} handleDelete={handleDelete} />
           ))}
         </div>
       </div>
@@ -37,7 +30,7 @@ function Details(props: Props) {
         <h4 className='details-title details-expense-title'>expenses</h4>
         <div className='details-list'>
           {expenses.map((expense, index) => (
-            <Item key={index} {...{ ...expense, type: 0 }} />
+            <Item key={index} money={expense} handleDelete={handleDelete} />
           ))}
         </div>
       </div>
@@ -45,8 +38,9 @@ function Details(props: Props) {
   );
 }
 
-const Item = (props: { description: string; amount: number; type: number }) => {
-  const { description, amount, type } = props;
+const Item = (props: { money: Money; handleDelete: (m: Money) => void }) => {
+  const { money, handleDelete } = props;
+  const { type, description, amount } = money;
 
   const theme = util.getTheme('white');
   const color = type ? theme.income : theme.expense;
@@ -61,7 +55,11 @@ const Item = (props: { description: string; amount: number; type: number }) => {
           {`${type ? '+' : '-'} ${util.formatAmount(amount)}`}
         </div>
         {!type && <span className='item-badge badge'>---</span>}
-        <FontAwesomeIcon className='item-delete' icon={faTimesCircle} />
+        <FontAwesomeIcon
+          className='item-delete'
+          icon={faTimesCircle}
+          onClick={() => handleDelete(money)}
+        />
       </div>
     </ItemDiv>
   );
@@ -101,6 +99,17 @@ const ItemDiv = styled.div<{ theme: Theme; color: string }>`
     width: 20px;
     height: 20px;
   }
+
+  @media screen and (max-width: 887px) {
+    .item-container-1 {
+      margin-left: 40px;
+      padding-left: 0px;
+    }
+    .item-container-2 {
+      margin-right: 40px;
+      padding-right: 0px;
+    }
+  }
 `;
 
 const Div = styled.div<{ theme: Theme }>`
@@ -123,6 +132,15 @@ const Div = styled.div<{ theme: Theme }>`
   }
   .details-expense-title {
     color: ${(props) => props.theme.expense};
+  }
+
+  @media screen and (max-width: 887px) {
+    flex-direction: column;
+
+    .details-title {
+      margin-left: 40px;
+      padding-left: 0px;
+    }
   }
 `;
 

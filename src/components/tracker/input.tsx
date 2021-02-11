@@ -3,14 +3,17 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import * as util from '../../utility';
-import { Theme } from '../../types';
+import { Theme, Money } from '../../types';
+import { MoneyCl } from '../../model';
 
-interface Props {}
+interface Props {
+  handleAdd: (money: Money) => void;
+}
 
 function Input(props: Props) {
-  //   const {} = props;
+  const { handleAdd } = props;
 
-  const [type, setType] = useState(1);
+  const [type, setType] = useState<1 | 0>(1);
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState(0);
 
@@ -18,17 +21,32 @@ function Input(props: Props) {
   const color = type ? theme.income : theme.expense;
 
   const handleInput = () => {
-    console.log('Handling input');
-    console.log({ type, description, amount });
+    if (description && amount) {
+      const date = new Date().toJSON();
+      const uid = date + '|' + Date.now();
+      const t = type ? 'incomes' : 'expenses';
+      const money = new MoneyCl(uid, description, amount, date, t);
+      handleAdd(money);
+    } else {
+      console.log('Empty fields not allowed.');
+    }
   };
 
+  const getIconClass = () =>
+    amount && description ? 'input-icon' : 'input-icon hide';
+
   return (
-    <Div className='input' theme={theme} color={color}>
+    <Div
+      className='input'
+      theme={theme}
+      color={color}
+      onKeyPress={(e) => (e.key === 'Enter' ? handleInput() : null)}
+    >
       <select
         name='type'
         className='input-type input-border'
         id='type'
-        onChange={(e) => setType(+e.target.value)}
+        onChange={(e) => setType(+e.target.value as 1 | 0)}
       >
         <option className='input-option input-plus' value='1'>
           +
@@ -53,7 +71,7 @@ function Input(props: Props) {
         onChange={(e) => setAmount(+e.target.value)}
       />
       <FontAwesomeIcon
-        className='input-icon'
+        className={getIconClass()}
         icon={faCheckCircle}
         onClick={handleInput}
       />
@@ -64,7 +82,9 @@ function Input(props: Props) {
 const Div = styled.div<{ theme: Theme; color: string }>`
   display: flex;
   justify-content: center;
-  height: 60px;
+  align-items: center;
+  min-height: 60px;
+  padding: 0 20px;
   background: ${(props) => props.theme.transparentGray};
   border-bottom: groove ${(props) => props.theme.transparentGray} 1.5px;
 
@@ -97,12 +117,26 @@ const Div = styled.div<{ theme: Theme; color: string }>`
     margin: 8px;
     color: ${(props) => props.color};
   }
+  .input-icon.hide {
+    display: none;
+  }
   .input-border {
     outline: none;
     border: 1px dotted ${(props) => props.color};
   }
   .input-border:focus {
     border: 1px solid ${(props) => props.color};
+  }
+
+  @media screen and (max-width: 489px) {
+    flex-wrap: wrap;
+
+    .input-description {
+      order: -2;
+      flex: 1;
+    }
+    .input-icon {
+    }
   }
 `;
 
