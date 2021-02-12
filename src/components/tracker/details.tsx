@@ -17,23 +17,27 @@ function Details(props: Props) {
 
   return (
     <Div className='details' theme={util.getTheme('white')}>
-      <div className='details-incomes details-container'>
-        <h4 className='details-title details-income-title'>incomes</h4>
-        <div className='details-list'>
-          {incomes.map((income, index) => (
-            <Item key={index} money={income} handleDelete={handleDelete} />
-          ))}
+      {incomes.length > 0 && (
+        <div className='details-incomes details-container'>
+          <h4 className='details-title details-income-title'>incomes</h4>
+          <div className='details-list'>
+            {incomes.map((income, index) => (
+              <Item key={index} money={income} handleDelete={handleDelete} />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
-      <div className='details-expenses details-container'>
-        <h4 className='details-title details-expense-title'>expenses</h4>
-        <div className='details-list'>
-          {expenses.map((expense, index) => (
-            <Item key={index} money={expense} handleDelete={handleDelete} />
-          ))}
+      {expenses.length > 0 && (
+        <div className='details-expenses details-container'>
+          <h4 className='details-title details-expense-title'>expenses</h4>
+          <div className='details-list'>
+            {expenses.map((expense, index) => (
+              <Item key={index} money={expense} handleDelete={handleDelete} />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </Div>
   );
 }
