@@ -1,12 +1,16 @@
 import React from 'react';
 // import logo from './logo.svg';
 import './App.css';
-import { Tracker } from './components';
+import { Switch, Route } from 'react-router-dom';
+import { Tracker, Home } from './components';
 
 function App() {
   return (
     <div className='App'>
-      <Tracker />
+      <Switch>
+        <Route exact path='/' component={Home} />
+        <Route exact path='/app' component={Tracker} />
+      </Switch>
     </div>
   );
 }

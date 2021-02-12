@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
 import styled from 'styled-components';
 import Banner from './banner';
 import Details from './details';
@@ -13,6 +16,14 @@ function Tracker(props: Props) {
 
   const [budget, setBudget] = useState<Budget>({ incomes: [], expenses: [] });
   const [type, setType] = useState<1 | 0>(1);
+
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      const fs = firebase.firestore();
+      const doc = fs.collection('budgety').doc(user.uid);
+      // const budget = JSON.parse(doc.data().budget)
+    }
+  });
 
   const handleAdd = (money: Money) => {
     const result = budget[money.type].find((m) => m.uid === money.uid);
