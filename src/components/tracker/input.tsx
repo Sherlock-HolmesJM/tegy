@@ -8,12 +8,13 @@ import { MoneyCl } from '../../model';
 
 interface Props {
   handleAdd: (money: Money) => void;
+  type: 1 | 0;
+  setType: (value: 1 | 0) => void;
 }
 
 function Input(props: Props) {
-  const { handleAdd } = props;
+  const { handleAdd, type, setType } = props;
 
-  const [type, setType] = useState<1 | 0>(1);
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState(0);
 
@@ -64,9 +65,7 @@ function Input(props: Props) {
         type='text'
         className='input-description input-border'
         placeholder='Add description'
-        onChange={(e) =>
-          setDescription(e.target.value.trim().toLocaleLowerCase())
-        }
+        onChange={(e) => setDescription(e.target.value.trim().toLowerCase())}
       />
       <input
         type='number'
@@ -141,18 +140,22 @@ const Div = styled.div<{ theme: Theme; color: string }>`
     }
   }
 
+  @media screen and (max-width: 463px) {
+    .input-icon {
+      display: none;
+    }
+  }
+
   @media screen and (max-width: 401px) {
     padding: 5px;
 
     .input-amount,
     .input-description,
-    .input-type,
-    .input-icon {
+    .input-type {
       margin: 4px;
     }
 
-    .input-amount,
-    .input-icon {
+    .input-amount {
       margin-top: 0;
     }
   }

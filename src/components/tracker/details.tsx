@@ -7,22 +7,30 @@ import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { Budget, Money } from '../../types';
 
 interface Props {
+  type: 1 | 0;
   budget: Budget;
   handleDelete: (money: Money) => void;
 }
 
 function Details(props: Props) {
   const { incomes, expenses } = props.budget;
-  const { handleDelete } = props;
+  const { handleDelete, type } = props;
+
+  const totalIncome = incomes.reduce((acc, inc) => acc + inc.amount, 0);
 
   return (
-    <Div className='details' theme={util.getTheme('white')}>
+    <Div className='details' theme={util.getTheme('white')} type={type}>
       {incomes.length > 0 && (
         <div className='details-incomes details-container'>
           <h4 className='details-title details-income-title'>incomes</h4>
           <div className='details-list'>
             {incomes.map((income, index) => (
-              <Item key={index} money={income} handleDelete={handleDelete} />
+              <Item
+                key={index}
+                money={income}
+                totalIncome={totalIncome}
+                handleDelete={handleDelete}
+              />
             ))}
           </div>
         </div>
@@ -33,7 +41,12 @@ function Details(props: Props) {
           <h4 className='details-title details-expense-title'>expenses</h4>
           <div className='details-list'>
             {expenses.map((expense, index) => (
-              <Item key={index} money={expense} handleDelete={handleDelete} />
+              <Item
+                key={index}
+                money={expense}
+                totalIncome={totalIncome}
+                handleDelete={handleDelete}
+              />
             ))}
           </div>
         </div>
@@ -42,12 +55,18 @@ function Details(props: Props) {
   );
 }
 
-const Item = (props: { money: Money; handleDelete: (m: Money) => void }) => {
-  const { money, handleDelete } = props;
+const Item = (props: {
+  totalIncome: number;
+  money: Money;
+  handleDelete: (m: Money) => void;
+}) => {
+  const { totalIncome, money, handleDelete } = props;
   const { type, description, amount } = money;
 
   const theme = util.getTheme('white');
   const color = type === 'incomes' ? theme.income : theme.expense;
+  const percent =
+    type === 'expenses' ? util.calcPercent(amount, totalIncome) : 0;
 
   return (
     <ItemDiv className='item' theme={theme} color={color}>
@@ -56,9 +75,13 @@ const Item = (props: { money: Money; handleDelete: (m: Money) => void }) => {
       </div>
       <div className='item-container-2'>
         <div className='item-amount'>
-          {`${type ? '+' : '-'} ${util.formatAmount(amount)}`}
+          {`${type === 'incomes' ? '+' : '-'} ${util.formatAmount(amount)}`}
         </div>
-        {!type && <span className='item-badge badge'>---</span>}
+        {type === 'expenses' && (
+          <span className='item-badge badge'>
+            {percent ? percent + '%' : '---'}
+          </span>
+        )}
         <FontAwesomeIcon
           className='item-delete'
           icon={faTimesCircle}
@@ -96,6 +119,9 @@ const ItemDiv = styled.div<{ theme: Theme; color: string }>`
     display: block;
   }
   .item-badge {
+    font-weight: 400;
+    min-width: 40px;
+    padding: 4px;
     background: rgb(248, 214, 214);
   }
   .item-delete {
@@ -116,7 +142,7 @@ const ItemDiv = styled.div<{ theme: Theme; color: string }>`
   }
 `;
 
-const Div = styled.div<{ theme: Theme }>`
+const Div = styled.div<{ theme: Theme; type: 1 | 0 }>`
   display: flex;
   justify-content: space-around;
   margin-top: 10px;
@@ -138,9 +164,15 @@ const Div = styled.div<{ theme: Theme }>`
     color: ${(props) => props.theme.expense};
   }
 
-  @media screen and (max-width: 675px) {
+  @media screen and (max-width: 777px) {
     flex-direction: column;
 
+    .details-incomes {
+      order: ${(props) => (props.type ? -1 : 1)};
+    }
+    .details-expenses {
+      order: ${(props) => (props.type ? 1 : -1)};
+    }
     .details-title {
       margin-left: 20px;
       padding-left: 0px;

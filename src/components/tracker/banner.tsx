@@ -4,12 +4,16 @@ import { back } from '../../media';
 import * as util from '../../utility';
 import { Theme } from '../../types';
 
-interface Props {}
+interface Props {
+  income: number;
+  expense: number;
+  balance: number;
+}
 
 function Banner(props: Props) {
-  //   const {} = props;
+  const { income, expense, balance } = props;
 
-  const balance = -1;
+  const expensePerc = util.calcPercent(expense, income);
   const theme = util.getTheme('white');
 
   return (
@@ -29,14 +33,16 @@ function Banner(props: Props) {
       <div className='banner-summaries'>
         <div className='banner-summary btn-sm banner-green'>
           <div className='banner-title'>income</div>
-          <div className='mr-5'>+ {util.formatAmount(0)}</div>
+          <div className='mr-5'>+ {util.formatAmount(income)}</div>
         </div>
 
         <div className='banner-summary btn-sm btn-danger'>
           <div className='banner-title'>expense</div>
           <div className='banner-expenseContainer'>
-            <div className='mr-3'>- {util.formatAmount(0)}</div>
-            <span className='banner-badge badge'>---</span>
+            <div className='mr-3'>- {util.formatAmount(expense)}</div>
+            <span className='banner-badge badge'>
+              {expensePerc ? expensePerc + '%' : '---'}
+            </span>
           </div>
         </div>
       </div>
@@ -96,6 +102,9 @@ const Div = styled.div<{ theme: Theme }>`
     align-items: center;
   }
   .banner-badge {
+    font-weight: 400;
+    min-width: 40px;
+    padding: 5px;
     background: rgb(255, 255, 255, 0.3);
   }
   .banner-green {

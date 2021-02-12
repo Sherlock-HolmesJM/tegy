@@ -1,5 +1,8 @@
 export const clone = <T>(object: T): T => JSON.parse(JSON.stringify(object));
 
+export const calcPercent = (value: number, total: number) =>
+  Math.round((value / total) * 100);
+
 export const formatAmount = (value: number) => {
   const head = (value + '').split('');
   const tails: string[] = [];

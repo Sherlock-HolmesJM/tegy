@@ -12,6 +12,7 @@ function Tracker(props: Props) {
   // const {} = props
 
   const [budget, setBudget] = useState<Budget>({ incomes: [], expenses: [] });
+  const [type, setType] = useState<1 | 0>(1);
 
   const handleAdd = (money: Money) => {
     const result = budget[money.type].find((m) => m.uid === money.uid);
@@ -31,11 +32,15 @@ function Tracker(props: Props) {
     }
   };
 
+  const totalIncome = budget.incomes.reduce((acc, inc) => acc + inc.amount, 0);
+  const totalExpense = budget.expenses.reduce((acc, ex) => acc + ex.amount, 0);
+  const balance = totalIncome - totalExpense;
+
   return (
     <TrackerDiv className='Tracker'>
-      <Banner />
-      <Input handleAdd={handleAdd} />
-      <Details handleDelete={handleDelete} budget={budget} />
+      <Banner income={totalIncome} expense={totalExpense} balance={balance} />
+      <Input handleAdd={handleAdd} type={type} setType={setType} />
+      <Details handleDelete={handleDelete} budget={budget} type={type} />
     </TrackerDiv>
   );
 }
