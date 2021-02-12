@@ -7,6 +7,7 @@ import Banner from './banner';
 import Details from './details';
 import Input from './input';
 import { Budget, Money } from '../../types';
+import * as types from '../../types';
 import * as util from '../../utility';
 
 interface Props {}
@@ -14,14 +15,15 @@ interface Props {}
 function Tracker(props: Props) {
   // const {} = props
 
-  const [budget, setBudget] = useState<Budget>({ incomes: [], expenses: [] });
+  const [budget, setBudget] = useState<Budget>(types.budget);
   const [type, setType] = useState<1 | 0>(1);
 
-  firebase.auth().onAuthStateChanged((user) => {
+  firebase.auth().onAuthStateChanged(async (user) => {
     if (user) {
       const fs = firebase.firestore();
-      const doc = fs.collection('budgety').doc(user.uid);
-      // const budget = JSON.parse(doc.data().budget)
+      const doc = await fs.collection('budgety').doc(user.uid).get();
+      const budget = doc.data()?.budget;
+      if (budget) setBudget(JSON.parse(budget) as Budget);
     }
   });
 

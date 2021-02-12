@@ -11,4 +11,6 @@ export interface Budget {
   expenses: Money[];
 }
 
+export const budget = { incomes: [], expenses: [] };
+
 export type MoneyType = 'incomes' | 'expenses';
