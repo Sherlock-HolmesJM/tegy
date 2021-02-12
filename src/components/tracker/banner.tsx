@@ -9,7 +9,7 @@ interface Props {}
 function Banner(props: Props) {
   //   const {} = props;
 
-  const availableAmount = -1;
+  const balance = -1;
   const theme = util.getTheme('white');
 
   return (
@@ -21,19 +21,19 @@ function Banner(props: Props) {
         Available budget in {new Date().getFullYear()}:
       </div>
 
-      <div className='display-4'>
-        {availableAmount > 0 ? '+' : availableAmount < 0 ? '' : '-'}{' '}
-        {util.formatAmount(availableAmount)}
+      <div className='display-4 banner-balance'>
+        {balance > 0 ? '+' : balance < 0 ? '' : '-'}{' '}
+        {util.formatAmount(balance)}
       </div>
 
-      <div>
-        <div className='banner-summary btn-lg banner-green'>
-          <div>income</div>
+      <div className='banner-summaries'>
+        <div className='banner-summary btn-sm banner-green'>
+          <div className='banner-title'>income</div>
           <div className='mr-5'>+ {util.formatAmount(0)}</div>
         </div>
 
-        <div className='banner-summary btn-lg btn-danger'>
-          <div className=''>expenses</div>
+        <div className='banner-summary btn-sm btn-danger'>
+          <div className='banner-title'>expense</div>
           <div className='banner-expenseContainer'>
             <div className='mr-3'>- {util.formatAmount(0)}</div>
             <span className='banner-badge badge'>---</span>
@@ -50,7 +50,7 @@ const Div = styled.div<{ theme: Theme }>`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 270px;
+  height: 240px;
   cursor: context-menu;
   color: white;
 
@@ -72,14 +72,24 @@ const Div = styled.div<{ theme: Theme }>`
   .banner-text {
     font-size: 20px;
   }
+  .banner-balance {
+    margin: 9px;
+  }
+  .banner-summaries {
+    width: min(350px, 80%);
+  }
   .banner-summary {
     display: flex;
     justify-content: space-between;
-    width: 350px;
+    width: 100%;
     margin: 10px auto;
-    padding: auto 15px;
+    padding: 8px 10px;
     text-transform: uppercase;
     transition: 0.5s;
+  }
+  .banner-title {
+    font-size: 16px;
+    color: black;
   }
   .banner-expenseContainer {
     display: flex;

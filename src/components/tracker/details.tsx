@@ -43,7 +43,7 @@ const Item = (props: { money: Money; handleDelete: (m: Money) => void }) => {
   const { type, description, amount } = money;
 
   const theme = util.getTheme('white');
-  const color = type ? theme.income : theme.expense;
+  const color = type === 'incomes' ? theme.income : theme.expense;
 
   return (
     <ItemDiv className='item' theme={theme} color={color}>
@@ -102,11 +102,11 @@ const ItemDiv = styled.div<{ theme: Theme; color: string }>`
 
   @media screen and (max-width: 887px) {
     .item-container-1 {
-      margin-left: 40px;
+      margin-left: 20px;
       padding-left: 0px;
     }
     .item-container-2 {
-      margin-right: 40px;
+      margin-right: 20px;
       padding-right: 0px;
     }
   }
@@ -134,11 +134,11 @@ const Div = styled.div<{ theme: Theme }>`
     color: ${(props) => props.theme.expense};
   }
 
-  @media screen and (max-width: 887px) {
+  @media screen and (max-width: 675px) {
     flex-direction: column;
 
     .details-title {
-      margin-left: 40px;
+      margin-left: 20px;
       padding-left: 0px;
     }
   }

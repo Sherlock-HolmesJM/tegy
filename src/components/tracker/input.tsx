@@ -32,6 +32,11 @@ function Input(props: Props) {
     }
   };
 
+  const handleChange = (value: 1 | 0) => {
+    setType(value);
+    (document.querySelector('.input-description') as HTMLElement)?.focus();
+  };
+
   const getIconClass = () =>
     amount && description ? 'input-icon' : 'input-icon hide';
 
@@ -46,7 +51,7 @@ function Input(props: Props) {
         name='type'
         className='input-type input-border'
         id='type'
-        onChange={(e) => setType(+e.target.value as 1 | 0)}
+        onChange={(e) => handleChange(+e.target.value as 1 | 0)}
       >
         <option className='input-option input-plus' value='1'>
           +
@@ -83,16 +88,15 @@ const Div = styled.div<{ theme: Theme; color: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 60px;
-  padding: 0 20px;
+  min-height: 40px;
   background: ${(props) => props.theme.transparentGray};
   border-bottom: groove ${(props) => props.theme.transparentGray} 1.5px;
 
   .input-amount,
   .input-description,
   .input-type {
-    margin: 10px;
-    padding: 10px;
+    margin: 8px;
+    padding: 5px 10px;
     border-radius: 5px;
     transition: 0.5s;
   }
@@ -116,6 +120,7 @@ const Div = styled.div<{ theme: Theme; color: string }>`
     height: 40px;
     margin: 8px;
     color: ${(props) => props.color};
+    transition: 0.5s;
   }
   .input-icon.hide {
     display: none;
@@ -128,14 +133,27 @@ const Div = styled.div<{ theme: Theme; color: string }>`
     border: 1px solid ${(props) => props.color};
   }
 
-  @media screen and (max-width: 489px) {
+  @media screen and (max-width: 487px) {
     flex-wrap: wrap;
 
     .input-description {
-      order: -2;
       flex: 1;
     }
+  }
+
+  @media screen and (max-width: 401px) {
+    padding: 5px;
+
+    .input-amount,
+    .input-description,
+    .input-type,
     .input-icon {
+      margin: 4px;
+    }
+
+    .input-amount,
+    .input-icon {
+      margin-top: 0;
     }
   }
 `;

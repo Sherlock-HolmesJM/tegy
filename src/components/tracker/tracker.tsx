@@ -40,6 +40,8 @@ function Tracker(props: Props) {
   );
 }
 
-const TrackerDiv = styled.div``;
+const TrackerDiv = styled.div`
+  min-width: 350px;
+`;
 
 export default Tracker;
