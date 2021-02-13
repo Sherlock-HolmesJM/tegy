@@ -1,5 +1,5 @@
 export default interface Money {
-  uid: string;
+  uid: number;
   description: string;
   amount: number;
   type: MoneyType;

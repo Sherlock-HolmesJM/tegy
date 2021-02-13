@@ -12,6 +12,8 @@ interface Props {
 
 function Banner(props: Props) {
   const { income, expense, balance } = props;
+  const date = new Date();
+  const month = date.toDateString().split(' ')[1];
 
   const expensePerc = util.calcPercent(expense, income);
   const theme = util.getTheme('white');
@@ -22,7 +24,7 @@ function Banner(props: Props) {
       <div className='banner-overlay'></div>
 
       <div className='banner-text'>
-        Available budget in {new Date().getFullYear()}:
+        Available budget in {month} {date.getFullYear()}:
       </div>
 
       <div className='display-4 banner-balance'>

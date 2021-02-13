@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import * as auth from '../firebase';
+import * as fb from '../firebase';
 import { Redirect } from 'react-router-dom';
 
 interface Props {}
@@ -20,11 +20,18 @@ function Home(props: Props) {
     <div>
       <main className='form-signin'>
         <form>
+          <img
+            className='mb-4'
+            src='/docs/5.0/assets/brand/bootstrap-logo.svg'
+            alt=''
+            width='72'
+            height='57'
+          />
           <h1 className='h3 mb-3 fw-normal'>Please sign in with Google</h1>
           <button
             className='w-100 btn btn-lg btn-primary'
             type='submit'
-            onClick={auth.signInWithGoogle}
+            onClick={fb.auth.signInWithGoogle}
           >
             Sign in
           </button>

@@ -1,38 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import 'firebase/firestore';
 import styled from 'styled-components';
 import Banner from './banner';
 import Details from './details';
 import Input from './input';
 import { Budget, Money } from '../../types';
-import * as types from '../../types';
 import * as util from '../../utility';
+import { getBudget, saveBudget } from '../../firebase';
 
 interface Props {}
 
 function Tracker(props: Props) {
   // const {} = props
 
-  const [budget, setBudget] = useState<Budget>(types.budget);
+  const [budget, setBudget] = useState<Budget>({ incomes: [], expenses: [] });
   const [type, setType] = useState<1 | 0>(1);
 
-  firebase.auth().onAuthStateChanged(async (user) => {
-    if (user) {
-      const fs = firebase.firestore();
-      const doc = await fs.collection('budgety').doc(user.uid).get();
-      const budget = doc.data()?.budget;
-      if (budget) setBudget(JSON.parse(budget) as Budget);
-    }
-  });
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user)
+        getBudget().then((budget) => (budget ? setBudget(budget) : null));
+    });
+  }, []);
 
   const handleAdd = (money: Money) => {
-    const result = budget[money.type].find((m) => m.uid === money.uid);
+    const { type } = money;
+    const result = budget[type].find((m) => m.uid === money.uid);
     if (!result) {
       const newBudget = util.clone<Budget>(budget);
-      newBudget[money.type].push(money);
+      newBudget[type].unshift(money);
       setBudget(newBudget);
+      saveBudget(newBudget).then((status) =>
+        status ? console.log('successful') : console.log('Failed. Try again.')
+      );
     }
   };
 
@@ -42,6 +43,9 @@ function Tracker(props: Props) {
       const newBudget = util.clone<Budget>(budget);
       newBudget[money.type].splice(index, 1);
       setBudget(newBudget);
+      saveBudget(newBudget).then((status) =>
+        status ? console.log('successful') : console.log('Failed. Try again.')
+      );
     }
   };
 

@@ -23,11 +23,12 @@ function Input(props: Props) {
 
   const handleInput = () => {
     if (description && amount) {
+      const uid = Date.now();
       const date = new Date().toJSON();
-      const uid = date + '|' + Date.now();
       const t = type ? 'incomes' : 'expenses';
       const money = new MoneyCl(uid, description, amount, date, t);
       handleAdd(money);
+      focusDesc();
     } else {
       console.log('Empty fields not allowed.');
     }
@@ -35,8 +36,11 @@ function Input(props: Props) {
 
   const handleChange = (value: 1 | 0) => {
     setType(value);
-    (document.querySelector('.input-description') as HTMLElement)?.focus();
+    focusDesc();
   };
+
+  const focusDesc = () =>
+    (document.querySelector('.input-description') as HTMLElement)?.focus();
 
   const getIconClass = () =>
     amount && description ? 'input-icon' : 'input-icon hide';
