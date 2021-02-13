@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import * as fb from '../firebase';
 import { Redirect } from 'react-router-dom';
+import { homeImg } from '../media';
 
 interface Props {}
 
@@ -10,35 +12,52 @@ function Home(props: Props) {
   // const {} = props;
   const [redirect, setRedirect] = useState('');
 
-  firebase
-    .auth()
-    .onAuthStateChanged((user) => (user ? setRedirect('/app') : null));
+  useEffect(() => {
+    firebase
+      .auth()
+      .onAuthStateChanged((user) =>
+        user ? setRedirect('/app') : console.log({ user })
+      );
+  }, []);
 
   if (redirect) return <Redirect to={redirect} />;
+  console.log({ redirect });
 
   return (
-    <div>
+    <Div>
       <main className='form-signin'>
-        <form>
-          <img
-            className='mb-4'
-            src='/docs/5.0/assets/brand/bootstrap-logo.svg'
-            alt=''
-            width='72'
-            height='57'
-          />
-          <h1 className='h3 mb-3 fw-normal'>Please sign in with Google</h1>
+        <form className='form-form'>
+          <h1 className='h3 mb-3 fw-normal'>Welcome</h1>
+          <h6 className='h6 mb-3 fw-normal'>
+            <em>Easily keep track of your revenue</em>
+          </h6>
+          <div>
+            <img
+              className='mb-4'
+              src={homeImg}
+              alt=''
+              width='100'
+              height='100'
+            />
+          </div>
           <button
-            className='w-100 btn btn-lg btn-primary'
+            className='btn btn-lg btn-primary'
             type='submit'
-            onClick={fb.auth.signInWithGoogle}
+            onClick={fb.signInWithGoogle}
           >
-            Sign in
+            Sign-in
           </button>
         </form>
       </main>
-    </div>
+    </Div>
   );
 }
+
+const Div = styled.div`
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
 
 export default Home;
