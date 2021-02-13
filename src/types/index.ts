@@ -1,5 +1,5 @@
-import Theme from './theme';
-import Money from './money';
+import Theme from './theme.d';
+import Money from './money.d';
 
-export * from './money';
+export * from './money.d';
 export type { Theme, Money };
