@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import firebase from 'firebase/app';
+import 'firebase/auth';
 import { config } from './firebase';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';

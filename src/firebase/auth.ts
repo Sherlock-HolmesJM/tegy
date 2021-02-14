@@ -7,6 +7,16 @@ export const signInWithGoogle = () => {
   firebase
     .auth()
     .signInWithPopup(provider)
-    .then((res) => console.log(res.user))
+    .then((credential) => console.log(credential.user))
     .catch((e) => console.log(e));
+};
+
+export const signInWithEmail = (email: string, password: string) => {
+  console.log('Attempting sign in.');
+
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password)
+    .then((credential) => console.log(credential.user))
+    .catch((e) => console.log({ e, code: e.code }));
 };
