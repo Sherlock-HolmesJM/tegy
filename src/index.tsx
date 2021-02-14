@@ -11,6 +11,8 @@ import App from './App';
 
 firebase.initializeApp(config);
 
+// firebase.auth().signOut();
+
 ReactDOM.render(
   <React.StrictMode>
     <Router>

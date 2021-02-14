@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -20,15 +20,17 @@ function Home(props: Props) {
       .onAuthStateChanged((user) => (user ? setRedirect('/app') : null));
   }, []);
 
+  const handleLogin = (e: FormEvent) => {
+    e.preventDefault();
+    fb.signInWithEmail(email, password);
+  };
+
   if (redirect) return <Redirect to={redirect} />;
 
   return (
     <Div>
       <main className='form-signin'>
-        <form
-          className='form-form'
-          onSubmit={() => fb.signInWithEmail(email, password)}
-        >
+        <form className='form-form' onSubmit={handleLogin}>
           <h1 className='h3 mb-3 fw-normal'>Welcome</h1>
           <h6 className='h6 mb-3 fw-normal'>
             <em>Easily keep track of your revenue</em>
@@ -59,15 +61,12 @@ function Home(props: Props) {
             />
           </div>
           <div>
-            <button type='submit' className='m-2 btn btn-lg btn-secondary'>
-              Login
+            <button type='submit' className='m-2 btn btn-primary'>
+              sign-in
             </button>
-            <button
-              className='btn btn-lg btn-primary'
-              onClick={fb.signInWithGoogle}
-            >
-              Sign-in
-            </button>
+            {/* <button className='btn btn-secondary' type='submit'>
+              sign-up
+            </button> */}
           </div>
         </form>
       </main>
@@ -86,6 +85,10 @@ const Div = styled.div`
     display: flex;
     flex-direction: column;
     width: 300px;
+  }
+
+  .btn {
+    text-transform: uppercase;
   }
 
   @media screen and (max-width: 326px) {
