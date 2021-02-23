@@ -8,6 +8,7 @@ import Input from './input';
 import { Budget, Money } from '../../types';
 import * as util from '../../utility';
 import { getBudget, saveBudget } from '../../firebase';
+import { Redirect } from 'react-router-dom';
 
 interface Props {}
 
@@ -16,11 +17,13 @@ function Tracker(props: Props) {
 
   const [budget, setBudget] = useState<Budget>({ incomes: [], expenses: [] });
   const [type, setType] = useState<1 | 0>(1);
+  const [redirect, setRedirect] = useState<'/' | ''>('');
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user)
         getBudget().then((budget) => (budget ? setBudget(budget) : null));
+      else setRedirect('/');
     });
   }, []);
 
@@ -29,7 +32,7 @@ function Tracker(props: Props) {
     const result = budget[type].find((m) => m.uid === money.uid);
     if (!result) {
       const newBudget = util.clone<Budget>(budget);
-      newBudget[type].unshift(money);
+      newBudget[type].push(money);
       setBudget(newBudget);
       saveBudget(newBudget).then((status) =>
         status ? console.log('successful') : console.log('Failed. Try again.')
@@ -52,6 +55,8 @@ function Tracker(props: Props) {
   const totalIncome = budget.incomes.reduce((acc, inc) => acc + inc.amount, 0);
   const totalExpense = budget.expenses.reduce((acc, ex) => acc + ex.amount, 0);
   const balance = totalIncome - totalExpense;
+
+  if (redirect) return <Redirect to={redirect} />;
 
   return (
     <TrackerDiv className='Tracker'>

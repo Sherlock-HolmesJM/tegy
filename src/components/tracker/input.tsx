@@ -144,9 +144,11 @@ const Div = styled.div<{ theme: Theme; color: string }>`
     }
   }
 
-  @media screen and (max-width: 463px) {
+  @media screen and (max-width: 466px) {
     .input-icon {
-      display: none;
+      width: 30px;
+      height: 30px;
+      margin: 4px 2px;
     }
   }
 

@@ -5,6 +5,7 @@ import { Theme } from '../../types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { Budget, Money } from '../../types';
+import { XyzTransition } from '@animxyz/react';
 
 interface Props {
   type: 1 | 0;
@@ -18,13 +19,19 @@ function Details(props: Props) {
 
   const totalIncome = incomes.reduce((acc, inc) => acc + inc.amount, 0);
 
+  const sort = (list: Money[], by?: 'newest' | 'oldest') => {
+    return by === 'newest'
+      ? list.sort((a, b) => b.uid - a.uid)
+      : list.sort((a, b) => a.uid - b.uid);
+  };
+
   return (
     <Div className='details' theme={util.getTheme('white')} type={type}>
       {incomes.length > 0 && (
         <div className='details-incomes details-container'>
           <h4 className='details-title details-income-title'>incomes</h4>
           <div className='details-list'>
-            {incomes.map((income, index) => (
+            {sort(incomes, 'newest').map((income, index) => (
               <Item
                 key={index}
                 money={income}
@@ -40,7 +47,7 @@ function Details(props: Props) {
         <div className='details-expenses details-container'>
           <h4 className='details-title details-expense-title'>expenses</h4>
           <div className='details-list'>
-            {expenses.map((expense, index) => (
+            {sort(expenses, 'newest').map((expense, index) => (
               <Item
                 key={index}
                 money={expense}
@@ -69,26 +76,32 @@ const Item = (props: {
     type === 'expenses' ? util.calcPercent(amount, totalIncome) : 0;
 
   return (
-    <ItemDiv className='item' theme={theme} color={color}>
-      <div className='item-container-1'>
-        <div className='item-description'>{util.capitalize(description)}</div>
-      </div>
-      <div className='item-container-2'>
-        <div className='item-amount'>
-          {`${type === 'incomes' ? '+' : '-'} ${util.formatAmount(amount)}`}
-        </div>
-        {type === 'expenses' && (
-          <span className='item-badge badge'>
-            {percent ? percent + '%' : '---'}
-          </span>
-        )}
-        <FontAwesomeIcon
-          className='item-delete'
-          icon={faTimesCircle}
-          onClick={() => handleDelete(money)}
-        />
-      </div>
-    </ItemDiv>
+    <XyzTransition className='item-group' xyz='fade left-100% out-left-25%'>
+      {true && (
+        <ItemDiv className='item square' theme={theme} color={color}>
+          <div className='item-container-1'>
+            <div className='item-description'>
+              {util.capitalize(description)}
+            </div>
+          </div>
+          <div className='item-container-2'>
+            <div className='item-amount'>
+              {`${type === 'incomes' ? '+' : '-'} ${util.formatAmount(amount)}`}
+            </div>
+            {type === 'expenses' && (
+              <span className='item-badge badge'>
+                {percent ? percent + '%' : '---'}
+              </span>
+            )}
+            <FontAwesomeIcon
+              className='item-delete'
+              icon={faTimesCircle}
+              onClick={() => handleDelete(money)}
+            />
+          </div>
+        </ItemDiv>
+      )}
+    </XyzTransition>
   );
 };
 

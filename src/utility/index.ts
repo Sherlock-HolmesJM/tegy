@@ -1,3 +1,7 @@
+import getTheme from './theme';
+
+export { getTheme };
+
 export const clone = <T>(object: T): T => JSON.parse(JSON.stringify(object));
 
 export const calcPercent = (value: number, total: number) =>
@@ -20,24 +24,4 @@ export const formatAmount = (value: number) => {
 export const capitalize = (value: string) => {
   let [fChar, ...oChars] = value.split('');
   return fChar.toUpperCase() + oChars.join('');
-};
-
-export const getTheme = (type: 'white' | 'black') => {
-  if (type === 'white') {
-    return {
-      income: 'rgb(14, 187, 172)',
-      incomeOverlay: 'rgb(20, 163, 151)',
-      expense: 'red',
-      expenseOverlay: '',
-      transparentGray: 'rgb(0, 0, 0, 0.1)',
-    };
-  }
-
-  return {
-    income: 'rgb(13, 221, 13)',
-    incomeOverlay: 'rgb(29, 194, 29)',
-    expense: '',
-    expenseOverlay: '',
-    transparentGray: 'rgb(0, 0, 0, 0.1)',
-  };
 };

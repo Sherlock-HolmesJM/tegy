@@ -9,3 +9,5 @@ export default class MoneyCl implements Money {
     public type: MoneyType
   ) {}
 }
+
+const money = new MoneyCl(0, '', 0, '', 'expenses');

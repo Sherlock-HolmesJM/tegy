@@ -5,6 +5,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import { config } from './firebase';
 import './index.css';
+import '@animxyz/core';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
 // import reportWebVitals from './reportWebVitals';

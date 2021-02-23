@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { back } from '../../media';
 import * as util from '../../utility';
 import { Theme } from '../../types';
+import NavBar from './navbar';
 
 interface Props {
   income: number;
@@ -20,6 +21,7 @@ function Banner(props: Props) {
 
   return (
     <Div className='banner' theme={theme}>
+      <NavBar />
       <img src={back} alt='banner' className='banner-image' />
       <div className='banner-overlay'></div>
 
