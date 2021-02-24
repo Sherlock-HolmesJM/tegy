@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
@@ -6,10 +7,12 @@ import { faTimes, faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import { signOut } from '../../firebase';
 import { XyzTransition } from '@animxyz/react';
 
-interface Props {}
+interface Props {
+  cate?: boolean;
+}
 
 function Navbar(props: Props) {
-  // const {} = props;
+  const { cate } = props;
 
   const [show, setShow] = useState(false);
 
@@ -34,13 +37,17 @@ function Navbar(props: Props) {
               />
             </div>
             <ul className='navbar-ul'>
-              <li className='navbar-li'>
-                <FontAwesomeIcon
-                  icon={faArrowCircleLeft}
-                  className='navbar-icon'
-                />
-                <div>Back</div>
-              </li>
+              {!cate && (
+                <li className='navbar-li'>
+                  <Link to='/category' className='navbar-li link'>
+                    <FontAwesomeIcon
+                      icon={faArrowCircleLeft}
+                      className='navbar-icon'
+                    />
+                    <div>Back</div>
+                  </Link>
+                </li>
+              )}
               <li className='navbar-li' onClick={signOut}>
                 <FontAwesomeIcon icon={faSignOutAlt} className='navbar-icon' />
                 <div>Sign-out</div>
@@ -72,7 +79,7 @@ const Nav = styled.nav`
     flex-direction: column;
     background: gray;
     width: 150px;
-    height: 100vh;
+    height: 100%;
     padding: 5px 5px 5px 10px;
   }
 
@@ -102,11 +109,20 @@ const Nav = styled.nav`
 
   .navbar-li {
     display: flex;
+    align-items: center;
     padding: 5px 0;
+    cursor: pointer;
+  }
+  .link {
+    text-decoration: none;
+    color: white;
+  }
+  .link:hover {
+    color: white;
   }
   .navbar-icon {
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
     margin-right: 6px;
   }
 

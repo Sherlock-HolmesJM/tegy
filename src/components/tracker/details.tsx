@@ -46,15 +46,21 @@ function Details(props: Props) {
       {expenses.length > 0 && (
         <div className='details-expenses details-container'>
           <h4 className='details-title details-expense-title'>expenses</h4>
+
           <div className='details-list'>
-            {sort(expenses, 'newest').map((expense, index) => (
-              <Item
-                key={index}
-                money={expense}
-                totalIncome={totalIncome}
-                handleDelete={handleDelete}
-              />
-            ))}
+            <XyzTransition
+              className='item-group'
+              xyz='fade left-100% out-left-25%'
+            >
+              {sort(expenses, 'newest').map((expense, index) => (
+                <Item
+                  key={index}
+                  money={expense}
+                  totalIncome={totalIncome}
+                  handleDelete={handleDelete}
+                />
+              ))}
+            </XyzTransition>
           </div>
         </div>
       )}
@@ -76,32 +82,26 @@ const Item = (props: {
     type === 'expenses' ? util.calcPercent(amount, totalIncome) : 0;
 
   return (
-    <XyzTransition className='item-group' xyz='fade left-100% out-left-25%'>
-      {true && (
-        <ItemDiv className='item square' theme={theme} color={color}>
-          <div className='item-container-1'>
-            <div className='item-description'>
-              {util.capitalize(description)}
-            </div>
-          </div>
-          <div className='item-container-2'>
-            <div className='item-amount'>
-              {`${type === 'incomes' ? '+' : '-'} ${util.formatAmount(amount)}`}
-            </div>
-            {type === 'expenses' && (
-              <span className='item-badge badge'>
-                {percent ? percent + '%' : '---'}
-              </span>
-            )}
-            <FontAwesomeIcon
-              className='item-delete'
-              icon={faTimesCircle}
-              onClick={() => handleDelete(money)}
-            />
-          </div>
-        </ItemDiv>
-      )}
-    </XyzTransition>
+    <ItemDiv className='item square' theme={theme} color={color}>
+      <div className='item-container-1'>
+        <div className='item-description'>{util.capitalize(description)}</div>
+      </div>
+      <div className='item-container-2'>
+        <div className='item-amount'>
+          {`${type === 'incomes' ? '+' : '-'} ${util.formatAmount(amount)}`}
+        </div>
+        {type === 'expenses' && (
+          <span className='item-badge badge'>
+            {percent ? percent + '%' : '---'}
+          </span>
+        )}
+        <FontAwesomeIcon
+          className='item-delete'
+          icon={faTimesCircle}
+          onClick={() => handleDelete(money)}
+        />
+      </div>
+    </ItemDiv>
   );
 };
 
