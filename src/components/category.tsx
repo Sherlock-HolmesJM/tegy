@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -14,10 +14,36 @@ interface Props {}
 
 function Category(props: Props) {
   // const {} = props
-  const [list, setList] = useState<string[]>(['item name']);
   const [redirect, setRedirect] = useState<'/' | ''>('');
+  const [cate, setCate] = useState('');
+  const [list, setList] = useState<string[]>([]);
 
   firebase.auth().onAuthStateChanged((user) => (user ? '' : setRedirect('/')));
+
+  const addCate = () => {
+    const newCate = cate.trim().toLowerCase().split(' ');
+    if (newCate.length === 1 && newCate[0] !== '') {
+      const index = list.findIndex((item) => item === newCate[0]);
+
+      if (index === -1) {
+        const newList = [...list, ...newCate];
+        setList(newList);
+        setCate('');
+      } else {
+        alert(`${newCate[0]} already exist.`);
+      }
+    } else {
+      alert('Category must be a word');
+    }
+  };
+
+  const deleteItem = (item: string) => {
+    const index = list.findIndex((i) => item === i);
+    if (index > -1) {
+      const newList = list.filter((i) => i !== item);
+      setList(newList);
+    }
+  };
 
   if (redirect) return <Redirect to={redirect} />;
 
@@ -32,10 +58,20 @@ function Category(props: Props) {
           <h1>Manage your categories</h1>
         </div>
 
-        <div>
+        <div onKeyPress={(e) => e.key === 'Enter' && addCate()}>
           <div className='input-container'>
-            <input type='text' className='inputField' />
-            <input type='button' value='Add' className='btn btn-primary' />
+            <input
+              type='text'
+              className='inputField'
+              value={cate}
+              onChange={(e) => setCate(e.target.value)}
+            />
+            <input
+              type='button'
+              value='Add'
+              className='btn btn-primary'
+              onClick={addCate}
+            />
           </div>
         </div>
       </div>
@@ -47,14 +83,16 @@ function Category(props: Props) {
           {list.map((item) => (
             <div className='item'>
               <div className='item-container-1'>
-                <div className='item-description'>{capitalize(item)}</div>
+                <Link className='item-description' to={`/app:${item}`}>
+                  {capitalize(item)}
+                </Link>
               </div>
-              <div className='item-container-2'>
-                <FontAwesomeIcon
-                  className='item-delete'
-                  icon={faTimesCircle}
-                  onClick={() => console.log('deleting...')}
-                />
+              <div
+                className='item-container-2'
+                data-item={item}
+                onClick={(e) => deleteItem(e.currentTarget.dataset.item ?? '')}
+              >
+                <FontAwesomeIcon className='item-delete' icon={faTimesCircle} />
               </div>
             </div>
           ))}
@@ -143,14 +181,17 @@ const Div = styled.div<{ theme: Theme }>`
     font-size: 20px;
     color: ${(props) => props.theme.income};
   }
+  .item-description {
+    text-decoration: none;
+    color: inherit;
+  }
+  .item-description:hover {
+    color: inherit;
+  }
   .item-container-2 {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
-    padding: 5px;
-  }
-  .item-container-2 > * {
-    margin-right: 7px;
   }
 
   .item-delete {

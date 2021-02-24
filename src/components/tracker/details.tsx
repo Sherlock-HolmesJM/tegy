@@ -5,7 +5,7 @@ import { Theme } from '../../types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { Budget, Money } from '../../types';
-import { XyzTransition } from '@animxyz/react';
+import { XyzTransitionGroup } from '@animxyz/react';
 
 interface Props {
   type: 1 | 0;
@@ -31,14 +31,19 @@ function Details(props: Props) {
         <div className='details-incomes details-container'>
           <h4 className='details-title details-income-title'>incomes</h4>
           <div className='details-list'>
-            {sort(incomes, 'newest').map((income, index) => (
-              <Item
-                key={index}
-                money={income}
-                totalIncome={totalIncome}
-                handleDelete={handleDelete}
-              />
-            ))}
+            <XyzTransitionGroup
+              className='item-group'
+              xyz='fade up-100% out-down-25%'
+            >
+              {sort(incomes, 'newest').map((income, index) => (
+                <Item
+                  key={index}
+                  money={income}
+                  totalIncome={totalIncome}
+                  handleDelete={handleDelete}
+                />
+              ))}
+            </XyzTransitionGroup>
           </div>
         </div>
       )}
@@ -48,9 +53,9 @@ function Details(props: Props) {
           <h4 className='details-title details-expense-title'>expenses</h4>
 
           <div className='details-list'>
-            <XyzTransition
+            <XyzTransitionGroup
               className='item-group'
-              xyz='fade left-100% out-left-25%'
+              xyz='fade up-100% out-down-25%'
             >
               {sort(expenses, 'newest').map((expense, index) => (
                 <Item
@@ -60,7 +65,7 @@ function Details(props: Props) {
                   handleDelete={handleDelete}
                 />
               ))}
-            </XyzTransition>
+            </XyzTransitionGroup>
           </div>
         </div>
       )}
