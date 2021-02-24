@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import { signOut } from '../../firebase';
 import { XyzTransition } from '@animxyz/react';
 
@@ -18,21 +19,31 @@ function Navbar(props: Props) {
         {!show && (
           <FontAwesomeIcon
             icon={faBars}
-            className='square'
+            className='navbar-menu'
             onClick={() => setShow(!show)}
           />
         )}
         {show && (
           <div className='navbar-container'>
-            <FontAwesomeIcon
-              icon={faBars}
-              className='square'
-              onClick={() => setShow(!show)}
-            />
+            <div className='navbar-closeIcon-container'>
+              <div>Menu</div>
+              <FontAwesomeIcon
+                icon={faTimes}
+                className='navbar-closeMenu'
+                onClick={() => setShow(!show)}
+              />
+            </div>
             <ul className='navbar-ul'>
-              <li className='navbar-li'>Back</li>
+              <li className='navbar-li'>
+                <FontAwesomeIcon
+                  icon={faArrowCircleLeft}
+                  className='navbar-icon'
+                />
+                <div>Back</div>
+              </li>
               <li className='navbar-li' onClick={signOut}>
-                Sign-out
+                <FontAwesomeIcon icon={faSignOutAlt} className='navbar-icon' />
+                <div>Sign-out</div>
               </li>
             </ul>
           </div>
@@ -43,23 +54,74 @@ function Navbar(props: Props) {
 }
 
 const Nav = styled.nav`
-  position: absolute;
+  position: fixed;
   left: 30px;
   top: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+
+  .navbar-menu {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 3px;
+  }
 
   .navbar-container {
+    position: fixed;
+    top: 1px;
+    left: 0;
     display: flex;
     flex-direction: column;
+    background: gray;
+    width: 150px;
+    height: 100vh;
+    padding: 5px 5px 5px 10px;
+  }
+
+  .navbar-closeIcon-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+    font-size: 25px;
+    font-weight: 800;
+    border-bottom: 2px groove white;
+  }
+
+  .navbar-closeMenu {
+    width: 30px;
+    height: 30px;
   }
 
   .navbar-ul {
     list-style-type: none;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    width: 100%;
+    padding-left: 10px;
+  }
+
+  .navbar-li {
+    display: flex;
+    padding: 5px 0;
+  }
+  .navbar-icon {
+    width: 25px;
+    height: 25px;
+    margin-right: 6px;
+  }
+
+  @media screen and (max-width: 594px) {
+    left: 5px;
+    top: 3px;
+
+    .navbar-menu {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  @media screen and (max-width: 424px) {
+    left: -8px;
   }
 `;
 
