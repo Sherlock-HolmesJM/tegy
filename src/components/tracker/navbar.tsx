@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faTimes, faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import { faFileImport } from '@fortawesome/free-solid-svg-icons';
 import { signOut } from '../../firebase';
 import { XyzTransition } from '@animxyz/react';
 
@@ -38,15 +39,26 @@ function Navbar(props: Props) {
             </div>
             <ul className='navbar-ul'>
               {!cate && (
-                <li className='navbar-li'>
-                  <Link to='/category' className='navbar-li link'>
-                    <FontAwesomeIcon
-                      icon={faArrowCircleLeft}
-                      className='navbar-icon'
-                    />
-                    <div>Back</div>
-                  </Link>
-                </li>
+                <React.Fragment>
+                  <li className='navbar-li'>
+                    <Link to='/category' className='navbar-li link'>
+                      <FontAwesomeIcon
+                        icon={faFileImport}
+                        className='navbar-icon'
+                      />
+                      <div>Upgrade</div>
+                    </Link>
+                  </li>
+                  <li className='navbar-li'>
+                    <Link to='/category' className='navbar-li link'>
+                      <FontAwesomeIcon
+                        icon={faArrowCircleLeft}
+                        className='navbar-icon'
+                      />
+                      <div>Back</div>
+                    </Link>
+                  </li>
+                </React.Fragment>
               )}
               <li className='navbar-li' onClick={signOut}>
                 <FontAwesomeIcon icon={faSignOutAlt} className='navbar-icon' />

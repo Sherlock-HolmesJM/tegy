@@ -1,3 +1,4 @@
 import MoneyCl from './money';
 
-export { MoneyCl };
+export default MoneyCl;
+export * from './money';

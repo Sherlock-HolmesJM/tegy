@@ -15,7 +15,11 @@ interface Props {}
 function Tracker(props: Props) {
   // const {} = props
 
-  const [budget, setBudget] = useState<Budget>({ incomes: [], expenses: [] });
+  const [budget, setBudget] = useState<Budget>({
+    name: 'd',
+    incomes: [],
+    expenses: [],
+  });
   const [type, setType] = useState<1 | 0>(1);
   const [redirect, setRedirect] = useState<'/' | ''>('');
 

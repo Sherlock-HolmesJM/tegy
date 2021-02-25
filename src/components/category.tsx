@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import firebase from 'firebase/app';
@@ -9,40 +9,42 @@ import { back } from '../media';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { NavBar } from './tracker';
+import { context, actions } from '../context';
+import { BudgetCl } from '../model';
 
 interface Props {}
 
 function Category(props: Props) {
   // const {} = props
   const [redirect, setRedirect] = useState<'/' | ''>('');
-  const [cate, setCate] = useState('');
-  const [list, setList] = useState<string[]>([]);
+  const [name, setName] = useState('');
+
+  const { budgets, dispatch } = useContext(context);
+  const list = budgets.reduce(
+    (acc: string[], next) => (acc = [...acc, next.name]),
+    []
+  );
 
   firebase.auth().onAuthStateChanged((user) => (user ? '' : setRedirect('/')));
 
   const addCate = () => {
-    const newCate = cate.trim().toLowerCase().split(' ');
-    if (newCate.length === 1 && newCate[0] !== '') {
-      const index = list.findIndex((item) => item === newCate[0]);
+    const newName = name.trim().toLowerCase();
 
-      if (index === -1) {
-        const newList = [...list, ...newCate];
-        setList(newList);
-        setCate('');
-      } else {
-        alert(`${newCate[0]} already exist.`);
-      }
+    if (newName === '') return;
+
+    const budget = budgets.find((budget) => budget.name === newName);
+
+    if (budget) {
+      alert(`${newName} already exist.`);
     } else {
-      alert('Category must be a word');
+      const newBudget = new BudgetCl(newName);
+      dispatch(actions.addBudget(newBudget));
+      setName('');
     }
   };
 
   const deleteItem = (item: string) => {
-    const index = list.findIndex((i) => item === i);
-    if (index > -1) {
-      const newList = list.filter((i) => i !== item);
-      setList(newList);
-    }
+    dispatch(actions.deleteBudget(item));
   };
 
   if (redirect) return <Redirect to={redirect} />;
@@ -63,8 +65,8 @@ function Category(props: Props) {
             <input
               type='text'
               className='inputField'
-              value={cate}
-              onChange={(e) => setCate(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
             <input
               type='button'

@@ -8,6 +8,7 @@ import './index.css';
 import '@animxyz/core';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
+import Provider from './context';
 // import reportWebVitals from './reportWebVitals';
 
 firebase.initializeApp(config);
@@ -17,7 +18,9 @@ firebase.initializeApp(config);
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-      <App />
+      <Provider>
+        <App />
+      </Provider>
     </Router>
   </React.StrictMode>,
   document.getElementById('root')

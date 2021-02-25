@@ -7,10 +7,15 @@ export default interface Money {
 }
 
 export interface Budget {
+  name: string;
   incomes: Money[];
   expenses: Money[];
 }
 
-export const budget = { incomes: [], expenses: [] };
+export interface Budgets {
+  [name: string]: Budget;
+}
+
+export const budget: Budget = { name: 'default', incomes: [], expenses: [] };
 
 export type MoneyType = 'incomes' | 'expenses';

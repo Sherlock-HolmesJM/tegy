@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import * as util from '../../utility';
 import { Theme, Money } from '../../types';
-import { MoneyCl } from '../../model';
+import MoneyCl from '../../model';
 
 interface Props {
   handleAdd: (money: Money) => void;
