@@ -23,10 +23,8 @@ function Input(props: Props) {
 
   const handleInput = () => {
     if (description && amount) {
-      const uid = Date.now();
-      const date = new Date().toJSON();
       const t = type ? 'incomes' : 'expenses';
-      const money = new MoneyCl(uid, description, amount, date, t);
+      const money = new MoneyCl(description, amount, t);
       handleAdd(money);
       focusDesc();
     } else {

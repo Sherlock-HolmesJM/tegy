@@ -43,15 +43,6 @@ function Navbar(props: Props) {
                   <li className='navbar-li'>
                     <Link to='/category' className='navbar-li link'>
                       <FontAwesomeIcon
-                        icon={faFileImport}
-                        className='navbar-icon'
-                      />
-                      <div>Upgrade</div>
-                    </Link>
-                  </li>
-                  <li className='navbar-li'>
-                    <Link to='/category' className='navbar-li link'>
-                      <FontAwesomeIcon
                         icon={faArrowCircleLeft}
                         className='navbar-icon'
                       />

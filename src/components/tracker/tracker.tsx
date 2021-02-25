@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import styled from 'styled-components';
@@ -9,26 +10,37 @@ import { Budget, Money } from '../../types';
 import * as util from '../../utility';
 import { getBudget, saveBudget } from '../../firebase';
 import { Redirect } from 'react-router-dom';
+import { context, actions } from '../../context';
+import { iBudget } from '../../model';
 
 interface Props {}
 
 function Tracker(props: Props) {
   // const {} = props
-
-  const [budget, setBudget] = useState<Budget>({
-    name: 'd',
-    incomes: [],
-    expenses: [],
-  });
   const [type, setType] = useState<1 | 0>(1);
-  const [redirect, setRedirect] = useState<'/' | ''>('');
+  const [redirect, setRedirect] = useState<string>('');
+  const { budgets, dispatch } = useContext(context);
+
+  const slug = useParams<{ slug: string | undefined }>().slug?.replace(':', '');
+
+  const budget = budgets.find((b) => b.name === slug) ?? iBudget;
+  budget.expenses = budget.expenses ?? [];
+  budget.incomes = budget.incomes ?? [];
+
+  console.log(budget);
+  console.log(budgets);
+  console.log({ slug: slug });
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
-      if (user)
-        getBudget().then((budget) => (budget ? setBudget(budget) : null));
-      else setRedirect('/');
+      const b = budgets.find((b) => b.name === slug);
+      if (user && !b) {
+        getBudget(slug).then((budget) =>
+          budget ? dispatch(actions.addBudget(budget)) : null
+        );
+      } else if (!user) setRedirect('/');
     });
+    //eslint-disable-next-line
   }, []);
 
   const handleAdd = (money: Money) => {
@@ -37,10 +49,8 @@ function Tracker(props: Props) {
     if (!result) {
       const newBudget = util.clone<Budget>(budget);
       newBudget[type].push(money);
-      setBudget(newBudget);
-      saveBudget(newBudget).then((status) =>
-        status ? console.log('successful') : console.log('Failed. Try again.')
-      );
+      dispatch(actions.udpateBudget(newBudget));
+      saveBudget(newBudget);
     }
   };
 
@@ -49,10 +59,8 @@ function Tracker(props: Props) {
     if (index !== -1) {
       const newBudget = util.clone<Budget>(budget);
       newBudget[money.type].splice(index, 1);
-      setBudget(newBudget);
-      saveBudget(newBudget).then((status) =>
-        status ? console.log('successful') : console.log('Failed. Try again.')
-      );
+      dispatch(actions.udpateBudget(newBudget));
+      saveBudget(newBudget);
     }
   };
 

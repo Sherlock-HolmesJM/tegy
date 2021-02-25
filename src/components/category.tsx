@@ -3,6 +3,7 @@ import { Redirect, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import * as fb from '../firebase';
 import { getTheme, capitalize } from '../utility';
 import { Theme } from '../types';
 import { back } from '../media';
@@ -19,11 +20,8 @@ function Category(props: Props) {
   const [redirect, setRedirect] = useState<'/' | ''>('');
   const [name, setName] = useState('');
 
-  const { budgets, dispatch } = useContext(context);
-  const list = budgets.reduce(
-    (acc: string[], next) => (acc = [...acc, next.name]),
-    []
-  );
+  const { categories, dispatch } = useContext(context);
+  console.log(categories);
 
   firebase.auth().onAuthStateChanged((user) => (user ? '' : setRedirect('/')));
 
@@ -31,20 +29,30 @@ function Category(props: Props) {
     const newName = name.trim().toLowerCase();
 
     if (newName === '') return;
+    if (newName.split(' ').length > 1) return alert('Name must be one word.');
 
-    const budget = budgets.find((budget) => budget.name === newName);
+    const oldCate = categories.find((c) => c === newName);
 
-    if (budget) {
+    if (oldCate) {
       alert(`${newName} already exist.`);
     } else {
       const newBudget = new BudgetCl(newName);
-      dispatch(actions.addBudget(newBudget));
+      const newList = [...categories, newName];
+
+      fb.saveCategories(newList);
+      fb.saveBudget(newBudget);
+      dispatch(actions.addBudget_And_Category(newBudget, newName));
       setName('');
     }
   };
 
   const deleteItem = (item: string) => {
+    const list = categories.filter((c) => c !== item);
+
+    fb.saveCategories(list);
+
     dispatch(actions.deleteBudget(item));
+    fb.deleteBudget(item);
   };
 
   if (redirect) return <Redirect to={redirect} />;
@@ -82,7 +90,7 @@ function Category(props: Props) {
         <h4 className='details-title'>Categories</h4>
 
         <div className='details-list'>
-          {list.map((item) => (
+          {categories.map((item) => (
             <div className='item'>
               <div className='item-container-1'>
                 <Link className='item-description' to={`/app:${item}`}>
@@ -178,7 +186,7 @@ const Div = styled.div<{ theme: Theme }>`
 
   .item-container-1 {
     padding: 5px;
-    margin-right: 20px;
+    margin-right: 100px;
     font-weight: 600;
     font-size: 20px;
     color: ${(props) => props.theme.income};

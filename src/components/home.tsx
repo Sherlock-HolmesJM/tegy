@@ -17,7 +17,7 @@ function Home(props: Props) {
   useEffect(() => {
     firebase
       .auth()
-      .onAuthStateChanged((user) => (user ? setRedirect('/app') : null));
+      .onAuthStateChanged((user) => (user ? setRedirect('/category') : null));
   }, []);
 
   const handleLogin = (e: FormEvent) => {
