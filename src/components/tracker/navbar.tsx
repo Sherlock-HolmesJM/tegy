@@ -72,6 +72,9 @@ const Nav = styled.nav`
     width: 40px;
     height: 40px;
     margin-bottom: 3px;
+    background: black;
+    padding: 5px;
+    border-radius: 5px;
   }
 
   .navbar-container {

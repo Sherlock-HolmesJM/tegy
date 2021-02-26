@@ -1,5 +1,6 @@
 import getTheme from './theme';
 
+export * from './theme';
 export { getTheme };
 
 export const clone = <T>(object: T): T => JSON.parse(JSON.stringify(object));

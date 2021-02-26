@@ -19,3 +19,4 @@ export const getTheme = (type: 'white' | 'black') => {
 };
 
 export default getTheme;
+export type Theme = typeof getTheme;

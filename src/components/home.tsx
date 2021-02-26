@@ -4,7 +4,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import styled from 'styled-components';
 import * as fb from '../firebase';
-import { homeImg } from '../media';
+import { homeImg, eSpin } from '../media';
 
 interface Props {}
 
@@ -13,6 +13,7 @@ function Home(props: Props) {
   const [redirect, setRedirect] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [spin, setSpin] = useState(false);
 
   useEffect(() => {
     firebase
@@ -22,13 +23,15 @@ function Home(props: Props) {
 
   const handleLogin = (e: FormEvent) => {
     e.preventDefault();
-    fb.signInWithEmail(email, password);
+    setSpin(true);
+    fb.signInWithEmail(email, password).then(() => setSpin(false));
   };
 
   if (redirect) return <Redirect to={redirect} />;
 
   return (
     <Div>
+      {spin && <img src={eSpin} alt='spin' className='spinner' />}
       <main className='form-signin'>
         <form className='form-form' onSubmit={handleLogin}>
           <h1 className='h3 mb-3 fw-normal'>Welcome</h1>
@@ -76,10 +79,16 @@ function Home(props: Props) {
 
 const Div = styled.div`
   min-height: 100vh;
+  min-width: 278px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  .spinner {
+    position: fixed;
+    top: 35px;
+  }
 
   .form-control-div {
     display: flex;

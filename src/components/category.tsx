@@ -143,8 +143,6 @@ const Div = styled.div<{ theme: Theme }>`
 
   .input-container {
     display: flex;
-    justify-content: space-between;
-    width: 260px;
     margin: 20px;
   }
   .inputField {
@@ -153,6 +151,7 @@ const Div = styled.div<{ theme: Theme }>`
     border: none;
     outline: none;
     transition: 0.5s;
+    margin-right: 14px;
   }
 
   .details-container {

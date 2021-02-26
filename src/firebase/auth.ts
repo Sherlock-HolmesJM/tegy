@@ -14,13 +14,13 @@ export const signInWithGoogle = () => {
 };
 
 export const signInWithEmail = (email: string, password: string) => {
-  firebase
+  return firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
-    .then((credential) => console.log(credential.user?.email))
+    .then((c) => true)
     .catch((e) => {
       if (e.code === 'auth/user-not-found') createUser(email, password);
-      else console.log({ e, code: e.code });
+      else alert(e.message);
     });
 };
 
