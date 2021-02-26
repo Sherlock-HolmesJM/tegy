@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faTimes, faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
-import { faFileImport } from '@fortawesome/free-solid-svg-icons';
+// import { faFileImport } from '@fortawesome/free-solid-svg-icons';
 import { signOut } from '../../firebase';
 import { XyzTransition } from '@animxyz/react';
 

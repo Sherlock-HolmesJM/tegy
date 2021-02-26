@@ -21,7 +21,6 @@ function Category(props: Props) {
   const [name, setName] = useState('');
 
   const { categories, dispatch } = useContext(context);
-  console.log(categories);
 
   firebase.auth().onAuthStateChanged((user) => (user ? '' : setRedirect('/')));
 

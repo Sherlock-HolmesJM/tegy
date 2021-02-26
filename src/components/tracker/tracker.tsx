@@ -27,16 +27,14 @@ function Tracker(props: Props) {
   budget.expenses = budget.expenses ?? [];
   budget.incomes = budget.incomes ?? [];
 
-  console.log(budget);
-  console.log(budgets);
-  console.log({ slug: slug });
-
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       const b = budgets.find((b) => b.name === slug);
       if (user && !b) {
         getBudget(slug).then((budget) =>
-          budget ? dispatch(actions.addBudget(budget)) : null
+          budget
+            ? dispatch(actions.addBudget(budget))
+            : setRedirect('/category')
         );
       } else if (!user) setRedirect('/');
     });
