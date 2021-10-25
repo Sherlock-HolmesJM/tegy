@@ -15,7 +15,7 @@ function BudgetInput(props: Props) {
 	const handleChange = (e) => {};
 
 	return (
-		<Wrapper onKeyPress={handleInput}>
+		<Wrapper onKeyPress={handleInput} theme={window.color}>
 			<select
 				name="type"
 				className="input-type input-border"
@@ -31,7 +31,7 @@ function BudgetInput(props: Props) {
 				type="text"
 				className="input-description input-border"
 				placeholder="Description"
-				onChange={(e) => setDescription(e.target.value.trim().toLowerCase())}
+				onChange={(e) => setDescription(e.target.value.trim())}
 			/>
 			<input
 				type="number"
@@ -44,7 +44,7 @@ function BudgetInput(props: Props) {
 	);
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ theme: Theme }>`
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -63,10 +63,10 @@ const Wrapper = styled.div`
 		font-size: large;
 	}
 	.input-option.plus {
-		color: ${(props) => props.theme.income};
+		color: ${(props) => props.theme.primary};
 	}
 	.input-minus {
-		color: ${(props) => props.theme.expense};
+		color: ${(props) => props.theme.secondary};
 	}
 	.input-amount {
 		width: 110px;
