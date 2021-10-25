@@ -1,27 +1,18 @@
 import styled from "styled-components";
 import banner from "../../media/banner.png";
-import SummaryLabel from "./summaryLabel";
 
 interface Props {}
 
-function Banner(props: Props) {
+const Banner: React.FC<Props> = (props) => {
 	// const {} = props;
 
 	return (
 		<Wrapper>
 			{/* <img src={banner} alt="banner" width="100%" height="100%" /> */}
-			<div className="banner-overlay">
-				<SummaryLabel color="primary" amount={100} type="inc" name="income" />
-				<SummaryLabel
-					color="secondary"
-					amount={100}
-					type="exp"
-					name="expense"
-				/>
-			</div>
+			<div className="banner-overlay">{props.children}</div>
 		</Wrapper>
 	);
-}
+};
 
 const Wrapper = styled.div`
 	position: relative;

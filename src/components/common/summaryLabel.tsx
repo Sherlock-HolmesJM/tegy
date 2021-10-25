@@ -5,13 +5,13 @@ interface Props {
 	name: string;
 	amount: number;
 	type: "inc" | "exp";
-	color: "primary" | "secondary";
+	color?: "primary" | "secondary";
 }
 
 function SummaryLabel(props: Props) {
-	const { name, amount, type, color } = props;
+	const { name, amount, type, color = "primary" } = props;
 
-	const percentage = type === "inc" ? 89 : 0;
+	const percentage = type === "exp" ? 8 : 0;
 
 	return (
 		<Wrapper className={`label ${color}`}>
@@ -46,7 +46,7 @@ const Wrapper = styled.div`
 	}
 
 	.label-name {
-		flex-basis: 60%;
+		flex-basis: 63%;
 		font-size: 18px;
 		line-height: 20px;
 		text-transform: uppercase;
@@ -59,7 +59,7 @@ const Wrapper = styled.div`
 	}
 
 	.label-percent {
-		padding: 3px 7px;
+		padding: 3px 6px;
 		border-radius: 4px;
 		background-color: #ffffff52;
 		font-size: 10px;
@@ -67,6 +67,16 @@ const Wrapper = styled.div`
 
 	.label-percent.primary {
 		visibility: hidden;
+	}
+
+	@media (max-width: 342px) {
+		.label-name {
+			flex-basis: 58%;
+			font-size: 16px;
+		}
+		.label-amount {
+			font-size: 14px;
+		}
 	}
 `;
 
