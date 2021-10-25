@@ -14,7 +14,7 @@ function SummaryLabel(props: Props) {
 	const percentage = type === "exp" ? 8 : 0;
 
 	return (
-		<Wrapper className={`label ${color}`}>
+		<Wrapper className={`label ${color}`} theme={window.color}>
 			<div className="label-name">{name}</div>
 
 			<div className="label-amount">- {formatAmount(amount)}</div>
@@ -24,7 +24,7 @@ function SummaryLabel(props: Props) {
 	);
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ theme: Theme }>`
 	position: relative;
 	display: flex;
 	align-items: center;
@@ -38,11 +38,11 @@ const Wrapper = styled.div`
 	cursor: context-menu;
 
 	&.primary {
-		background-color: #32c4c9;
+		background-color: ${(props) => props.theme.primary};
 	}
 
 	&.secondary {
-		background-color: #f33333;
+		background-color: ${(props) => props.theme.secondary};
 	}
 
 	.label-name {
