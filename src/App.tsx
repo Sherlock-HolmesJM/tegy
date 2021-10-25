@@ -1,20 +1,7 @@
-import React from 'react';
-// import logo from './logo.svg';
-import './App.css';
-import { Switch, Route } from 'react-router-dom';
-import { Tracker, Home, Category } from './components';
+import "./App.css";
 
 function App() {
-  return (
-    <div className='App'>
-      <Switch>
-        <Route exact path='/' component={Home} />
-        <Route exact path='/category' component={Category} />
-        <Route exact path='/app' component={Tracker} />
-        <Route exact path='/app:slug' component={Tracker} />
-      </Switch>
-    </div>
-  );
+	return <div className="App"></div>;
 }
 
 export default App;
