@@ -1,7 +1,12 @@
 import "./App.css";
+import Tracker from "./components/tracker";
 
 function App() {
-	return <div className="App"></div>;
+	return (
+		<div className="App">
+			<Tracker />
+		</div>
+	);
 }
 
 export default App;

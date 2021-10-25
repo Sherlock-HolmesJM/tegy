@@ -4,11 +4,20 @@
 
 body {
 	margin: 0;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-		"Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-		sans-serif;
+	font-family: "Lato", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	min-width: 300px;
+}
+
+body::-webkit-scrollbar {
+	width: 6px;
+}
+body::-webkit-scrollbar-track {
+	background: rgb(216, 210, 210);
+}
+body::-webkit-scrollbar-thumb {
+	background: rgb(122, 126, 122);
 }
 
 code {
