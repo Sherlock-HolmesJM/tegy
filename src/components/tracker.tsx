@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Banner from "./common/banner";
-import BudgetInput from "./common/budgetInput";
+import BudgetInput from "./budgetInput";
 import SummaryLabel from "./common/summaryLabel";
 
 interface Props {}

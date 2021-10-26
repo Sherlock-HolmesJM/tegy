@@ -14,7 +14,7 @@ function SummaryLabel(props: Props) {
 	const percentage = type === "exp" ? 8 : 0;
 
 	return (
-		<Wrapper className={`label ${color}`} theme={window.color}>
+		<Wrapper className={`label ${color}`} theme={window.theme}>
 			<div className="label-name">{name}</div>
 
 			<div className="label-amount">- {formatAmount(amount)}</div>

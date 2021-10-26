@@ -4,26 +4,32 @@ import styled from "styled-components";
 interface Props {}
 
 function BudgetInput(props: Props) {
-	// const { handleAdd, type, setType } = props;
 	const [amount, setAmount] = useState(0);
 	const [description, setDescription] = useState("");
+	const [type, setType] = useState<BudgetType>("inc");
+
+	const { theme } = window;
+	const selectedColor = type === "inc" ? theme.primary : theme.secondary;
 
 	const handleInput = (e) => {
 		if (e.key !== "Enter") return;
 	};
 
-	const handleChange = (e) => {};
+	const handleChange = (e) => {
+		setType(e.target.value as BudgetType);
+	};
 
 	return (
-		<Wrapper onKeyPress={handleInput} theme={window.color}>
+		<Wrapper onKeyPress={handleInput} ctheme={{ selectedColor, ...theme }}>
 			<select
 				name="type"
 				className="input-type input-border"
-				onChange={handleChange}>
-				<option className="input-option plus" value="1">
+				onChange={handleChange}
+				value={type}>
+				<option className="input-option plus" value="inc">
 					+
 				</option>
-				<option className="input-option minus" value="0">
+				<option className="input-option minus" value="exp">
 					-
 				</option>
 			</select>
@@ -31,6 +37,7 @@ function BudgetInput(props: Props) {
 				type="text"
 				className="input-description input-border"
 				placeholder="Description"
+				value={description}
 				onChange={(e) => setDescription(e.target.value.trim())}
 			/>
 			<input
@@ -38,18 +45,24 @@ function BudgetInput(props: Props) {
 				min="1"
 				className="input-amount input-border"
 				placeholder="Amount"
+				value={amount}
 				onChange={(e) => setAmount(+e.target.value)}
 			/>
 		</Wrapper>
 	);
 }
 
-const Wrapper = styled.div<{ theme: Theme }>`
+interface Color extends Theme {
+	selectedColor: string;
+}
+
+const Wrapper = styled.div<{ ctheme: Color }>`
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	min-height: 40px;
-	border-bottom: groove grey 1.5px;
+	background-color: #e2dede;
+	border-bottom: 1px groove ${(props) => props.ctheme.selectedColor};
 
 	.input-amount,
 	.input-description,
@@ -63,10 +76,10 @@ const Wrapper = styled.div<{ theme: Theme }>`
 		font-size: large;
 	}
 	.input-option.plus {
-		color: ${(props) => props.theme.primary};
+		color: ${(props) => props.ctheme.primary};
 	}
 	.input-minus {
-		color: ${(props) => props.theme.secondary};
+		color: ${(props) => props.ctheme.secondary};
 	}
 	.input-amount {
 		width: 110px;
@@ -78,7 +91,7 @@ const Wrapper = styled.div<{ theme: Theme }>`
 		width: 40px;
 		height: 40px;
 		margin: 8px;
-		color: ${(props) => props.color};
+		color: ${(props) => props.ctheme.selectedColor};
 		transition: 0.5s;
 	}
 	.input-icon.hide {
@@ -86,10 +99,10 @@ const Wrapper = styled.div<{ theme: Theme }>`
 	}
 	.input-border {
 		outline: none;
-		border: 1px dotted ${(props) => props.color};
+		border: 1px dotted ${(props) => props.ctheme.selectedColor};
 	}
 	.input-border:focus {
-		border: 1px solid ${(props) => props.color};
+		border: 1px solid ${(props) => props.ctheme.selectedColor};
 	}
 
 	@media screen and (max-width: 487px) {

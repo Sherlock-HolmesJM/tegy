@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 // import * as serviceWorker from "./serviceWorker";
 
 window.border = (color = "red") => `border: 1px solid ${color};`;
-window.color = {
+window.theme = {
 	primary: "#32c4c9",
 	secondary: "#f33333"
 };
