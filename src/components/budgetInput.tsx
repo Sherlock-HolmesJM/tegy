@@ -27,6 +27,7 @@ function BudgetInput(props: Props) {
 					{ value: "exp", label: "-" }
 				]}
 			/>
+
 			<input
 				type="text"
 				className="input-description input-border"
@@ -34,6 +35,7 @@ function BudgetInput(props: Props) {
 				value={description}
 				onChange={(e) => setDescription(e.target.value.trim())}
 			/>
+
 			<input
 				type="number"
 				min="1"
@@ -59,8 +61,7 @@ const Wrapper = styled.div<{ ctheme: Color }>`
 	border-bottom: 1px groove ${(props) => props.ctheme.selectedColor};
 
 	.input-amount,
-	.input-description,
-	.input-type {
+	.input-description {
 		margin: 8px;
 		padding: 10px 12px;
 		border-radius: 5px;
@@ -110,8 +111,7 @@ const Wrapper = styled.div<{ ctheme: Color }>`
 		padding: 5px;
 
 		.input-amount,
-		.input-description,
-		.input-type {
+		.input-description {
 			margin: 4px;
 		}
 

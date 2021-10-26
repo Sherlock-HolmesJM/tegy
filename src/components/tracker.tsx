@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Banner from "./common/banner";
 import BudgetInput from "./budgetInput";
 import SummaryLabel from "./common/summaryLabel";
+import BudgetItems from "./common/budgetItems";
 
 interface Props {}
 
@@ -32,7 +33,9 @@ function Tracker(props: Props) {
 
 			<BudgetInput />
 
-			<div className="content"></div>
+			<div className="content">
+				<BudgetItems />
+			</div>
 		</Wrapper>
 	);
 }

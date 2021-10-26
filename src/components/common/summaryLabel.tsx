@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { formatAmount } from "../../utils/money";
+import Badge from "./badge";
 
 interface Props {
 	name: string;
@@ -19,7 +20,7 @@ function SummaryLabel(props: Props) {
 
 			<div className="label-amount">- {formatAmount(amount)}</div>
 
-			<div className={`label-percent ${color}`}>{percentage + "%"}</div>
+			<Badge className={`label-percent ${color}`}>{percentage + "%"}</Badge>
 		</Wrapper>
 	);
 }
@@ -56,13 +57,6 @@ const Wrapper = styled.div<{ theme: Theme }>`
 
 	.label-amount {
 		font-size: 16px;
-	}
-
-	.label-percent {
-		padding: 3px 6px;
-		border-radius: 4px;
-		background-color: #ffffff52;
-		font-size: 10px;
 	}
 
 	.label-percent.primary {
