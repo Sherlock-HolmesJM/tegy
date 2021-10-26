@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import Select from "./common/select";
 
 interface Props {}
 
@@ -15,24 +16,17 @@ function BudgetInput(props: Props) {
 		if (e.key !== "Enter") return;
 	};
 
-	const handleChange = (e) => {
-		setType(e.target.value as BudgetType);
-	};
-
 	return (
 		<Wrapper onKeyPress={handleInput} ctheme={{ selectedColor, ...theme }}>
-			<select
-				name="type"
-				className="input-type input-border"
-				onChange={handleChange}
-				value={type}>
-				<option className="input-option plus" value="inc">
-					+
-				</option>
-				<option className="input-option minus" value="exp">
-					-
-				</option>
-			</select>
+			<Select
+				color={selectedColor}
+				onSelect={(value) => setType(value as BudgetType)}
+				value={type}
+				options={[
+					{ value: "inc", label: "+" },
+					{ value: "exp", label: "-" }
+				]}
+			/>
 			<input
 				type="text"
 				className="input-description input-border"
@@ -72,20 +66,11 @@ const Wrapper = styled.div<{ ctheme: Color }>`
 		border-radius: 5px;
 		transition: 0.5s;
 	}
-	.input-type {
-		font-size: large;
-	}
-	.input-option.plus {
-		color: ${(props) => props.ctheme.primary};
-	}
-	.input-minus {
-		color: ${(props) => props.ctheme.secondary};
-	}
 	.input-amount {
-		width: 110px;
+		width: 100px;
 	}
 	.input-description {
-		width: 400px;
+		width: 250px;
 	}
 	.input-icon {
 		width: 40px;
@@ -99,7 +84,7 @@ const Wrapper = styled.div<{ ctheme: Color }>`
 	}
 	.input-border {
 		outline: none;
-		border: 1px dotted ${(props) => props.ctheme.selectedColor};
+		border: 1px solid ${(props) => props.ctheme.selectedColor};
 	}
 	.input-border:focus {
 		border: 1px solid ${(props) => props.ctheme.selectedColor};
