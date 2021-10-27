@@ -5,20 +5,22 @@ import Badge from "./badge";
 interface Props {
 	name: string;
 	amount: number;
-	type: "inc" | "exp";
+	type: BudgetType;
 	color?: "primary" | "secondary";
 }
 
 function SummaryLabel(props: Props) {
 	const { name, amount, type, color = "primary" } = props;
 
-	const percentage = type === "exp" ? 8 : 0;
+	const percentage = type === "expense" ? 8 : 0;
 
 	return (
 		<Wrapper className={`label ${color}`} theme={window.theme}>
 			<div className="label-name">{name}</div>
 
-			<div className="label-amount">- {formatAmount(amount)}</div>
+			<div className="label-amount">
+				{type === "income" ? "+" : "-"} {formatAmount(amount)}
+			</div>
 
 			<Badge className={`label-percent ${color}`}>{percentage + "%"}</Badge>
 		</Wrapper>
@@ -39,11 +41,11 @@ const Wrapper = styled.div<{ theme: Theme }>`
 	cursor: context-menu;
 
 	&.primary {
-		background-color: ${(props) => props.theme.primary};
+		background-color: ${props => props.theme.primary};
 	}
 
 	&.secondary {
-		background-color: ${(props) => props.theme.secondary};
+		background-color: ${props => props.theme.secondary};
 	}
 
 	.label-name {

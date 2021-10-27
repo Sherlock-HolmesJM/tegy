@@ -35,11 +35,11 @@ function Tracker(props: Props) {
 
 					<div className="banner-amount">{total.income - total.expense}</div>
 
-					<SummaryLabel type="inc" name="income" amount={total.income} />
+					<SummaryLabel type="income" name="income" amount={total.income} />
 
 					<SummaryLabel
 						color="secondary"
-						type="exp"
+						type="expense"
 						name="expense"
 						amount={total.expense}
 					/>
