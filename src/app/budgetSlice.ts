@@ -6,8 +6,7 @@ const budgetSlice = createSlice({
 
 	initialState: {
 		income: [] as Budget[],
-		expense: [] as Budget[],
-		selectedBudget: { amounts: [] } as Budget
+		expense: [] as Budget[]
 	},
 
 	reducers: {
@@ -25,15 +24,11 @@ const budgetSlice = createSlice({
 
 				state[type][index].amounts = [...budget.amounts, ...amounts];
 			}
-		},
-
-		changedSelectedBudget: (state, { payload }: PayloadAction<Budget>) => {
-			state.selectedBudget = payload;
 		}
 	}
 });
 
-export const { addedBudget, changedSelectedBudget } = budgetSlice.actions;
+export const { addedBudget } = budgetSlice.actions;
 
 export const selectBudgets = (state: RootState) => state.budget;
 
