@@ -9,6 +9,35 @@ interface Props {}
 function Tracker(props: Props) {
 	// const {} = props;
 
+	const budgets = {
+		income: [
+			{
+				id: "kkdkd",
+				type: "income",
+				description: "James Man",
+				amounts: [
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() }
+				]
+			}
+		] as Budget[],
+		expense: [
+			{
+				id: "kkdkdddff",
+				type: "expense",
+				description: "James Spent",
+				amounts: [
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() }
+				]
+			}
+		] as Budget[]
+	};
+
 	return (
 		<Wrapper>
 			<Banner>
@@ -34,7 +63,12 @@ function Tracker(props: Props) {
 			<BudgetInput />
 
 			<div className="content">
-				<BudgetItems />
+				<BudgetItems title="Income" color="primary" budgets={budgets.income} />
+				<BudgetItems
+					title="Expense"
+					color="secondary"
+					budgets={budgets.expense}
+				/>
 			</div>
 		</Wrapper>
 	);
@@ -56,6 +90,11 @@ const Wrapper = styled.div`
 	.banner-amount {
 		font-size: min(50px, 15vw);
 		margin: 10px 0;
+	}
+
+	.content {
+		display: flex;
+		flex-wrap: wrap;
 	}
 
 	@media (max-width: 435px) {
