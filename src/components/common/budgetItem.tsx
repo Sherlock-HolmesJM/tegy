@@ -83,6 +83,10 @@ const Wrapper = styled.div`
 		flex-grow: 1;
 	}
 
+	.description {
+		text-transform: capitalize;
+	}
+
 	.budgetItem-content {
 		display: flex;
 		justify-content: space-between;
