@@ -5,6 +5,7 @@ import Badge from "./badge";
 
 import income from "../../media/income.webp";
 import expense from "../../media/expense.webp";
+import { useHistory } from "react-router";
 
 interface Props {
 	budget: Budget;
@@ -22,8 +23,14 @@ function BudgetItem(props: Props) {
 	const totalAmount = amounts.reduce((acc, next) => acc + next.amount, 0);
 	const { date } = amounts[amounts.length - 1];
 
+	const history = useHistory();
+
+	const handleClick = () => {
+		history.push(`/view/${type}/${id}`);
+	};
+
 	return (
-		<Wrapper color={theme[color]}>
+		<Wrapper color={theme[color]} onClick={handleClick}>
 			<div className="img-div">
 				<img
 					src={type === "income" ? income : expense}
@@ -87,7 +94,7 @@ const Wrapper = styled.div`
 	.amount {
 		display: flex;
 		align-items: center;
-		color: ${(props) => props.color};
+		color: ${props => props.color};
 	}
 
 	.badge-income {

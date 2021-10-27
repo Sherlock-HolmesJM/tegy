@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import { store } from "./app/store";
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 // import * as serviceWorker from "./serviceWorker";
 
 window.border = (color = "red") => `border: 1px solid ${color};`;
@@ -14,9 +15,11 @@ window.theme = {
 
 ReactDOM.render(
 	<React.StrictMode>
-		<Provider store={store}>
-			<App />
-		</Provider>
+		<BrowserRouter>
+			<Provider store={store}>
+				<App />
+			</Provider>
+		</BrowserRouter>
 	</React.StrictMode>,
 	document.getElementById("root")
 );

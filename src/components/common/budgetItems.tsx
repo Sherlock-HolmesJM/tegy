@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import BudgetItem from "./budgetItem";
 
@@ -13,12 +14,17 @@ function BudgetItems({ title, budgets, color, single }: Props) {
 		<Wrapper>
 			<div className="title">
 				<div>{title}</div>
-				{single && <div>Back</div>}
+
+				{single && <Link to="/">Back</Link>}
 			</div>
 
 			<div className="item-group scrollar">
-				{budgets.map((budget) => (
-					<BudgetItem key={budget.id} color={color} budget={budget} />
+				{budgets.map(budget => (
+					<BudgetItem
+						key={budget.amounts[0].date}
+						color={color}
+						budget={budget}
+					/>
 				))}
 			</div>
 		</Wrapper>

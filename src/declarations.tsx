@@ -23,7 +23,7 @@ declare global {
 	}
 
 	interface SelectBudget {
-		description: string;
+		id: string;
 		type: BudgetType;
 	}
 }

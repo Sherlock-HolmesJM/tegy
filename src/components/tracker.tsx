@@ -1,3 +1,4 @@
+import { Route, Switch, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Banner from "./common/banner";
 import BudgetInput from "./budgetInput";
@@ -5,20 +6,16 @@ import SummaryLabel from "./common/summaryLabel";
 import BudgetItems from "./common/budgetItems";
 import { selectBudgets } from "../app/budgetSlice";
 import { useAppSelector } from "../app/hooks";
+import BudgetView from "./budgetView";
 
 interface Props {}
 
 function Tracker(props: Props) {
 	// const {} = props;
 
+	const { pathname } = useLocation();
+
 	const budgets = useAppSelector(selectBudgets);
-
-	// const income = budgets.income[0];
-
-	// const budget_single = income.amounts.map(amount => ({
-	// 	...income,
-	// 	amounts: [amount]
-	// }));
 
 	return (
 		<Wrapper>
@@ -45,22 +42,27 @@ function Tracker(props: Props) {
 			<BudgetInput />
 
 			<div className="tracker-content">
-				<BudgetItems title="Income" color="primary" budgets={budgets.income} />
-				<BudgetItems
-					title="Expense"
-					color="secondary"
-					budgets={budgets.expense}
-				/>
-			</div>
+				<Switch>
+					<Route path="/view/:type/:id">
+						<BudgetView />
+					</Route>
 
-			{/* <div className="tracker-content">
-				<BudgetItems
-					title="Income"
-					color="primary"
-					single
-					budgets={budget_single}
-				/>
-			</div> */}
+					<Route path="/">
+						<>
+							<BudgetItems
+								title="Income"
+								color="primary"
+								budgets={budgets.income}
+							/>
+							<BudgetItems
+								title="Expense"
+								color="secondary"
+								budgets={budgets.expense}
+							/>
+						</>
+					</Route>
+				</Switch>
+			</div>
 		</Wrapper>
 	);
 }
