@@ -3,146 +3,22 @@ import Banner from "./common/banner";
 import BudgetInput from "./budgetInput";
 import SummaryLabel from "./common/summaryLabel";
 import BudgetItems from "./common/budgetItems";
+import { selectBudgets } from "../app/budgetSlice";
+import { useAppSelector } from "../app/hooks";
 
 interface Props {}
 
 function Tracker(props: Props) {
 	// const {} = props;
 
-	const budgets = {
-		income: [
-			{
-				id: "kkd555kd",
-				type: "income",
-				description: "James Man",
-				amounts: [
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() }
-				]
-			},
-			{
-				id: "kkd555kd",
-				type: "income",
-				description: "James Man",
-				amounts: [
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() }
-				]
-			},
-			{
-				id: "kkd555kd",
-				type: "income",
-				description: "James Man",
-				amounts: [
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() }
-				]
-			},
-			{
-				id: "kkd555kd",
-				type: "income",
-				description: "James Man",
-				amounts: [
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() }
-				]
-			},
-			{
-				id: "kkd555kd",
-				type: "income",
-				description: "James Man",
-				amounts: [
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() }
-				]
-			},
-			{
-				id: "kkd555kd",
-				type: "income",
-				description: "James Man",
-				amounts: [
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() }
-				]
-			},
-			{
-				id: "kkd555kd",
-				type: "income",
-				description: "James Man",
-				amounts: [
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() }
-				]
-			},
-			{
-				id: "kkd555kd",
-				type: "income",
-				description: "James Man",
-				amounts: [
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() }
-				]
-			},
-			{
-				id: "kkd555kd",
-				type: "income",
-				description: "James Man",
-				amounts: [
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() }
-				]
-			},
-			{
-				id: "kkd555kd",
-				type: "income",
-				description: "James Man",
-				amounts: [
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() }
-				]
-			}
-		] as Budget[],
-		expense: [
-			{
-				id: "kkdkdd2dff",
-				type: "expense",
-				description: "James Spent",
-				amounts: [
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() },
-					{ amount: 50, date: Date.now() }
-				]
-			}
-		] as Budget[]
-	};
+	const budgets = useAppSelector(selectBudgets);
 
-	const income = budgets.income[0];
+	// const income = budgets.income[0];
 
-	const budget_single = income.amounts.map((amount) => ({
-		...income,
-		amounts: [amount]
-	}));
+	// const budget_single = income.amounts.map(amount => ({
+	// 	...income,
+	// 	amounts: [amount]
+	// }));
 
 	return (
 		<Wrapper>
@@ -177,14 +53,14 @@ function Tracker(props: Props) {
 				/>
 			</div>
 
-			<div className="tracker-content">
+			{/* <div className="tracker-content">
 				<BudgetItems
 					title="Income"
 					color="primary"
 					single
 					budgets={budget_single}
 				/>
-			</div>
+			</div> */}
 		</Wrapper>
 	);
 }

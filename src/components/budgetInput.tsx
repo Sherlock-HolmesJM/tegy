@@ -1,5 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { addedBudget } from "../app/budgetSlice";
+import { useAppDispatch } from "../app/hooks";
 import Select from "./common/select";
 
 interface Props {}
@@ -9,18 +11,29 @@ function BudgetInput(props: Props) {
 	const [description, setDescription] = useState("");
 	const [type, setType] = useState<BudgetType>("income");
 
+	const dispatch = useAppDispatch();
+
 	const { theme } = window;
 	const selectedColor = type === "income" ? theme.primary : theme.secondary;
 
-	const handleInput = (e) => {
-		if (e.key !== "Enter") return;
+	const handleInput = e => {
+		if (e.key === "Enter") {
+			const budget: Budget = {
+				id: Date.now() + "",
+				description,
+				type,
+				amounts: [{ amount, date: Date.now() }]
+			};
+
+			dispatch(addedBudget(budget));
+		}
 	};
 
 	return (
 		<Wrapper onKeyPress={handleInput} ctheme={{ selectedColor, ...theme }}>
 			<Select
 				color={selectedColor}
-				onSelect={(value) => setType(value as BudgetType)}
+				onSelect={value => setType(value as BudgetType)}
 				value={type}
 				options={[
 					{ value: "income", label: "+" },
@@ -33,7 +46,7 @@ function BudgetInput(props: Props) {
 				className="input-description input-border"
 				placeholder="Description"
 				value={description}
-				onChange={(e) => setDescription(e.target.value.trim())}
+				onChange={e => setDescription(e.target.value.trim())}
 			/>
 
 			<input
@@ -42,7 +55,7 @@ function BudgetInput(props: Props) {
 				className="input-amount input-border"
 				placeholder="Amount"
 				value={amount}
-				onChange={(e) => setAmount(+e.target.value)}
+				onChange={e => setAmount(+e.target.value)}
 			/>
 		</Wrapper>
 	);
@@ -58,7 +71,7 @@ const Wrapper = styled.div<{ ctheme: Color }>`
 	align-items: center;
 	min-height: 40px;
 	background-color: #e2dede;
-	border-bottom: 1px groove ${(props) => props.ctheme.selectedColor};
+	border-bottom: 1px groove ${props => props.ctheme.selectedColor};
 
 	.input-amount,
 	.input-description {
@@ -77,7 +90,7 @@ const Wrapper = styled.div<{ ctheme: Color }>`
 		width: 40px;
 		height: 40px;
 		margin: 8px;
-		color: ${(props) => props.ctheme.selectedColor};
+		color: ${props => props.ctheme.selectedColor};
 		transition: 0.5s;
 	}
 	.input-icon.hide {
@@ -85,10 +98,10 @@ const Wrapper = styled.div<{ ctheme: Color }>`
 	}
 	.input-border {
 		outline: none;
-		border: 1px solid ${(props) => props.ctheme.selectedColor};
+		border: 1px solid ${props => props.ctheme.selectedColor};
 	}
 	.input-border:focus {
-		border: 1px solid ${(props) => props.ctheme.selectedColor};
+		border: 1px solid ${props => props.ctheme.selectedColor};
 	}
 
 	@media screen and (max-width: 487px) {

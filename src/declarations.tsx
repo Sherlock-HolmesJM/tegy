@@ -21,4 +21,9 @@ declare global {
 		type: BudgetType;
 		amounts: { amount: number; date: number }[];
 	}
+
+	interface SelectBudget {
+		description: string;
+		type: BudgetType;
+	}
 }
