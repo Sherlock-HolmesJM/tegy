@@ -1,6 +1,7 @@
 import { useHistory, useParams } from "react-router";
 import { selectBudget } from "../app/budgetSlice";
 import { useAppSelector } from "../app/hooks";
+import { toBudgetList } from "../utils/budget";
 import BudgetItems from "./common/budgetItems";
 
 const BudgetView = () => {
@@ -14,18 +15,9 @@ const BudgetView = () => {
 		return null;
 	}
 
-	budget = JSON.parse(JSON.stringify(budget));
-
-	const budgets = budget.amounts
-		.sort((a, b) => b.amount - a.amount)
-		.map(amount => ({
-			...budget,
-			amounts: [amount]
-		}));
-
 	return (
 		<BudgetItems
-			budgets={budgets}
+			budgets={toBudgetList(budget)}
 			title={param.type}
 			single
 			color={param.type === "income" ? "primary" : "secondary"}

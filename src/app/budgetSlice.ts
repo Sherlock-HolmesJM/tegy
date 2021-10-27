@@ -38,7 +38,9 @@ export const { addedBudget, changedSelectedBudget } = budgetSlice.actions;
 export const selectBudgets = (state: RootState) => state.budget;
 
 export const selectBudget = (param: SelectBudget) => (state: RootState) =>
-	state.budget[param.type].find(b => b.id === param.id);
+	param.type
+		? state.budget[param.type].find(b => b.id === param.id)
+		: undefined;
 
 // export const selectBudget = (budget: SelectBudget) => (state: RootState) => {
 // 	return state.budget[budget.type].find(

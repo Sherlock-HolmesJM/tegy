@@ -7,20 +7,22 @@ import BudgetItems from "./common/budgetItems";
 import { selectBudget, selectBudgets } from "../app/budgetSlice";
 import { useAppSelector } from "../app/hooks";
 import BudgetView from "./budgetView";
-import { totalBudget } from "../utils/budget";
+import { toBudgetList, totalBudget } from "../utils/budget";
 
 interface Props {}
 
 function Tracker(props: Props) {
 	// const {} = props;
 
-	const [, type, id] = useLocation().pathname.split("/");
+	const [, , type, id] = useLocation().pathname.split("/");
 
-	// const bugets_single = useAppSelector(selectBudget({type: type as any, id}))
+	const budget = useAppSelector(selectBudget({ type: type as any, id }));
 
 	const { income, expense } = useAppSelector(selectBudgets);
 
-	const total = totalBudget([...income, ...expense]);
+	const total = totalBudget(
+		budget ? toBudgetList(budget) : [...income, ...expense]
+	);
 
 	return (
 		<Wrapper>
