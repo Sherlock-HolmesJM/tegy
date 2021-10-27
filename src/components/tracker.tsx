@@ -4,18 +4,23 @@ import Banner from "./common/banner";
 import BudgetInput from "./budgetInput";
 import SummaryLabel from "./common/summaryLabel";
 import BudgetItems from "./common/budgetItems";
-import { selectBudgets } from "../app/budgetSlice";
+import { selectBudget, selectBudgets } from "../app/budgetSlice";
 import { useAppSelector } from "../app/hooks";
 import BudgetView from "./budgetView";
+import { totalBudget } from "../utils/budget";
 
 interface Props {}
 
 function Tracker(props: Props) {
 	// const {} = props;
 
-	const { pathname } = useLocation();
+	const [, type, id] = useLocation().pathname.split("/");
 
-	const budgets = useAppSelector(selectBudgets);
+	// const bugets_single = useAppSelector(selectBudget({type: type as any, id}))
+
+	const { income, expense } = useAppSelector(selectBudgets);
+
+	const total = totalBudget([...income, ...expense]);
 
 	return (
 		<Wrapper>
@@ -26,15 +31,15 @@ function Tracker(props: Props) {
 						<span className="banner-title-hide">ober, 2021</span>
 					</div>
 
-					<div className="banner-amount">0.00</div>
+					<div className="banner-amount">{total.income - total.expense}</div>
 
-					<SummaryLabel type="inc" name="income" amount={1000} />
+					<SummaryLabel type="inc" name="income" amount={total.income} />
 
 					<SummaryLabel
 						color="secondary"
 						type="exp"
 						name="expense"
-						amount={1000}
+						amount={total.expense}
 					/>
 				</div>
 			</Banner>
@@ -49,15 +54,11 @@ function Tracker(props: Props) {
 
 					<Route path="/">
 						<>
-							<BudgetItems
-								title="Income"
-								color="primary"
-								budgets={budgets.income}
-							/>
+							<BudgetItems title="Income" color="primary" budgets={income} />
 							<BudgetItems
 								title="Expense"
 								color="secondary"
-								budgets={budgets.expense}
+								budgets={expense}
 							/>
 						</>
 					</Route>
