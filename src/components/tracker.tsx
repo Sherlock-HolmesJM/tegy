@@ -12,7 +12,106 @@ function Tracker(props: Props) {
 	const budgets = {
 		income: [
 			{
-				id: "kkdkd",
+				id: "kkd555kd",
+				type: "income",
+				description: "James Man",
+				amounts: [
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() }
+				]
+			},
+			{
+				id: "kkd555kd",
+				type: "income",
+				description: "James Man",
+				amounts: [
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() }
+				]
+			},
+			{
+				id: "kkd555kd",
+				type: "income",
+				description: "James Man",
+				amounts: [
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() }
+				]
+			},
+			{
+				id: "kkd555kd",
+				type: "income",
+				description: "James Man",
+				amounts: [
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() }
+				]
+			},
+			{
+				id: "kkd555kd",
+				type: "income",
+				description: "James Man",
+				amounts: [
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() }
+				]
+			},
+			{
+				id: "kkd555kd",
+				type: "income",
+				description: "James Man",
+				amounts: [
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() }
+				]
+			},
+			{
+				id: "kkd555kd",
+				type: "income",
+				description: "James Man",
+				amounts: [
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() }
+				]
+			},
+			{
+				id: "kkd555kd",
+				type: "income",
+				description: "James Man",
+				amounts: [
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() }
+				]
+			},
+			{
+				id: "kkd555kd",
+				type: "income",
+				description: "James Man",
+				amounts: [
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() },
+					{ amount: 50, date: Date.now() }
+				]
+			},
+			{
+				id: "kkd555kd",
 				type: "income",
 				description: "James Man",
 				amounts: [
@@ -25,7 +124,7 @@ function Tracker(props: Props) {
 		] as Budget[],
 		expense: [
 			{
-				id: "kkdkdddff",
+				id: "kkdkdd2dff",
 				type: "expense",
 				description: "James Spent",
 				amounts: [
@@ -37,6 +136,13 @@ function Tracker(props: Props) {
 			}
 		] as Budget[]
 	};
+
+	const income = budgets.income[0];
+
+	const budget_single = income.amounts.map((amount) => ({
+		...income,
+		amounts: [amount]
+	}));
 
 	return (
 		<Wrapper>
@@ -62,12 +168,21 @@ function Tracker(props: Props) {
 
 			<BudgetInput />
 
-			<div className="content">
+			<div className="tracker-content">
 				<BudgetItems title="Income" color="primary" budgets={budgets.income} />
 				<BudgetItems
 					title="Expense"
 					color="secondary"
 					budgets={budgets.expense}
+				/>
+			</div>
+
+			<div className="tracker-content">
+				<BudgetItems
+					title="Income"
+					color="primary"
+					single
+					budgets={budget_single}
 				/>
 			</div>
 		</Wrapper>
@@ -92,8 +207,9 @@ const Wrapper = styled.div`
 		margin: 10px 0;
 	}
 
-	.content {
+	.tracker-content {
 		display: flex;
+		justify-content: center;
 		flex-wrap: wrap;
 	}
 

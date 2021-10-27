@@ -3,8 +3,8 @@ import Moment from "react-moment";
 
 import Badge from "./badge";
 
-import income from "../../media/income.png";
-import expense from "../../media/expense.png";
+import income from "../../media/income.webp";
+import expense from "../../media/expense.webp";
 
 interface Props {
 	budget: Budget;
@@ -34,7 +34,7 @@ function BudgetItem(props: Props) {
 			</div>
 
 			<div className="content-group">
-				<div className="content">
+				<div className="budgetItem-content">
 					<div className="description">{description}</div>
 
 					<div className="amount">
@@ -55,23 +55,28 @@ function BudgetItem(props: Props) {
 
 const Wrapper = styled.div`
 	display: flex;
-	border-top: 1px solid lightgray;
 	padding-right: 7px;
 	cursor: pointer;
+	margin-bottom: 5px;
+	width: 100%;
+	background: white;
+	border: 1px solid lightgray;
+	border-radius: 5px;
 
 	&:last-child {
-		border-bottom: 1px solid lightgray;
+		margin: 0;
 	}
 
 	.img-div {
-		flex-basis: 50px;
+		flex-basis: 40px;
+		margin-right: 8px;
 	}
 
 	.content-group {
 		flex-grow: 1;
 	}
 
-	.content {
+	.budgetItem-content {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
