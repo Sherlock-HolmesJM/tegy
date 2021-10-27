@@ -1,45 +1,87 @@
 import React from "react";
 import styled from "styled-components";
+import Moment from "react-moment";
 import Badge from "./badge";
+import income from "../../media/income.png";
+import expense from "../../media/expense.png";
 
 interface Props {}
 
 function BudgetItem(props: Props) {
 	// const {} = props;
 
+	const { theme } = window;
+
 	const color = "primary";
+	const type = "income";
 
 	return (
-		<Wrapper>
-			<div className="description">James</div>
-			<div className="amount">
-				+ 500.00 <Badge className={`badge-${color}`}>50%</Badge>
+		<Wrapper color={theme[color]}>
+			<div className="img-div">
+				<img
+					src={type === "income" ? income : expense}
+					alt="inc"
+					width="100%"
+					height="100%"
+				/>
 			</div>
-			<div className="datetime">{new Date().toJSON()}</div>
+
+			<div className="content-group">
+				<div className="content">
+					<div className="description">James</div>
+
+					<div className="amount">
+						<div>+ 500.00</div> <Badge className={`badge-${color}`}>50%</Badge>
+					</div>
+				</div>
+
+				<div className="datetime">
+					<Moment fromNow>{new Date().toJSON()}</Moment>
+				</div>
+			</div>
 		</Wrapper>
 	);
 }
 
 const Wrapper = styled.div`
-	position: relative;
 	display: flex;
-	justify-content: space-between;
-	font-size: 18px;
-	padding: 10px;
 	border-top: 1px solid lightgray;
+	padding-right: 7px;
 	cursor: pointer;
 
 	&:last-child {
 		border-bottom: 1px solid lightgray;
 	}
 
+	.img-div {
+		flex-basis: 50px;
+	}
+
+	.content-group {
+		flex-grow: 1;
+	}
+
+	.content {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		font-size: 18px;
+		height: 60%;
+	}
+
+	.amount {
+		display: flex;
+		align-items: center;
+		color: ${(props) => props.color};
+	}
+
+	.badge-primary {
+		display: none;
+	}
+
 	.datetime {
-		position: absolute;
-		right: 4px;
-		bottom: -5px;
-		font-size: 10px;
-		padding: 5px;
-		text-align: right;
+		font-size: 12px;
+		text-align: left;
 	}
 `;
 
