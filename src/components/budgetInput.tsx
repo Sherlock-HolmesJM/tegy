@@ -7,10 +7,10 @@ interface Props {}
 function BudgetInput(props: Props) {
 	const [amount, setAmount] = useState(0);
 	const [description, setDescription] = useState("");
-	const [type, setType] = useState<BudgetType>("inc");
+	const [type, setType] = useState<BudgetType>("income");
 
 	const { theme } = window;
-	const selectedColor = type === "inc" ? theme.primary : theme.secondary;
+	const selectedColor = type === "income" ? theme.primary : theme.secondary;
 
 	const handleInput = (e) => {
 		if (e.key !== "Enter") return;
@@ -23,8 +23,8 @@ function BudgetInput(props: Props) {
 				onSelect={(value) => setType(value as BudgetType)}
 				value={type}
 				options={[
-					{ value: "inc", label: "+" },
-					{ value: "exp", label: "-" }
+					{ value: "income", label: "+" },
+					{ value: "expense", label: "-" }
 				]}
 			/>
 

@@ -1,19 +1,26 @@
-import React from "react";
 import styled from "styled-components";
 import Moment from "react-moment";
+
 import Badge from "./badge";
+
 import income from "../../media/income.png";
 import expense from "../../media/expense.png";
 
-interface Props {}
+interface Props {
+	budget: Budget;
+	color: ThemeField;
+}
 
 function BudgetItem(props: Props) {
-	// const {} = props;
+	const {
+		color,
+		budget: { description, id, type, amounts }
+	} = props;
 
 	const { theme } = window;
-
-	const color = "primary";
-	const type = "income";
+	const sign = type === "income" ? "+" : "-";
+	const totalAmount = amounts.reduce((acc, next) => acc + next.amount, 0);
+	const { date } = amounts[amounts.length - 1];
 
 	return (
 		<Wrapper color={theme[color]}>
@@ -28,15 +35,18 @@ function BudgetItem(props: Props) {
 
 			<div className="content-group">
 				<div className="content">
-					<div className="description">James</div>
+					<div className="description">{description}</div>
 
 					<div className="amount">
-						<div>+ 500.00</div> <Badge className={`badge-${color}`}>50%</Badge>
+						<div>
+							{sign} {totalAmount}
+						</div>{" "}
+						<Badge className={`badge-${type}`}>50%</Badge>
 					</div>
 				</div>
 
 				<div className="datetime">
-					<Moment fromNow>{new Date().toJSON()}</Moment>
+					<Moment fromNow>{new Date(date)}</Moment>
 				</div>
 			</div>
 		</Wrapper>
@@ -75,7 +85,7 @@ const Wrapper = styled.div`
 		color: ${(props) => props.color};
 	}
 
-	.badge-primary {
+	.badge-income {
 		display: none;
 	}
 

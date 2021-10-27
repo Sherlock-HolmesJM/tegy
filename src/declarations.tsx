@@ -6,10 +6,19 @@ declare global {
 		theme: Theme;
 	}
 
+	type ThemeField = "primary" | "secondary";
+
 	interface Theme {
 		primary: string;
 		secondary: string;
 	}
 
-	type BudgetType = "inc" | "exp";
+	type BudgetType = "income" | "expense";
+
+	interface Budget {
+		id: string;
+		description: string;
+		type: BudgetType;
+		amounts: { amount: number; date: number }[];
+	}
 }

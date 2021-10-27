@@ -12,7 +12,20 @@ function BudgetItems(props: Props) {
 			<div className="title">Income</div>
 
 			<div>
-				<BudgetItem />
+				<BudgetItem
+					color="primary"
+					budget={{
+						id: "kkdkd",
+						type: "income",
+						description: "James Man",
+						amounts: [
+							{ amount: 50, date: Date.now() },
+							{ amount: 50, date: Date.now() },
+							{ amount: 50, date: Date.now() },
+							{ amount: 50, date: Date.now() }
+						]
+					}}
+				/>
 			</div>
 		</Wrapper>
 	);
