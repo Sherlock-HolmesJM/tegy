@@ -41,7 +41,7 @@ function Tracker() {
 					</div>
 
 					<div className="banner-amount">
-						{formatAmount(total.income - total.expense)}
+						{formatAmount(total.income - total.expense, "+")}
 					</div>
 
 					<SummaryLabel type="income" name="income" />

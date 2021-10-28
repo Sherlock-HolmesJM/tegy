@@ -21,7 +21,7 @@ function SummaryLabel(props: Props) {
 
 			<div className="amount-div">
 				<div className="label-amount">
-					{type === "income" ? "+" : "-"} {formatAmount(total[type])}
+					{formatAmount(total[type], type === "income" ? "+" : "-")}
 				</div>
 
 				<Badge className={`label-percent ${color}`}>
