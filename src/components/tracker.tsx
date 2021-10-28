@@ -14,7 +14,6 @@ import {
 	updatedTotal
 } from "../app/budgetSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-
 import { formatAmount } from "../utils/money";
 
 function Tracker() {
