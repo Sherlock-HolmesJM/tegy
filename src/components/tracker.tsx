@@ -1,24 +1,23 @@
 import { useEffect } from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import Banner from "./common/banner";
+
+import BudgetView from "./budgetView";
 import BudgetInput from "./budgetInput";
+import Banner from "./common/banner";
 import SummaryLabel from "./common/summaryLabel";
 import BudgetItems from "./common/budgetItems";
+
 import {
 	selectBudgets,
 	selectBudgetTotal,
 	updatedTotal
 } from "../app/budgetSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import BudgetView from "./budgetView";
+
 import { formatAmount } from "../utils/money";
 
-interface Props {}
-
-function Tracker(props: Props) {
-	// const {} = props;
-
+function Tracker() {
 	const [, , type, id] = useLocation().pathname.split("/");
 
 	const dispatch = useAppDispatch();
