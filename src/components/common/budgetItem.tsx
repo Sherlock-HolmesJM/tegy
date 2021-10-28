@@ -6,6 +6,7 @@ import Badge from "./badge";
 import income from "../../media/income.webp";
 import expense from "../../media/expense.webp";
 import { useHistory } from "react-router";
+import { formatAmount } from "../../utils/money";
 
 interface Props {
 	budget: Budget;
@@ -46,7 +47,7 @@ function BudgetItem(props: Props) {
 
 					<div className="amount">
 						<div>
-							{sign} {totalAmount}
+							{sign} {formatAmount(totalAmount)}
 						</div>{" "}
 						<Badge className={`badge-${type}`}>50%</Badge>
 					</div>

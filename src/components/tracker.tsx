@@ -1,13 +1,18 @@
+import { useEffect } from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Banner from "./common/banner";
 import BudgetInput from "./budgetInput";
 import SummaryLabel from "./common/summaryLabel";
 import BudgetItems from "./common/budgetItems";
-import { selectBudget, selectBudgets } from "../app/budgetSlice";
-import { useAppSelector } from "../app/hooks";
+import {
+	selectBudgets,
+	selectBudgetTotal,
+	updatedTotal
+} from "../app/budgetSlice";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import BudgetView from "./budgetView";
-import { toBudgetList, totalBudget } from "../utils/budget";
+import { formatAmount } from "../utils/money";
 
 interface Props {}
 
@@ -16,13 +21,17 @@ function Tracker(props: Props) {
 
 	const [, , type, id] = useLocation().pathname.split("/");
 
-	const budget = useAppSelector(selectBudget({ type: type as any, id }));
+	const dispatch = useAppDispatch();
 
 	const { income, expense } = useAppSelector(selectBudgets);
 
-	const total = totalBudget(
-		budget ? toBudgetList(budget) : [...income, ...expense]
-	);
+	useEffect(() => {
+		console.log("getting total");
+
+		dispatch(updatedTotal({ type: type as BudgetType, id }));
+	}, [type, id]);
+
+	const total = useAppSelector(selectBudgetTotal);
 
 	return (
 		<Wrapper>
@@ -33,16 +42,13 @@ function Tracker(props: Props) {
 						<span className="banner-title-hide">ober, 2021</span>
 					</div>
 
-					<div className="banner-amount">{total.income - total.expense}</div>
+					<div className="banner-amount">
+						{formatAmount(total.income - total.expense)}
+					</div>
 
-					<SummaryLabel type="income" name="income" amount={total.income} />
+					<SummaryLabel type="income" name="income" />
 
-					<SummaryLabel
-						color="secondary"
-						type="expense"
-						name="expense"
-						amount={total.expense}
-					/>
+					<SummaryLabel color="secondary" type="expense" name="expense" />
 				</div>
 			</Banner>
 

@@ -1,28 +1,35 @@
 import styled from "styled-components";
-import { formatAmount } from "../../utils/money";
+import { selectBudgetTotal } from "../../app/budgetSlice";
+import { useAppSelector } from "../../app/hooks";
+import { formatAmount, percentage } from "../../utils/money";
 import Badge from "./badge";
 
 interface Props {
 	name: string;
-	amount: number;
 	type: BudgetType;
 	color?: "primary" | "secondary";
 }
 
 function SummaryLabel(props: Props) {
-	const { name, amount, type, color = "primary" } = props;
+	const { name, type, color = "primary" } = props;
 
-	const percentage = type === "expense" ? 8 : 0;
+	const total = useAppSelector(selectBudgetTotal);
+
+	const totalAmount = total.income + total.expense;
 
 	return (
 		<Wrapper className={`label ${color}`} theme={window.theme}>
 			<div className="label-name">{name}</div>
 
 			<div className="label-amount">
-				{type === "income" ? "+" : "-"} {formatAmount(amount)}
+				{type === "income" ? "+" : "-"} {formatAmount(total[type])}
 			</div>
 
-			<Badge className={`label-percent ${color}`}>{percentage + "%"}</Badge>
+			{type === "expense" && (
+				<Badge className={`label-percent ${color}`}>
+					{percentage(totalAmount, total.expense) + "%"}
+				</Badge>
+			)}
 		</Wrapper>
 	);
 }
@@ -61,9 +68,9 @@ const Wrapper = styled.div<{ theme: Theme }>`
 		font-size: 16px;
 	}
 
-	.label-percent.primary {
+	/* .label-percent.primary {
 		visibility: hidden;
-	}
+	} */
 
 	@media (max-width: 342px) {
 		.label-name {

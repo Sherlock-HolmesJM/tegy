@@ -26,4 +26,15 @@ declare global {
 		id: string;
 		type: BudgetType;
 	}
+
+	interface BudgetTotal {
+		income: number;
+		expense: number;
+	}
+
+	interface BudgetSlice {
+		income: Budget[];
+		expense: Budget[];
+		total: BudgetTotal;
+	}
 }

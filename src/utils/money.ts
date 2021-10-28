@@ -11,3 +11,6 @@ export const formatAmount = (value: number) => {
 	if (tails.length === 0) return `${head.join("")}.00`;
 	return `${head.join("")},${tails.reverse().join(",")}.00`;
 };
+
+export const percentage = (total: number, value: number) =>
+	Math.round((value / total) * 100);

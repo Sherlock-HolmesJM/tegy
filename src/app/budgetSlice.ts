@@ -1,13 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { toBudgetList, totalBudget } from "../utils/budget";
 import { RootState } from "./store";
+
+const initialState: BudgetSlice = {
+	income: [],
+	expense: [],
+	total: {
+		income: 0,
+		expense: 0
+	}
+};
 
 const budgetSlice = createSlice({
 	name: "budget",
 
-	initialState: {
-		income: [] as Budget[],
-		expense: [] as Budget[]
-	},
+	initialState,
 
 	reducers: {
 		addedBudget: (state, { payload }: PayloadAction<Budget>) => {
@@ -24,18 +31,31 @@ const budgetSlice = createSlice({
 
 				state[type][index].amounts = [...budget.amounts, ...amounts];
 			}
+		},
+
+		updatedTotal: (state, { payload }: PayloadAction<SelectBudget>) => {
+			const budget = findBudget(payload, state);
+
+			const { income, expense } = state;
+
+			state.total = totalBudget(
+				budget ? toBudgetList(budget) : [...income, ...expense]
+			);
 		}
 	}
 });
 
-export const { addedBudget } = budgetSlice.actions;
+const findBudget = (param: SelectBudget, budget: BudgetSlice) =>
+	param.type ? budget[param.type].find(b => b.id === param.id) : undefined;
+
+export const { addedBudget, updatedTotal } = budgetSlice.actions;
 
 export const selectBudgets = (state: RootState) => state.budget;
 
 export const selectBudget = (param: SelectBudget) => (state: RootState) =>
-	param.type
-		? state.budget[param.type].find(b => b.id === param.id)
-		: undefined;
+	findBudget(param, state.budget);
+
+export const selectBudgetTotal = (state: RootState) => state.budget.total;
 
 // export const selectBudget = (budget: SelectBudget) => (state: RootState) => {
 // 	return state.budget[budget.type].find(

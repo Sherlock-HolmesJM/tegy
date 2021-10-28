@@ -9,7 +9,7 @@ export const toBudgetList = (budget: Budget): Budget[] => {
 		}));
 };
 
-export const totalBudget = (budgets: Budget[]) => {
+export const totalBudget = (budgets: Budget[]): BudgetTotal => {
 	return budgets.reduce(
 		(acc, { type, amounts }) => ({
 			...acc,
