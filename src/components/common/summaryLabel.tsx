@@ -15,21 +15,19 @@ function SummaryLabel(props: Props) {
 
 	const total = useAppSelector(selectBudgetTotal);
 
-	const totalAmount = total.income + total.expense;
-
 	return (
 		<Wrapper className={`label ${color}`} theme={window.theme}>
 			<div className="label-name">{name}</div>
 
-			<div className="label-amount">
-				{type === "income" ? "+" : "-"} {formatAmount(total[type])}
-			</div>
+			<div className="amount-div">
+				<div className="label-amount">
+					{type === "income" ? "+" : "-"} {formatAmount(total[type])}
+				</div>
 
-			{type === "expense" && (
 				<Badge className={`label-percent ${color}`}>
-					{percentage(totalAmount, total.expense) + "%"}
+					{type === "expense" && percentage(total.income, total.expense) + "%"}
 				</Badge>
-			)}
+			</div>
 		</Wrapper>
 	);
 }
@@ -56,7 +54,6 @@ const Wrapper = styled.div<{ theme: Theme }>`
 	}
 
 	.label-name {
-		flex-basis: 63%;
 		font-size: 18px;
 		line-height: 20px;
 		text-transform: uppercase;
@@ -64,22 +61,21 @@ const Wrapper = styled.div<{ theme: Theme }>`
 		text-align: left;
 	}
 
-	.label-amount {
-		font-size: 16px;
+	.amount-div {
+		display: flex;
+		justify-content: center;
 	}
 
-	/* .label-percent.primary {
-		visibility: hidden;
-	} */
+	.label-amount {
+		font-size: 16px;
+		margin-right: 5px;
+	}
 
-	@media (max-width: 342px) {
-		.label-name {
-			flex-basis: 58%;
-			font-size: 16px;
-		}
-		.label-amount {
-			font-size: 14px;
-		}
+	.label-percent {
+		min-width: 35px;
+	}
+	.label-percent.primary {
+		visibility: hidden;
 	}
 `;
 

@@ -1,4 +1,6 @@
-export const formatAmount = (value: number) => {
+export const formatAmount = (value: number, sign = "") => {
+	if (value === 0) return value + ".00";
+
 	const head = (value + "").split("");
 	const tails: string[] = [];
 
@@ -8,9 +10,17 @@ export const formatAmount = (value: number) => {
 		tails.push(tail);
 	}
 
-	if (tails.length === 0) return `${head.join("")}.00`;
-	return `${head.join("")},${tails.reverse().join(",")}.00`;
+	sign = head.includes("-") ? head.splice(0, 1)[0] : sign;
+
+	if (tails.length === 0) return `${sign} ${head.join("")}.00`.trim();
+
+	const tail = tails.reverse().join(",") + ".00";
+
+	const head_string = head.length === 1 ? head[0] + "," : head.join(",");
+
+	return `${sign} ${head_string}${tail}`.trim();
 };
 
-export const percentage = (total: number, value: number) =>
-	Math.round((value / total) * 100);
+export const percentage = (total: number, value: number) => {
+	return value && total ? Math.round((value / total) * 100) : 0;
+};
