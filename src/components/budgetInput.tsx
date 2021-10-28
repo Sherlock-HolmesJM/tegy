@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { addedBudget } from "../app/budgetSlice";
+import { addedBudget, updatedTotal } from "../app/budgetSlice";
 import { useAppDispatch } from "../app/hooks";
 import Select from "./common/select";
 
@@ -26,6 +26,7 @@ function BudgetInput(props: Props) {
 			};
 
 			dispatch(addedBudget(budget));
+			dispatch(updatedTotal());
 		}
 	};
 

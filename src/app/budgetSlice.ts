@@ -46,7 +46,7 @@ const budgetSlice = createSlice({
 });
 
 const findBudget = (param: SelectBudget, budget: BudgetSlice) =>
-	param.type ? budget[param.type].find(b => b.id === param.id) : undefined;
+	budget[param?.type]?.find(b => b.id === param.id);
 
 export const { addedBudget, updatedTotal } = budgetSlice.actions;
 
