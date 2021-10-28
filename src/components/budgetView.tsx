@@ -5,7 +5,7 @@ import { toBudgetList } from "../utils/budget";
 import BudgetItems from "./common/budgetItems";
 
 const BudgetView = () => {
-	const param = useParams<SelectBudget>();
+	const param = useParams<BudgetFind>();
 	const history = useHistory();
 
 	let budget = useAppSelector(selectBudget(param));

@@ -9,8 +9,8 @@ import SummaryLabel from "./common/summaryLabel";
 import BudgetItems from "./common/budgetItems";
 
 import {
-	selectBudgets,
-	selectBudgetTotal,
+	selectBatch,
+	selectBatchTotal,
 	updatedTotal
 } from "../app/budgetSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
@@ -21,13 +21,13 @@ function Tracker() {
 
 	const dispatch = useAppDispatch();
 
-	const { income, expense } = useAppSelector(selectBudgets);
+	const { income, expense } = useAppSelector(selectBatch);
 
 	useEffect(() => {
 		dispatch(updatedTotal({ type: type as BudgetType, id }));
 	}, [type, id, dispatch]);
 
-	const total = useAppSelector(selectBudgetTotal);
+	const total = useAppSelector(selectBatchTotal);
 
 	return (
 		<Wrapper>

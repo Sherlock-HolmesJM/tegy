@@ -22,19 +22,29 @@ declare global {
 		amounts: { amount: number; date: number }[];
 	}
 
-	interface SelectBudget {
-		id: string;
+	interface BudgetFind {
 		type: BudgetType;
+		id?: string;
+		description?: string;
 	}
 
-	interface BudgetTotal {
+	interface BudgetSlice {
+		id: string;
+		name: string;
+		currentBatchId: string;
+		batches: Batch[];
+	}
+
+	interface BatchTotal {
 		income: number;
 		expense: number;
 	}
 
-	interface BudgetSlice {
+	interface Batch {
+		id: string;
+		name: string;
 		income: Budget[];
 		expense: Budget[];
-		total: BudgetTotal;
+		total: BatchTotal;
 	}
 }

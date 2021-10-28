@@ -1,14 +1,24 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { toBudgetList, totalBudget } from "../utils/budget";
+import { totalBudget } from "../utils/budget";
 import { RootState } from "./store";
+import { findBudget, getCurrentBatch } from "../utils/budgetSlice";
 
-const initialState: BudgetSlice = {
+const batch: Batch = {
+	id: Date.now() + "",
+	name: "batch1",
 	income: [],
 	expense: [],
 	total: {
 		income: 0,
 		expense: 0
 	}
+};
+
+const initialState: BudgetSlice = {
+	id: Date.now() + "",
+	name: "nepa_bill",
+	currentBatchId: batch.id,
+	batches: [batch]
 };
 
 const budgetSlice = createSlice({
@@ -20,42 +30,37 @@ const budgetSlice = createSlice({
 		addedBudget: (state, { payload }: PayloadAction<Budget>) => {
 			const { type, description, amounts } = payload;
 
-			const index = state[payload.type].findIndex(
-				b => b.description.toLowerCase() === description.toLowerCase()
-			);
+			const budget = findBudget({ type, description }, state);
 
-			if (index === -1) {
-				state[type].push(payload);
+			if (budget) {
+				budget.amounts = [...budget.amounts, ...amounts];
 			} else {
-				const budget = state[type][index];
-
-				state[type][index].amounts = [...budget.amounts, ...amounts];
+				getCurrentBatch(state)[type].push(payload);
 			}
 		},
 
-		updatedTotal: (state, { payload }: PayloadAction<SelectBudget>) => {
-			const budget = findBudget(payload, state);
+		updatedTotal: (state, { payload }: PayloadAction<BudgetFind>) => {
+			const batch = getCurrentBatch(state);
 
-			const { income, expense } = state;
-
-			state.total = totalBudget(
-				budget ? toBudgetList(budget) : [...income, ...expense]
-			);
+			const { income, expense } = batch;
+			batch.total = totalBudget([...income, ...expense]);
 		}
 	}
 });
 
-const findBudget = (param: SelectBudget, budget: BudgetSlice) =>
-	budget[param?.type]?.find(b => b.id === param.id);
-
 export const { addedBudget, updatedTotal } = budgetSlice.actions;
 
-export const selectBudgets = (state: RootState) => state.budget;
+export const selectBatch = (state: RootState) => {
+	return getCurrentBatch(state.budget);
+};
 
-export const selectBudget = (param: SelectBudget) => (state: RootState) =>
-	findBudget(param, state.budget);
+export const selectBudget = (param: BudgetFind) => (state: RootState) => {
+	return findBudget(param, state.budget);
+};
 
-export const selectBudgetTotal = (state: RootState) => state.budget.total;
+export const selectBatchTotal = (state: RootState) => {
+	return getCurrentBatch(state.budget).total;
+};
 
 // export const selectBudget = (budget: SelectBudget) => (state: RootState) => {
 // 	return state.budget[budget.type].find(

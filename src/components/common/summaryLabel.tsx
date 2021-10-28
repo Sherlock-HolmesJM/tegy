@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { selectBudgetTotal } from "../../app/budgetSlice";
+import { selectBatchTotal } from "../../app/budgetSlice";
 import { useAppSelector } from "../../app/hooks";
 import { formatAmount, percentage } from "../../utils/money";
 import Badge from "./badge";
@@ -13,7 +13,7 @@ interface Props {
 function SummaryLabel(props: Props) {
 	const { name, type, color = "primary" } = props;
 
-	const total = useAppSelector(selectBudgetTotal);
+	const total = useAppSelector(selectBatchTotal);
 
 	return (
 		<Wrapper className={`label ${color}`} theme={window.theme}>

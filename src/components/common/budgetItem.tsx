@@ -8,7 +8,7 @@ import expenseImg from "../../media/expense.webp";
 import { useHistory } from "react-router";
 import { formatAmount, percentage } from "../../utils/money";
 import { useAppSelector } from "../../app/hooks";
-import { selectBudgetTotal } from "../../app/budgetSlice";
+import { selectBatchTotal } from "../../app/budgetSlice";
 
 interface Props {
 	budget: Budget;
@@ -27,7 +27,7 @@ function BudgetItem(props: Props) {
 	const { date } = amounts[amounts.length - 1];
 
 	const history = useHistory();
-	const { income } = useAppSelector(selectBudgetTotal);
+	const { income } = useAppSelector(selectBatchTotal);
 
 	const handleClick = () => {
 		history.push(`/view/${type}/${id}`);

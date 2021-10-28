@@ -34,6 +34,13 @@ function BudgetInput(props: Props) {
 		<Wrapper onKeyPress={handleInput} ctheme={{ selectedColor, ...theme }}>
 			<Select
 				color={selectedColor}
+				onSelect={value => value}
+				value={"batch1"}
+				options={[{ value: "batch1", label: "Batch 1" }]}
+			/>
+
+			<Select
+				color={selectedColor}
 				onSelect={value => setType(value as BudgetType)}
 				value={type}
 				options={[
