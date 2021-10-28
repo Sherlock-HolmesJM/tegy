@@ -3,10 +3,12 @@ import Moment from "react-moment";
 
 import Badge from "./badge";
 
-import income from "../../media/income.webp";
-import expense from "../../media/expense.webp";
+import incomeImg from "../../media/income.webp";
+import expenseImg from "../../media/expense.webp";
 import { useHistory } from "react-router";
-import { formatAmount } from "../../utils/money";
+import { formatAmount, percentage } from "../../utils/money";
+import { useAppSelector } from "../../app/hooks";
+import { selectBudgetTotal } from "../../app/budgetSlice";
 
 interface Props {
 	budget: Budget;
@@ -25,6 +27,7 @@ function BudgetItem(props: Props) {
 	const { date } = amounts[amounts.length - 1];
 
 	const history = useHistory();
+	const { income } = useAppSelector(selectBudgetTotal);
 
 	const handleClick = () => {
 		history.push(`/view/${type}/${id}`);
@@ -34,7 +37,7 @@ function BudgetItem(props: Props) {
 		<Wrapper color={theme[color]} onClick={handleClick}>
 			<div className="img-div">
 				<img
-					src={type === "income" ? income : expense}
+					src={type === "income" ? incomeImg : expenseImg}
 					alt="inc"
 					width="100%"
 					height="100%"
@@ -46,10 +49,12 @@ function BudgetItem(props: Props) {
 					<div className="description">{description}</div>
 
 					<div className="amount">
-						<div>
+						<div style={{ marginRight: "5px" }}>
 							{sign} {formatAmount(totalAmount)}
 						</div>{" "}
-						<Badge className={`badge-${type}`}>50%</Badge>
+						<Badge className={`item-badge item-badge-${type}`}>
+							{percentage(income, totalAmount) + "%"}
+						</Badge>
 					</div>
 				</div>
 
@@ -102,7 +107,10 @@ const Wrapper = styled.div`
 		color: ${props => props.color};
 	}
 
-	.badge-income {
+	.item-badge {
+		background: #ff000030;
+	}
+	.item-badge-income {
 		display: none;
 	}
 
