@@ -24,10 +24,8 @@ function Tracker() {
 	const { income, expense } = useAppSelector(selectBudgets);
 
 	useEffect(() => {
-		console.log("getting total");
-
 		dispatch(updatedTotal({ type: type as BudgetType, id }));
-	}, [type, id]);
+	}, [type, id, dispatch]);
 
 	const total = useAppSelector(selectBudgetTotal);
 
