@@ -10,6 +10,8 @@ interface Props {
 }
 
 function BudgetItems({ title, budgets, color, single }: Props) {
+	if (budgets.length === 0) return null;
+
 	return (
 		<Wrapper>
 			<div className="title">
