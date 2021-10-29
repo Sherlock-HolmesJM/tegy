@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
 import styled from "styled-components";
+import { ToastContainer } from "react-toastify";
 
 import BudgetView from "./budgetView";
 import BudgetInput from "./budgetInput";
@@ -31,6 +32,8 @@ function Tracker() {
 
 	return (
 		<Wrapper>
+			<ToastContainer theme="colored" position="top-center" />
+
 			<Banner>
 				<div className="banner-content">
 					<div className="banner-title">

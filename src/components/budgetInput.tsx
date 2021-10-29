@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 import styled from "styled-components";
 import { addedBudget, updatedTotal } from "../app/budgetSlice";
 import { useAppDispatch } from "../app/hooks";
@@ -18,6 +19,8 @@ function BudgetInput(props: Props) {
 
 	const handleInput = e => {
 		if (e.key === "Enter") {
+			if (!description) return toast.error("Description cannot be empty");
+
 			const budget: Budget = {
 				id: Date.now() + "",
 				description,
@@ -59,7 +62,6 @@ function BudgetInput(props: Props) {
 
 			<input
 				type="number"
-				min="1"
 				className="input-amount input-border"
 				placeholder="Amount"
 				value={amount}
