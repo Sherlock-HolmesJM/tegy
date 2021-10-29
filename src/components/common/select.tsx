@@ -8,15 +8,10 @@ interface Props {
 	color?: string;
 }
 
-interface SelectOption {
-	value: string;
-	label: string;
-}
-
 function Select(props: Props) {
 	const { value, options, onSelect, color } = props;
 
-	const selected = options.find((option) => option.value === value);
+	const selected = options.find(option => option.value === value);
 
 	const [show, setShow] = useState(false);
 
@@ -26,7 +21,7 @@ function Select(props: Props) {
 
 			{show && (
 				<div className="options">
-					{options.map((option) => (
+					{options.map(option => (
 						<div
 							key={option.value}
 							className="option"
@@ -54,7 +49,7 @@ const Wrapper = styled.div`
 		padding: 10px;
 		line-height: 15px;
 		${border_radius};
-		border: 1px solid ${(props) => props.color || "#e2dede"};
+		border: 1px solid ${props => props.color || "#e2dede"};
 	}
 
 	.options {

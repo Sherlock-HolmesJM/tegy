@@ -47,4 +47,9 @@ declare global {
 		expense: Budget[];
 		total: BatchTotal;
 	}
+
+	interface SelectOption {
+		value: string;
+		label: string;
+	}
 }

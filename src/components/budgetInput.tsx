@@ -1,18 +1,26 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import styled from "styled-components";
-import { addedBudget, updatedTotal } from "../app/budgetSlice";
-import { useAppDispatch } from "../app/hooks";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import Select from "./common/select";
+import {
+	addedBudget,
+	changedBatch,
+	selectBatchList,
+	selectCurrentBatchId,
+	updatedTotal
+} from "../app/budgetSlice";
 
 interface Props {}
 
 function BudgetInput(props: Props) {
+	const dispatch = useAppDispatch();
+	const batchList = useAppSelector(selectBatchList);
+	const batchId = useAppSelector(selectCurrentBatchId);
+
 	const [amount, setAmount] = useState(0);
 	const [description, setDescription] = useState("");
 	const [type, setType] = useState<BudgetType>("income");
-
-	const dispatch = useAppDispatch();
 
 	const { theme } = window;
 	const selectedColor = type === "income" ? theme.primary : theme.secondary;
@@ -33,13 +41,17 @@ function BudgetInput(props: Props) {
 		}
 	};
 
+	const handleBatchChange = id => {
+		dispatch(changedBatch({ batchId: id }));
+	};
+
 	return (
 		<Wrapper onKeyPress={handleInput} ctheme={{ selectedColor, ...theme }}>
 			<Select
 				color={selectedColor}
-				onSelect={value => value}
-				value={"batch1"}
-				options={[{ value: "batch1", label: "Batch 1" }]}
+				onSelect={handleBatchChange}
+				value={batchId}
+				options={batchList}
 			/>
 
 			<Select
