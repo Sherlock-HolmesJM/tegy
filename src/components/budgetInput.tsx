@@ -47,8 +47,10 @@ function BudgetInput(props: Props) {
 
 	return (
 		<Wrapper onKeyPress={handleInput} ctheme={{ selectedColor, ...theme }}>
+			{/* <input type="button" value="New batch" /> */}
+
 			<Select
-				color={selectedColor}
+				color={theme.primary}
 				onSelect={handleBatchChange}
 				value={batchId}
 				options={batchList}
@@ -89,19 +91,32 @@ interface Color extends Theme {
 
 const Wrapper = styled.div<{ ctheme: Color }>`
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: center;
 	align-items: center;
 	min-height: 40px;
+	padding: 5px;
 	background-color: #e2dede;
 	border-bottom: 1px groove ${props => props.ctheme.selectedColor};
 
-	.input-amount,
-	.input-description {
-		margin: 8px;
+	input {
+		margin: 5px;
 		padding: 10px 12px;
 		border-radius: 5px;
 		transition: 0.5s;
 	}
+
+	/* input[type="button"] {
+		border: none;
+		outline: none;
+		background-color: ${props => props.ctheme.primary};
+		cursor: pointer;
+		transition: none;
+	}
+	input[type="button"]:active {
+		box-shadow: 2px 2px 2px inset;
+	} */
+
 	.input-amount {
 		width: 100px;
 	}
@@ -126,32 +141,10 @@ const Wrapper = styled.div<{ ctheme: Color }>`
 		border: 1px solid ${props => props.ctheme.selectedColor};
 	}
 
-	@media screen and (max-width: 487px) {
-		flex-wrap: wrap;
-
-		.input-description {
-			flex: 1;
-		}
-	}
-
 	@media screen and (max-width: 466px) {
 		.input-icon {
 			width: 30px;
 			height: 30px;
-			margin: 4px 2px;
-		}
-	}
-
-	@media screen and (max-width: 401px) {
-		padding: 5px;
-
-		.input-amount,
-		.input-description {
-			margin: 4px;
-		}
-
-		.input-amount {
-			margin-top: 0;
 		}
 	}
 `;
