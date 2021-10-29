@@ -3,8 +3,8 @@ import Moment from "react-moment";
 
 import Badge from "./badge";
 
-import incomeImg from "../../media/income.webp";
-import expenseImg from "../../media/expense.webp";
+import incomeImg from "../../asset/income.webp";
+import expenseImg from "../../asset/expense.webp";
 import { useHistory } from "react-router";
 import { formatAmount, percentage } from "../../utils/money";
 import { useAppSelector } from "../../app/hooks";

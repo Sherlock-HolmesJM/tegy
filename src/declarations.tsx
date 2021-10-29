@@ -46,6 +46,10 @@ declare global {
 		income: Budget[];
 		expense: Budget[];
 		total: BatchTotal;
+		date: {
+			start: number;
+			end: number;
+		};
 	}
 
 	interface SelectOption {

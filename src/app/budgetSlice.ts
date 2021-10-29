@@ -12,6 +12,10 @@ const batch: Batch = {
 	total: {
 		income: 0,
 		expense: 0
+	},
+	date: {
+		start: Date.now(),
+		end: Date.now()
 	}
 };
 
@@ -23,6 +27,10 @@ const batch2: Batch = {
 	total: {
 		income: 0,
 		expense: 0
+	},
+	date: {
+		start: Date.now(),
+		end: Date.now()
 	}
 };
 

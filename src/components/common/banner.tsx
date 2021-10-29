@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import banner from "../../media/banner.png";
+import banner from "../../asset/banner.png";
 
 interface Props {}
 
-const Banner: React.FC<Props> = (props) => {
+const Banner: React.FC<Props> = props => {
 	// const {} = props;
 
 	return (
