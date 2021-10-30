@@ -122,8 +122,6 @@ const Wrapper = styled.div<{ ctheme: Color }>`
 	input[type="button"]:active {
 		box-shadow: 2px 2px 2px inset;
 	}
-	input[type="button"]:focus {
-	}
 
 	.input-amount {
 		width: 100px;
