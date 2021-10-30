@@ -68,11 +68,17 @@ const budgetSlice = createSlice({
 
 		changedBatch: (state, { payload }: PayloadAction<{ batchId: string }>) => {
 			state.currentBatchId = payload.batchId;
+		},
+
+		createdBatch: (state, { payload }: PayloadAction<Batch>) => {
+			state.batches.push(payload);
+			state.currentBatchId = payload.id;
 		}
 	}
 });
 
-export const { addedBudget, updatedTotal, changedBatch } = budgetSlice.actions;
+export const { addedBudget, updatedTotal, changedBatch, createdBatch } =
+	budgetSlice.actions;
 
 export const selectBatch = (state: RootState) => {
 	return getCurrentBatch(state.budget);

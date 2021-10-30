@@ -10,6 +10,7 @@ import {
 	selectCurrentBatchId,
 	updatedTotal
 } from "../app/budgetSlice";
+import { toggledBatch } from "../app/uiSlice";
 
 interface Props {}
 
@@ -45,9 +46,13 @@ function BudgetInput(props: Props) {
 		dispatch(changedBatch({ batchId: id }));
 	};
 
+	const handleNewBatch = () => {
+		dispatch(toggledBatch(true));
+	};
+
 	return (
 		<Wrapper onKeyPress={handleInput} ctheme={{ selectedColor, ...theme }}>
-			{/* <input type="button" value="New batch" /> */}
+			<input type="button" value="New batch" onClick={handleNewBatch} />
 
 			<Select
 				color={theme.primary}
@@ -106,7 +111,7 @@ const Wrapper = styled.div<{ ctheme: Color }>`
 		transition: 0.5s;
 	}
 
-	/* input[type="button"] {
+	input[type="button"] {
 		border: none;
 		outline: none;
 		background-color: ${props => props.ctheme.primary};
@@ -115,7 +120,7 @@ const Wrapper = styled.div<{ ctheme: Color }>`
 	}
 	input[type="button"]:active {
 		box-shadow: 2px 2px 2px inset;
-	} */
+	}
 
 	.input-amount {
 		width: 100px;
