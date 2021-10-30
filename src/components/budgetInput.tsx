@@ -32,7 +32,7 @@ function BudgetInput(props: Props) {
 
 			const budget: Budget = {
 				id: Date.now() + "",
-				description,
+				description: description.trim(),
 				type,
 				amounts: [{ amount, date: Date.now() }]
 			};
@@ -76,7 +76,7 @@ function BudgetInput(props: Props) {
 				className="input-description input-border"
 				placeholder="Description"
 				value={description}
-				onChange={e => setDescription(e.target.value.trim())}
+				onChange={e => setDescription(e.target.value)}
 			/>
 
 			<input
@@ -85,6 +85,7 @@ function BudgetInput(props: Props) {
 				placeholder="Amount"
 				value={amount}
 				onChange={e => setAmount(+e.target.value)}
+				onFocus={e => e.target.select()}
 			/>
 		</Wrapper>
 	);
@@ -120,6 +121,8 @@ const Wrapper = styled.div<{ ctheme: Color }>`
 	}
 	input[type="button"]:active {
 		box-shadow: 2px 2px 2px inset;
+	}
+	input[type="button"]:focus {
 	}
 
 	.input-amount {
