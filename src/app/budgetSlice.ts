@@ -1,43 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { totalBudget } from "../utils/budget";
 import { RootState } from "./store";
-import { findBudget, getCurrentBatch } from "../utils/budgetSlice";
+import { findBudget } from "../utils/budget";
+import { getCurrentBatch, createBatch } from "../utils/batch";
 import uid from "../utils/id";
 
-const batch: Batch = {
-	id: Date.now() + "",
-	name: "batch 1",
-	income: [],
-	expense: [],
-	total: {
-		income: 0,
-		expense: 0
-	},
-	date: {
-		start: Date.now(),
-		end: Date.now()
-	}
-};
-
-const batch2: Batch = {
-	id: uid(),
-	name: "batch 2",
-	income: [],
-	expense: [],
-	total: {
-		income: 0,
-		expense: 0
-	},
-	date: {
-		start: Date.now(),
-		end: Date.now()
-	}
-};
+const batch = createBatch("batch 1", { start: new Date(), end: new Date() });
+const batch2 = createBatch("batch 2", { start: new Date(), end: new Date() });
 
 const initialState: BudgetSlice = {
 	id: uid(),
 	name: "nepa_bill",
-	currentBatchId: batch.id,
+	selectedBatch: batch.id,
 	batches: [batch, batch2]
 };
 
@@ -67,12 +41,12 @@ const budgetSlice = createSlice({
 		},
 
 		changedBatch: (state, { payload }: PayloadAction<{ batchId: string }>) => {
-			state.currentBatchId = payload.batchId;
+			state.selectedBatch = payload.batchId;
 		},
 
 		createdBatch: (state, { payload }: PayloadAction<Batch>) => {
 			state.batches.push(payload);
-			state.currentBatchId = payload.id;
+			state.selectedBatch = payload.id;
 		}
 	}
 });
@@ -92,8 +66,7 @@ export const selectBatchTotal = (state: RootState) => {
 	return getCurrentBatch(state.budget).total;
 };
 
-export const selectCurrentBatchId = (state: RootState) =>
-	state.budget.currentBatchId;
+export const selectBatchId = (state: RootState) => state.budget.selectedBatch;
 
 export const selectBatchList = (state: RootState): SelectOption[] => {
 	return state.budget.batches.map(batch => ({

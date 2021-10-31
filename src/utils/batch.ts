@@ -19,3 +19,6 @@ export const createBatch = (
 		}
 	};
 };
+
+export const getCurrentBatch = ({ selectedBatch, batches }: BudgetSlice) =>
+	batches.find(b => b.id === selectedBatch);

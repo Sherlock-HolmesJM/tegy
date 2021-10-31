@@ -7,7 +7,7 @@ import {
 	addedBudget,
 	changedBatch,
 	selectBatchList,
-	selectCurrentBatchId,
+	selectBatchId,
 	updatedTotal
 } from "../app/budgetSlice";
 import { toggledBatch } from "../app/uiSlice";
@@ -17,7 +17,7 @@ interface Props {}
 function BudgetInput(props: Props) {
 	const dispatch = useAppDispatch();
 	const batchList = useAppSelector(selectBatchList);
-	const batchId = useAppSelector(selectCurrentBatchId);
+	const batchId = useAppSelector(selectBatchId);
 
 	const [amount, setAmount] = useState(0);
 	const [description, setDescription] = useState("");

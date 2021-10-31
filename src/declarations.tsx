@@ -31,7 +31,7 @@ declare global {
 	interface BudgetSlice {
 		id: string;
 		name: string;
-		currentBatchId: string;
+		selectedBatch: string;
 		batches: Batch[];
 	}
 

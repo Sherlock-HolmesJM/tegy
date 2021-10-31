@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { createdBatch, selectBatchList } from "../../app/budgetSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { selectCreateBatch, toggledBatch } from "../../app/uiSlice";
-import { createBatch } from "../../utils/batchUtil";
+import { createBatch } from "../../utils/batch";
 import Button from "../common/button";
 import Input from "../common/input";
 import Modal from "./modal";
