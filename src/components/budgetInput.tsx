@@ -13,9 +13,7 @@ import {
 import { toggledBatch } from "../app/uiSlice";
 import uid from "../utils/id";
 
-interface Props {}
-
-function BudgetInput(props: Props) {
+const BudgetInput = () => {
 	const dispatch = useAppDispatch();
 	const batchList = useAppSelector(selectBatchList);
 	const batchId = useAppSelector(selectBatchId);
@@ -96,7 +94,7 @@ function BudgetInput(props: Props) {
 			/>
 		</Wrapper>
 	);
-}
+};
 
 interface Color extends Theme {
 	selectedColor: string;
