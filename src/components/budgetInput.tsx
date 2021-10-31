@@ -29,7 +29,7 @@ function BudgetInput(props: Props) {
 
 	const handleInput = e => {
 		if (e.key === "Enter") {
-			if (!description) return toast.error("Description cannot be empty");
+			if (!description) return toast.error("Please provide a description");
 
 			const budget: Budget = {
 				id: uid(),
