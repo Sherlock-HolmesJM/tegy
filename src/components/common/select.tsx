@@ -64,7 +64,7 @@ const Wrapper = styled.div<{ len: number }>`
 		overflow-y: scroll;
 		position: absolute;
 		top: 40px;
-		width: calc(40px * (${props => props.len} / 4));
+		width: clamp(35px, calc(40px * (${props => props.len} / 3)), 200px);
 		max-height: 200px;
 	}
 
@@ -84,12 +84,6 @@ const Wrapper = styled.div<{ len: number }>`
 	.option:hover {
 		background: #d6d1d1;
 		transition: all 0.5s;
-	}
-
-	@media (max-width: 500px) {
-		.options {
-			max-width: 200px;
-		}
 	}
 `;
 
