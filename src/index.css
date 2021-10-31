@@ -12,12 +12,22 @@ body {
 }
 
 .scrollar::-webkit-scrollbar {
-	width: 6px;
+	width: 3px;
 }
 .scrollar::-webkit-scrollbar-track {
 	background: rgb(216, 210, 210);
 }
 .scrollar::-webkit-scrollbar-thumb {
+	background: rgb(122, 126, 122);
+}
+
+.scrollar-m::-webkit-scrollbar {
+	width: 1px;
+}
+.scrollar-m::-webkit-scrollbar-track {
+	background: rgb(216, 210, 210);
+}
+.scrollar-m::-webkit-scrollbar-thumb {
 	background: rgb(122, 126, 122);
 }
 
