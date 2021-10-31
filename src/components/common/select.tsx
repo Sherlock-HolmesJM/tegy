@@ -6,10 +6,11 @@ interface Props {
 	value: string;
 	options: SelectOption[];
 	color?: string;
+	className?: string;
 }
 
 function Select(props: Props) {
-	const { value, options, onSelect, color } = props;
+	const { value, options, onSelect, color, className } = props;
 
 	const [show, setShow] = useState(false);
 
@@ -21,7 +22,11 @@ function Select(props: Props) {
 	);
 
 	return (
-		<Wrapper onClick={() => setShow(!show)} color={color} len={len}>
+		<Wrapper
+			onClick={() => setShow(!show)}
+			color={color}
+			len={len}
+			className={className}>
 			<div className="value">{selected.label ?? value}</div>
 
 			{show && (

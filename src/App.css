@@ -1,3 +1,8 @@
+:root {
+	--toastify-color-success: #32c4c9;
+	--toastify-color-error: #f33333;
+}
+
 .App {
 	position: relative;
 	text-align: center;
@@ -6,6 +11,10 @@
 .App-logo {
 	height: 40vmin;
 	pointer-events: none;
+}
+
+.Toastify__toast-container {
+	width: min(100%, 500px);
 }
 
 @media (prefers-reduced-motion: no-preference) {

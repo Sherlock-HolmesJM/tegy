@@ -52,13 +52,19 @@ function BudgetInput(props: Props) {
 
 	return (
 		<Wrapper onKeyPress={handleInput} ctheme={{ selectedColor, ...theme }}>
-			<input type="button" value="New batch" onClick={handleNewBatch} />
+			<input
+				type="button"
+				value="New batch"
+				className="input-hide"
+				onClick={handleNewBatch}
+			/>
 
 			<Select
 				color={theme.primary}
 				onSelect={handleBatchChange}
 				value={batchId}
 				options={batchList}
+				className="input-hide"
 			/>
 
 			<Select
@@ -147,6 +153,11 @@ const Wrapper = styled.div<{ ctheme: Color }>`
 		border: 1px solid ${props => props.ctheme.selectedColor};
 	}
 
+	@media screen and (max-width: 620px) {
+		.input-hide {
+			display: none;
+		}
+	}
 	@media screen and (max-width: 466px) {
 		.input-icon {
 			width: 30px;
