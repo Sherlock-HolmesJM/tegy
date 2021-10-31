@@ -15,11 +15,16 @@ declare global {
 
 	type BudgetType = "income" | "expense";
 
+	interface BudgetRemove {
+		budget: Budget;
+		amountId: string;
+	}
+
 	interface Budget {
 		id: string;
 		description: string;
 		type: BudgetType;
-		amounts: { amount: number; date: number }[];
+		amounts: { amount: number; date: number; id: string }[];
 	}
 
 	interface BudgetFind {

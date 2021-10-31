@@ -7,10 +7,10 @@ export const findBudget = (param: BudgetFind, budgetSlice: BudgetSlice) => {
 
 	const list = batch[type] ?? [];
 
-	return description
-		? list.find(b => b.description === description)
-		: id
+	return id
 		? list.find(b => b.id === id)
+		: description
+		? list.find(b => b.description === description)
 		: undefined;
 };
 

@@ -1,14 +1,16 @@
 import styled from "styled-components";
 import Moment from "react-moment";
+import Swal from "sweetalert2";
 
 import Badge from "./badge";
 
 import incomeImg from "../../asset/income.webp";
 import expenseImg from "../../asset/expense.webp";
+import deleteImg from "../../asset/delete.webp";
 import { useHistory } from "react-router";
 import { formatAmount, percentage } from "../../utils/money";
-import { useAppSelector } from "../../app/hooks";
-import { selectBatchTotal } from "../../app/budgetSlice";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { removedBudget, selectBatchTotal } from "../../app/budgetSlice";
 
 interface Props {
 	budget: Budget;
@@ -26,6 +28,7 @@ function BudgetItem(props: Props) {
 	const totalAmount = amounts.reduce((acc, next) => acc + next.amount, 0);
 	const { date } = amounts[amounts.length - 1];
 
+	const dispatch = useAppDispatch();
 	const history = useHistory();
 	const { income } = useAppSelector(selectBatchTotal);
 
@@ -33,8 +36,26 @@ function BudgetItem(props: Props) {
 		history.push(`/view/${type}/${id}`);
 	};
 
+	const handleDelete = () => {
+		Swal.fire({
+			title: "Are you sure?",
+			text: "You won't be able to revert this!",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: theme.primary,
+			cancelButtonColor: theme.secondary,
+			confirmButtonText: "Yes, delete it!"
+		}).then(result => {
+			if (result.isConfirmed) {
+				dispatch(
+					removedBudget({ budget: props.budget, amountId: amounts[0].id })
+				);
+			}
+		});
+	};
+
 	return (
-		<Wrapper color={theme[color]} onClick={handleClick}>
+		<Wrapper color={theme[color]}>
 			<div className="img-div">
 				<img
 					src={type === "income" ? incomeImg : expenseImg}
@@ -46,15 +67,29 @@ function BudgetItem(props: Props) {
 
 			<div className="content-group">
 				<div className="budgetItem-content">
-					<div className="description">{description}</div>
+					<div className="description" onClick={handleClick}>
+						{description}
+					</div>
 
 					<div className="amount">
-						<div style={{ marginRight: "5px" }}>
+						<div>
 							{sign} {formatAmount(totalAmount)}
-						</div>{" "}
+						</div>
+
 						<Badge className={`item-badge item-badge-${type}`}>
 							{percentage(income, totalAmount) + "%"}
 						</Badge>
+
+						{amounts.length === 1 && (
+							<img
+								src={deleteImg}
+								alt="D"
+								onClick={handleDelete}
+								className="delete-div"
+								width="100%"
+								height="100%"
+							/>
+						)}
 					</div>
 				</div>
 
@@ -69,7 +104,6 @@ function BudgetItem(props: Props) {
 const Wrapper = styled.div`
 	display: flex;
 	padding-right: 7px;
-	cursor: pointer;
 	margin-bottom: 5px;
 	width: 100%;
 	background: white;
@@ -91,6 +125,7 @@ const Wrapper = styled.div`
 
 	.description {
 		text-transform: capitalize;
+		cursor: pointer;
 	}
 
 	.budgetItem-content {
@@ -103,8 +138,10 @@ const Wrapper = styled.div`
 
 	.amount {
 		display: flex;
+		justify-content: space-between;
 		align-items: center;
 		color: ${props => props.color};
+		gap: 5px;
 	}
 
 	.item-badge {
@@ -112,6 +149,12 @@ const Wrapper = styled.div`
 	}
 	.item-badge-income {
 		display: none;
+	}
+
+	.delete-div {
+		width: 18px;
+		height: 16px;
+		cursor: pointer;
 	}
 
 	.datetime {

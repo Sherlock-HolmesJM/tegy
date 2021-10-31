@@ -11,6 +11,7 @@ import {
 	updatedTotal
 } from "../app/budgetSlice";
 import { toggledBatch } from "../app/uiSlice";
+import uid from "../utils/id";
 
 interface Props {}
 
@@ -31,10 +32,10 @@ function BudgetInput(props: Props) {
 			if (!description) return toast.error("Description cannot be empty");
 
 			const budget: Budget = {
-				id: Date.now() + "",
+				id: uid(),
 				description: description.trim(),
 				type,
-				amounts: [{ amount, date: Date.now() }]
+				amounts: [{ amount, date: Date.now(), id: uid() }]
 			};
 
 			dispatch(addedBudget(budget));

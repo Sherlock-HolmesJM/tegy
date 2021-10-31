@@ -33,6 +33,22 @@ const budgetSlice = createSlice({
 			}
 		},
 
+		removedBudget: (state, { payload }: PayloadAction<BudgetRemove>) => {
+			const {
+				budget: { id, type, description },
+				amountId
+			} = payload;
+
+			const budget = findBudget({ type, id, description }, state);
+
+			if (budget.amounts.length > 1) {
+				budget.amounts = budget.amounts.filter(a => a.id !== amountId);
+			} else {
+				const batch = getCurrentBatch(state);
+				batch[type] = batch[type].filter(b => b.id !== id);
+			}
+		},
+
 		updatedTotal: (state, { payload }: PayloadAction<BudgetFind>) => {
 			const batch = getCurrentBatch(state);
 
@@ -51,8 +67,13 @@ const budgetSlice = createSlice({
 	}
 });
 
-export const { addedBudget, updatedTotal, changedBatch, createdBatch } =
-	budgetSlice.actions;
+export const {
+	addedBudget,
+	removedBudget,
+	updatedTotal,
+	changedBatch,
+	createdBatch
+} = budgetSlice.actions;
 
 export const selectBatch = (state: RootState) => {
 	return getCurrentBatch(state.budget);
