@@ -1,5 +1,6 @@
 import "./App.css";
 import CreateBatch from "./components/modal/createBatch";
+import SignUp from "./components/modal/signUp";
 import Tracker from "./components/tracker";
 
 function App() {
@@ -7,6 +8,7 @@ function App() {
 		<div className="App">
 			{/* Modals */}
 			<CreateBatch />
+			<SignUp />
 
 			{/* Page */}
 			<Tracker />
