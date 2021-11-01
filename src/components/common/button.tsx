@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 const Button = styled.button`
-	font-size: 12px;
-	font-weight: 600;
+	font-size: 11px;
+	font-weight: 500;
 	margin: 5px;
-	padding: 10px 12px;
+	padding: 10px;
 	border-radius: 5px;
 	border: none;
 	outline: none;

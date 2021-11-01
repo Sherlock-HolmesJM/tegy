@@ -52,14 +52,14 @@ const Wrapper = styled.div<{ len: number }>`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin: 5px;
+	margin: 2px;
 	cursor: pointer;
 	min-width: 40px;
-	${border_radius};
+	${border_radius}
 
 	.value {
 		padding: 10px;
-		line-height: 15px;
+		line-height: 11px;
 		${border_radius};
 		border: 1px solid ${props => props.color || "#e2dede"};
 		background-color: white;

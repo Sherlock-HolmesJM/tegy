@@ -12,6 +12,8 @@ import {
 } from "../app/budgetSlice";
 import { ModalE, toggledModal } from "../app/uiSlice";
 import uid from "../utils/id";
+import Input from "./common/input";
+import Button from "./common/button";
 
 const BudgetInput = () => {
 	const dispatch = useAppDispatch();
@@ -51,12 +53,12 @@ const BudgetInput = () => {
 
 	return (
 		<Wrapper onKeyPress={handleInput} ctheme={{ selectedColor, ...theme }}>
-			<input
-				type="button"
-				value="New batch"
+			<Button
 				className="input-hide"
 				onClick={handleNewBatch}
-			/>
+				color={theme.primary}>
+				New batch
+			</Button>
 
 			<Select
 				color={theme.primary}
@@ -76,21 +78,22 @@ const BudgetInput = () => {
 				]}
 			/>
 
-			<input
-				type="text"
-				className="input-description input-border"
+			<Input
 				placeholder="Description"
+				className="input-description"
 				value={description}
 				onChange={e => setDescription(e.target.value)}
+				color={selectedColor}
 			/>
 
-			<input
+			<Input
 				type="number"
-				className="input-amount input-border"
+				className="input-amount"
 				placeholder="Amount"
 				value={amount}
 				onChange={e => setAmount(+e.target.value)}
 				onFocus={e => e.target.select()}
+				color={selectedColor}
 			/>
 		</Wrapper>
 	);
@@ -102,54 +105,19 @@ interface Color extends Theme {
 
 const Wrapper = styled.div<{ ctheme: Color }>`
 	display: flex;
-	flex-wrap: wrap;
 	justify-content: center;
 	align-items: center;
 	min-height: 40px;
-	padding: 5px;
+	padding: 5px 2px;
 	background-color: #e2dede;
 	border-bottom: 1px groove ${props => props.ctheme.selectedColor};
 
-	input {
-		margin: 5px;
-		padding: 10px 12px;
-		border-radius: 5px;
-		transition: 0.5s;
-	}
-
-	input[type="button"] {
-		border: none;
-		outline: none;
-		background-color: ${props => props.ctheme.primary};
-		cursor: pointer;
-		transition: none;
-	}
-	input[type="button"]:active {
-		box-shadow: 2px 2px 2px inset;
+	.input-icon.hide {
+		display: none;
 	}
 
 	.input-amount {
 		width: 100px;
-	}
-	.input-description {
-		width: 250px;
-	}
-	.input-icon {
-		width: 40px;
-		height: 40px;
-		margin: 8px;
-		color: ${props => props.ctheme.selectedColor};
-		transition: 0.5s;
-	}
-	.input-icon.hide {
-		display: none;
-	}
-	.input-border {
-		outline: none;
-		border: 1px solid ${props => props.ctheme.selectedColor};
-	}
-	.input-border:focus {
-		border: 1px solid ${props => props.ctheme.selectedColor};
 	}
 
 	@media screen and (max-width: 620px) {
@@ -157,10 +125,13 @@ const Wrapper = styled.div<{ ctheme: Color }>`
 			display: none;
 		}
 	}
-	@media screen and (max-width: 466px) {
-		.input-icon {
-			width: 30px;
-			height: 30px;
+
+	@media screen and (max-width: 360px) {
+		.input-description {
+			width: 150px;
+		}
+		.input-amount {
+			width: 80px;
 		}
 	}
 `;

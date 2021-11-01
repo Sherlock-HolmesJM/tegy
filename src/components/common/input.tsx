@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
 const Input = styled.input`
-	margin: 5px;
-	padding: 10px 12px;
+	margin: 3px;
+	padding: 8px;
 	border-radius: 5px;
-	border: 1px solid lightgray;
+	border: 1px solid ${props => props.color || "lightgray"};
 	outline: none;
 
 	&:focus {
-		outline: 1px solid gray;
+		outline: 1px solid ${props => props.color || "lightgray"};
 	}
 `;
 
