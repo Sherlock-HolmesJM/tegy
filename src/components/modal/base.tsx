@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { useAppDispatch } from "../../app/hooks";
+import { ModalE, toggledModal } from "../../app/uiSlice";
 
 const Container = styled.div`
 	position: absolute;
@@ -34,8 +36,14 @@ const Title = styled.div`
 `;
 
 const ModalWrapper: React.FC<{ theme: Theme; title: string }> = props => {
+	const dispatch = useAppDispatch();
+
+	const handleClose = e => {
+		if (e.target.dataset.close) dispatch(toggledModal(ModalE.CLOSE));
+	};
+
 	return (
-		<Container>
+		<Container onClick={handleClose} data-close>
 			<Modal ctheme={props.theme}>
 				<Title>{props.title}</Title>
 

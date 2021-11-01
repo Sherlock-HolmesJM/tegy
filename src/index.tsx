@@ -1,18 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import { initializeApp } from "firebase/app";
 import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
 import App from "./App";
 import { store } from "./app/store";
-import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
+import { firebaseConfig } from "./utils/config";
+
 // import * as serviceWorker from "./serviceWorker";
 
-window.border = (color = "red") => `border: 1px solid ${color};`;
-window.theme = {
-	primary: "#32c4c9",
-	secondary: "#f33333"
-};
+// window.border = (color = "red") => `border: 1px solid ${color};`;
+// window.theme = {
+// 	primary: "#32c4c9",
+// 	secondary: "#f33333"
+// };
+
+initializeApp(firebaseConfig);
 
 ReactDOM.render(
 	<React.StrictMode>

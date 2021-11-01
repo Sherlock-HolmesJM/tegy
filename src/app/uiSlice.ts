@@ -1,11 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 
-export enum Modal {
-	BATCH = 0,
-	SIGN_UP,
-
-	// Note, let CLOSE always be the last
+export enum ModalE {
+	SIGN_UP = 0,
+	BATCH,
 	CLOSE
 }
 
@@ -13,12 +11,12 @@ const uiSlice = createSlice({
 	name: "ui",
 
 	initialState: {
-		modal: new Array(Object.keys(Modal).length / 2).fill(false)
+		modal: []
 	},
 
 	reducers: {
-		toggledModal: (state, { payload }: PayloadAction<Modal>) => {
-			if (payload === Modal.CLOSE)
+		toggledModal: (state, { payload }: PayloadAction<ModalE>) => {
+			if (payload === ModalE.CLOSE)
 				state.modal = state.modal.map(value => false);
 			else state.modal[payload] = !state.modal[payload];
 		}
@@ -27,7 +25,7 @@ const uiSlice = createSlice({
 
 export const { toggledModal } = uiSlice.actions;
 
-export const selectModal = (modal: Modal) => (state: RootState) =>
+export const selectModal = (modal: ModalE) => (state: RootState) =>
 	state.ui.modal[modal];
 
 export default uiSlice.reducer;
