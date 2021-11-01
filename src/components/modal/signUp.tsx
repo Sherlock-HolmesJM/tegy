@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { ModalE, selectModal, toggledModal } from "../../app/uiSlice";
+import {
+	ModalE,
+	selectModal,
+	toggledLoading,
+	toggledModal
+} from "../../app/uiSlice";
 import Button from "../common/button";
 import Input from "../common/input";
 import { ModalWrapper } from "./base";
@@ -23,18 +28,21 @@ function SignUp() {
 
 	if (!showModal) return null;
 
-	const handleSubmit = () => {
-		if (email && password) {
-			authService
-				.signUp(email, password)
-				.then(user => {
-					dispatch(toggledModal(ModalE.SIGN_UP));
-					toast.success("Accounted created successfully.");
-				})
-				.catch(console.log);
-		} else {
-			toast.error("Empty fields not allowed");
+	const handleSubmit = async () => {
+		try {
+			if (!email || !password) throw Error("Empty fields not allowed");
+
+			dispatch(toggledLoading(""));
+
+			await authService.signUp(email, password);
+
+			dispatch(toggledModal(ModalE.SIGN_UP));
+
+			toast.success("Accounted created successfully.");
+		} catch (error) {
+			toast.error(error.message);
 		}
+		dispatch(toggledLoading(""));
 	};
 
 	const handleClose = () => {
