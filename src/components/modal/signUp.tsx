@@ -30,7 +30,7 @@ function SignUp() {
 
 	const handleSubmit = async () => {
 		try {
-			if (!email || !password) throw Error("Empty fields not allowed");
+			if (!email || !password) throw Error("Empty fields not allowed.");
 
 			dispatch(toggledLoading(""));
 
