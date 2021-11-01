@@ -77,9 +77,7 @@ function BudgetItem(props: Props) {
 					</div>
 
 					<div className="amount">
-						<div>
-							{sign} {formatAmount(totalAmount)}
-						</div>
+						<div>{formatAmount(totalAmount, sign)}</div>
 
 						<Badge className={`item-badge item-badge-${type}`}>
 							{percentage(income, totalAmount) + "%"}

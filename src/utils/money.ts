@@ -16,9 +16,9 @@ export const formatAmount = (value: number, sign = "") => {
 
 	const tail = tails.reverse().join(",") + ".00";
 
-	const head_string = head.length === 1 ? head[0] + "," : head.join(",");
+	const head_string = head.length === 1 ? head[0] : head.join("");
 
-	return `${sign} ${head_string}${tail}`.trim();
+	return `${sign} ${head_string},${tail}`.trim();
 };
 
 export const percentage = (total: number, value: number) => {
