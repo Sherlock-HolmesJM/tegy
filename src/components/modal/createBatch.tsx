@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { createdBatch, selectBatchList } from "../../app/budgetSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { selectCreateBatch, toggledBatch } from "../../app/uiSlice";
+import { Modal, selectModal, toggledModal } from "../../app/uiSlice";
 import { createBatch } from "../../utils/batch";
 import Button from "../common/button";
 import Input from "../common/input";
@@ -10,7 +10,7 @@ import { ModalWrapper } from "./base";
 
 const CreateBatch = () => {
 	const dispatch = useAppDispatch();
-	const showModal = useAppSelector(selectCreateBatch);
+	const showModal = useAppSelector(selectModal(Modal.BATCH));
 	const { length: count } = useAppSelector(selectBatchList);
 
 	const [date, setDate] = useState({
@@ -42,7 +42,7 @@ const CreateBatch = () => {
 	};
 
 	const handleClose = () => {
-		dispatch(toggledBatch(false));
+		dispatch(toggledModal(Modal.BATCH));
 	};
 
 	return (

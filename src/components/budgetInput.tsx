@@ -10,7 +10,7 @@ import {
 	selectBatchId,
 	updatedTotal
 } from "../app/budgetSlice";
-import { toggledBatch } from "../app/uiSlice";
+import { Modal, toggledModal } from "../app/uiSlice";
 import uid from "../utils/id";
 
 const BudgetInput = () => {
@@ -46,7 +46,7 @@ const BudgetInput = () => {
 	};
 
 	const handleNewBatch = () => {
-		dispatch(toggledBatch(true));
+		dispatch(toggledModal(Modal.BATCH));
 	};
 
 	return (

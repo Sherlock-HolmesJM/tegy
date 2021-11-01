@@ -8,7 +8,7 @@ function App() {
 		<div className="App">
 			{/* Modals */}
 			<CreateBatch />
-			<SignUp />
+			{/* <SignUp /> */}
 
 			{/* Page */}
 			<Tracker />
