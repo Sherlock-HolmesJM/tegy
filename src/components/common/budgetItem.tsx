@@ -10,7 +10,11 @@ import deleteImg from "../../asset/delete.webp";
 import { useHistory } from "react-router";
 import { formatAmount, percentage } from "../../utils/money";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { removedBudget, selectBatchTotal } from "../../app/budgetSlice";
+import {
+	removedBudget,
+	selectBatchTotal,
+	updatedTotal
+} from "../../app/budgetSlice";
 
 interface Props {
 	budget: Budget;
@@ -50,6 +54,7 @@ function BudgetItem(props: Props) {
 				dispatch(
 					removedBudget({ budget: props.budget, amountId: amounts[0].id })
 				);
+				dispatch(updatedTotal());
 			}
 		});
 	};
