@@ -5,12 +5,12 @@ import BudgetItem from "./budgetItem";
 interface Props {
 	title: string;
 	color: ThemeField;
-	budgets: Budget[];
+	items: BudgetItem[];
 	single?: boolean;
 }
 
-function BudgetItems({ title, budgets, color, single }: Props) {
-	if (budgets.length === 0) return null;
+function BudgetItems({ title, items, color, single }: Props) {
+	if (items.length === 0) return null;
 
 	return (
 		<Wrapper>
@@ -21,7 +21,7 @@ function BudgetItems({ title, budgets, color, single }: Props) {
 			</div>
 
 			<div className="item-group scrollar">
-				{budgets.map(budget => (
+				{items.map(budget => (
 					<BudgetItem
 						key={budget.amounts[0].date}
 						color={color}

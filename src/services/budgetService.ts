@@ -5,7 +5,7 @@ import {
 	updateDoc,
 	writeBatch
 } from "firebase/firestore";
-import { findBudget } from "../utils/budget";
+import { getItem } from "../utils/budgetItem";
 import { getCurrentUser } from "./authService";
 import { initialState } from "../app/budgetSlice";
 import { User } from "@firebase/auth";
@@ -40,14 +40,14 @@ export const initializeDB = async (user: User) => {
 	// }
 };
 
-export const addBudget = (b: Budget, slice: BudgetSlice) => {
+export const addBudget = (b: BudgetItem, slice: Budgets) => {
 	const user = getCurrentUser();
 	if (!user) return;
 
 	const db = getFirestore();
 	const { type, description, amounts } = b;
 
-	const budget = findBudget({ type, description }, slice);
+	const budget = getItem({ type, description }, slice);
 	//user.id/batches/batchId/field
 	if (budget) {
 		budget.amounts = [...budget.amounts, ...amounts];

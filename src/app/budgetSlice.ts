@@ -1,18 +1,22 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { totalBudget } from "../utils/budget";
 import { RootState } from "./store";
-import { findBudget } from "../utils/budget";
-import { getCurrentBatch, createBatch } from "../utils/batch";
+import { getItem, sumItem } from "../utils/budgetItem";
+import { getBatch, createBatch, updateTotal } from "../utils/batch";
 import uid from "../utils/id";
+import { getBudget } from "../utils/budget";
 
 const batch = createBatch("batch 1", { start: new Date(), end: new Date() });
-// const batch2 = createBatch("batch 2", { start: new Date(), end: new Date() });
 
-export const initialState: BudgetSlice = {
+const budget: Budget = {
 	id: uid(),
 	name: "default",
-	selectedBatch: batch.id,
-	batches: [batch]
+	batches: [batch],
+	selectedBatch: batch.id
+};
+
+export const initialState: Budgets = {
+	budgets: [budget],
+	selectedBudget: budget.id
 };
 
 const budgetSlice = createSlice({
@@ -21,76 +25,86 @@ const budgetSlice = createSlice({
 	initialState,
 
 	reducers: {
-		addedBudget: (state, { payload }: PayloadAction<Budget>) => {
+		itemAdded: (state, { payload }: PayloadAction<BudgetItem>) => {
+			const batch = getBatch(state);
+
+			if (!batch) return state;
+
 			const { type, description, amounts } = payload;
 
-			const budget = findBudget({ type, description }, state);
+			const item = getItem({ type, description }, state, batch);
 
-			if (budget) {
-				budget.amounts = [...budget.amounts, ...amounts];
+			if (item) {
+				item.amounts = [...item.amounts, ...amounts];
 			} else {
-				getCurrentBatch(state)[type].push(payload);
+				batch[type].push(payload);
 			}
+
+			updateTotal(batch);
 		},
 
-		removedBudget: (state, { payload }: PayloadAction<BudgetRemove>) => {
+		itemRemoved: (state, { payload }: PayloadAction<ItemRemove>) => {
 			const {
 				budget: { id, type, description },
 				amountId
 			} = payload;
 
-			const budget = findBudget({ type, id, description }, state);
+			const batch = getBatch(state);
 
-			if (budget.amounts.length > 1) {
-				budget.amounts = budget.amounts.filter(a => a.id !== amountId);
+			if (!batch) return state;
+
+			const item = getItem({ type, id, description }, state, batch);
+
+			if (item.amounts.length > 1) {
+				item.amounts = item.amounts.filter(a => a.id !== amountId);
 			} else {
-				const batch = getCurrentBatch(state);
 				batch[type] = batch[type].filter(b => b.id !== id);
 			}
+
+			updateTotal(batch);
 		},
 
-		updatedTotal: (state, { payload }: PayloadAction<BudgetFind>) => {
-			const batch = getCurrentBatch(state);
-
-			const { income, expense } = batch;
-			batch.total = totalBudget([...income, ...expense]);
+		totalUpdated: (state, { payload }: PayloadAction<ItemFind>) => {
+			const batch = getBatch(state);
+			batch.total = sumItem([getItem(payload, state, batch)]);
 		},
 
 		changedBatch: (state, { payload }: PayloadAction<{ batchId: string }>) => {
-			state.selectedBatch = payload.batchId;
+			getBudget(state).selectedBatch = payload.batchId;
 		},
 
 		createdBatch: (state, { payload }: PayloadAction<Batch>) => {
-			state.batches.push(payload);
-			state.selectedBatch = payload.id;
+			const budget = getBudget(state);
+			budget.batches.push(payload);
+			budget.selectedBatch = payload.id;
 		}
 	}
 });
 
 export const {
-	addedBudget,
-	removedBudget,
-	updatedTotal,
+	itemAdded,
+	itemRemoved,
+	totalUpdated,
 	changedBatch,
 	createdBatch
 } = budgetSlice.actions;
 
 export const selectBatch = (state: RootState) => {
-	return getCurrentBatch(state.budget);
+	return getBatch(state.budgets);
 };
 
-export const selectBudget = (param: BudgetFind) => (state: RootState) => {
-	return findBudget(param, state.budget);
+export const selectItem = (param: ItemFind) => (state: RootState) => {
+	return getItem(param, state.budgets);
 };
 
 export const selectBatchTotal = (state: RootState) => {
-	return getCurrentBatch(state.budget).total;
+	return getBatch(state.budgets).total;
 };
 
-export const selectBatchId = (state: RootState) => state.budget.selectedBatch;
+export const selectBatchId = (state: RootState) => getBatch(state.budgets).id;
 
 export const selectBatchList = (state: RootState): SelectOption[] => {
-	return state.budget.batches.map(batch => ({
+	return getBudget(state.budgets).batches.map(batch => ({
 		label: batch.name,
 		value: batch.id
 	}));

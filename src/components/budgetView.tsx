@@ -1,19 +1,19 @@
 import { useParams, Redirect } from "react-router";
-import { selectBudget } from "../app/budgetSlice";
+import { selectItem } from "../app/budgetSlice";
 import { useAppSelector } from "../app/hooks";
-import { toBudgetList } from "../utils/budget";
+import { toBudgetList } from "../utils/budgetItem";
 import BudgetItems from "./common/budgetItems";
 
 const BudgetView = () => {
-	const param = useParams<BudgetFind>();
+	const param = useParams<ItemFind>();
 
-	let budget = useAppSelector(selectBudget(param));
+	let budget = useAppSelector(selectItem(param));
 
 	if (!budget) return <Redirect to="/" />;
 
 	return (
 		<BudgetItems
-			budgets={toBudgetList(budget)}
+			items={toBudgetList(budget)}
 			title={param.type}
 			single
 			color={param.type === "income" ? "primary" : "secondary"}

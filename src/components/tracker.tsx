@@ -2,17 +2,15 @@ import { useEffect } from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { ToastContainer } from "react-toastify";
-
 import BudgetView from "./budgetView";
 import BudgetInput from "./budgetInput";
 import Banner from "./common/banner";
 import SummaryLabel from "./common/summaryLabel";
 import BudgetItems from "./common/budgetItems";
-
 import {
 	selectBatch,
 	selectBatchTotal,
-	updatedTotal
+	totalUpdated as updatedTotal
 } from "../app/budgetSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { formatAmount } from "../utils/money";
@@ -22,10 +20,10 @@ function Tracker() {
 
 	const dispatch = useAppDispatch();
 
-	const { income, expense } = useAppSelector(selectBatch);
+	const batch = useAppSelector(selectBatch);
 
 	useEffect(() => {
-		dispatch(updatedTotal({ type: type as BudgetType, id }));
+		if (type && id) dispatch(updatedTotal({ type: type as ItemType, id }));
 	}, [type, id, dispatch]);
 
 	const total = useAppSelector(selectBatchTotal);
@@ -61,11 +59,15 @@ function Tracker() {
 
 					<Route path="/">
 						<>
-							<BudgetItems title="Income" color="primary" budgets={income} />
+							<BudgetItems
+								title="Income"
+								color="primary"
+								items={batch.income ?? []}
+							/>
 							<BudgetItems
 								title="Expense"
 								color="secondary"
-								budgets={expense}
+								items={batch.expense ?? []}
 							/>
 						</>
 					</Route>

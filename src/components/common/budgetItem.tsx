@@ -1,23 +1,17 @@
 import styled from "styled-components";
 import Moment from "react-moment";
 import Swal from "sweetalert2";
-
 import Badge from "./badge";
-
 import incomeImg from "../../asset/income.webp";
 import expenseImg from "../../asset/expense.webp";
 import deleteImg from "../../asset/delete.webp";
 import { useHistory } from "react-router";
 import { formatAmount, percentage } from "../../utils/money";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import {
-	removedBudget,
-	selectBatchTotal,
-	updatedTotal
-} from "../../app/budgetSlice";
+import { itemRemoved, selectBatchTotal } from "../../app/budgetSlice";
 
 interface Props {
-	budget: Budget;
+	budget: BudgetItem;
 	color: ThemeField;
 }
 
@@ -52,9 +46,8 @@ function BudgetItem(props: Props) {
 		}).then(result => {
 			if (result.isConfirmed) {
 				dispatch(
-					removedBudget({ budget: props.budget, amountId: amounts[0].id })
+					itemRemoved({ budget: props.budget, amountId: amounts[0].id })
 				);
-				dispatch(updatedTotal());
 			}
 		});
 	};

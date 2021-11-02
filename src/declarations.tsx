@@ -5,39 +5,35 @@ declare global {
 		border: (color?: string) => string;
 		theme: Theme;
 	}
-
-	type ThemeField = "primary" | "secondary";
-
 	interface Theme {
 		primary: string;
 		secondary: string;
 	}
 
-	type BudgetType = "income" | "expense";
+	type ThemeField = "primary" | "secondary";
 
-	interface BudgetRemove {
-		budget: Budget;
-		amountId: string;
+	interface Budgets {
+		budgets: Budget[];
+		selectedBudget: string;
 	}
 
 	interface Budget {
 		id: string;
-		description: string;
-		type: BudgetType;
-		amounts: { amount: number; date: number; id: string }[];
+		name: string;
+		batches: Batch[];
+		selectedBatch: string;
 	}
 
-	interface BudgetFind {
-		type: BudgetType;
-		id?: string;
-		description?: string;
-	}
-
-	interface BudgetSlice {
+	interface Batch {
 		id: string;
 		name: string;
-		selectedBatch: string;
-		batches: Batch[];
+		income: BudgetItem[];
+		expense: BudgetItem[];
+		total: BatchTotal;
+		date: {
+			start: number;
+			end: number;
+		};
 	}
 
 	interface BatchTotal {
@@ -45,16 +41,24 @@ declare global {
 		expense: number;
 	}
 
-	interface Batch {
+	interface BudgetItem {
 		id: string;
-		name: string;
-		income: Budget[];
-		expense: Budget[];
-		total: BatchTotal;
-		date: {
-			start: number;
-			end: number;
-		};
+		description: string;
+		type: ItemType;
+		amounts: { amount: number; date: number; id: string }[];
+	}
+
+	type ItemType = "income" | "expense";
+
+	interface ItemRemove {
+		budget: BudgetItem;
+		amountId: string;
+	}
+
+	interface ItemFind {
+		type: ItemType;
+		id?: string;
+		description?: string;
 	}
 
 	interface SelectOption {

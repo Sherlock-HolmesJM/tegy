@@ -4,11 +4,11 @@ import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import Select from "./common/select";
 import {
-	addedBudget,
+	itemAdded,
 	changedBatch,
 	selectBatchList,
 	selectBatchId,
-	updatedTotal
+	totalUpdated
 } from "../app/budgetSlice";
 import { ModalE, toggledModal } from "../app/uiSlice";
 import uid from "../utils/id";
@@ -23,7 +23,7 @@ const BudgetInput = () => {
 
 	const [amount, setAmount] = useState(0);
 	const [description, setDescription] = useState("");
-	const [type, setType] = useState<BudgetType>("income");
+	const [type, setType] = useState<ItemType>("income");
 
 	const { theme } = window;
 	const selectedColor = type === "income" ? theme.primary : theme.secondary;
@@ -32,7 +32,7 @@ const BudgetInput = () => {
 		if (e.key === "Enter") {
 			if (!description) return toast.error("Please provide a description");
 
-			const budget: Budget = {
+			const item: BudgetItem = {
 				id: uid(),
 				description: description.trim(),
 				type,
@@ -41,10 +41,11 @@ const BudgetInput = () => {
 
 			dispatch((dispatch, getState) => {
 				console.log("dispatching func");
-				budgetService.addBudget(budget, getState().budget);
-				dispatch(addedBudget(budget));
+				// budgetService.addBudget(budget, getState().budgets);
+
+				dispatch(itemAdded(item));
 			});
-			dispatch(updatedTotal());
+			// dispatch(totalUpdated());
 		}
 	};
 
@@ -75,7 +76,7 @@ const BudgetInput = () => {
 
 			<Select
 				color={selectedColor}
-				onSelect={value => setType(value as BudgetType)}
+				onSelect={value => setType(value as ItemType)}
 				value={type}
 				options={[
 					{ value: "income", label: "+" },

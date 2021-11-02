@@ -6,7 +6,7 @@ import Badge from "./badge";
 
 interface Props {
 	name: string;
-	type: BudgetType;
+	type: ItemType;
 	color?: "primary" | "secondary";
 }
 
