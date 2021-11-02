@@ -18,9 +18,18 @@ const uiSlice = createSlice({
 
 	reducers: {
 		toggledModal: (state, { payload }: PayloadAction<ModalE>) => {
-			if (payload === ModalE.CLOSE)
-				state.modal = state.modal.map(value => false);
-			else state.modal[payload] = !state.modal[payload];
+			const close = (key = -1) => {
+				state.modal = state.modal.map((value, index) =>
+					index === key ? value : false
+				);
+			};
+
+			if (payload === ModalE.CLOSE) {
+				close();
+			} else {
+				close(payload);
+				state.modal[payload] = !state.modal[payload];
+			}
 		},
 
 		toggledLoading: (state, action) => {
