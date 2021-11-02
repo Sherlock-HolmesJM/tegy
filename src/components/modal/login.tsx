@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
 	ModalE,
@@ -12,19 +13,19 @@ import { ModalWrapper } from "./base";
 import authService from "../../services/authService";
 import { toast } from "react-toastify";
 
-function SignUp() {
+const Login = () => {
 	const dispatch = useAppDispatch();
-	const showModal = useAppSelector(selectModal(ModalE.SIGN_UP));
+	const showModal = useAppSelector(selectModal(ModalE.LOGIN));
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
-	// useEffect(() => {
-	// 	return authService.onStateChange(user => {
-	// 		if (!user) dispatch(toggledModal(ModalE.SIGN_UP));
-	// 	});
-	// 	// eslint-disable-next-line
-	// }, []);
+	useEffect(() => {
+		return authService.onStateChange(user => {
+			if (!user) dispatch(toggledModal(ModalE.LOGIN));
+		});
+		// eslint-disable-next-line
+	}, []);
 
 	if (!showModal) return null;
 
@@ -34,11 +35,11 @@ function SignUp() {
 
 			dispatch(toggledLoading(""));
 
-			await authService.signUp(email, password);
+			await authService.login(email, password);
 
-			dispatch(toggledModal(ModalE.SIGN_UP));
+			dispatch(toggledModal(ModalE.LOGIN));
 
-			toast.success("Accounted created successfully.");
+			toast.success("Successfully logged in.");
 		} catch (error) {
 			toast.error(error.message);
 		}
@@ -46,7 +47,7 @@ function SignUp() {
 	};
 
 	const handleClose = () => {
-		dispatch(toggledModal(ModalE.SIGN_UP));
+		dispatch(toggledModal(ModalE.LOGIN));
 	};
 
 	return (
@@ -72,8 +73,20 @@ function SignUp() {
 					cancel
 				</Button>
 			</div>
+
+			<LoginRegister onClick={() => dispatch(toggledModal(ModalE.SIGN_UP))}>
+				<em>NO ACCOUNT? SIGN-UP</em>
+			</LoginRegister>
 		</ModalWrapper>
 	);
-}
+};
 
-export default SignUp;
+const LoginRegister = styled.div`
+	font-size: 12px;
+	color: ${window.theme.primary};
+	text-align: right;
+	font-weight: 600;
+	cursor: pointer;
+`;
+
+export default Login;

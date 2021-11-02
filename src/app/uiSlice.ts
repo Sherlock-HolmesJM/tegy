@@ -2,7 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 
 export enum ModalE {
-	SIGN_UP = 0,
+	LOGIN = 0,
+	SIGN_UP,
 	BATCH,
 	CLOSE
 }
