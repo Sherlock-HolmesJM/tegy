@@ -41,7 +41,7 @@ const BudgetInput = () => {
 
 			dispatch((dispatch, getState) => {
 				console.log("dispatching func");
-				budgetService.addBudget(budget, getState());
+				budgetService.addBudget(budget, getState().budget);
 				dispatch(addedBudget(budget));
 			});
 			dispatch(updatedTotal());
