@@ -11,11 +11,8 @@ import {
 export const onStateChange = (observer: NextOrObserver<User>) =>
 	onAuthStateChanged(getAuth(), observer);
 
-const signUp = (email: string, password: string) => {
-	return createUserWithEmailAndPassword(getAuth(), email, password).then(
-		value => value
-	);
-};
+const signUp = (email: string, password: string) =>
+	createUserWithEmailAndPassword(getAuth(), email, password);
 
 const login = (email: string, password: string) =>
 	signInWithEmailAndPassword(getAuth(), email, password);
