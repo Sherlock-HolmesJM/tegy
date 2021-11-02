@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
 	ModalE,
@@ -18,13 +18,6 @@ const Login = () => {
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-
-	useEffect(() => {
-		return authService.onStateChange(user => {
-			if (!user) dispatch(toggledModal(ModalE.LOGIN));
-		});
-		// eslint-disable-next-line
-	}, []);
 
 	if (!showModal) return null;
 

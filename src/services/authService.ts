@@ -8,7 +8,7 @@ import {
 	User
 } from "firebase/auth";
 
-const onStateChange = (observer: NextOrObserver<User>) =>
+export const onStateChange = (observer: NextOrObserver<User>) =>
 	onAuthStateChanged(getAuth(), observer);
 
 const signUp = (email: string, password: string) => {
