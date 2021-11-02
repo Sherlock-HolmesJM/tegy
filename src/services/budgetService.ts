@@ -1,40 +1,43 @@
 import {
 	doc,
-	setDoc,
 	getDoc,
 	getFirestore,
-	addDoc,
 	updateDoc,
-	writeBatch,
-	collection
+	writeBatch
 } from "firebase/firestore";
-import { getCurrentBatch } from "../utils/batch";
 import { findBudget } from "../utils/budget";
 import { getCurrentUser } from "./authService";
 import { initialState } from "../app/budgetSlice";
 import { User } from "@firebase/auth";
-import { arrayToObject } from "../utils/transform";
+
+const ref = (userId: string, budgetId?: string, batchId?: string) => {
+	const path =
+		budgetId && batchId
+			? `users/${userId}/budgets/${budgetId}/batches/${batchId}`
+			: budgetId
+			? `users/${userId}/budgets/${budgetId}`
+			: `users/${userId}`;
+
+	return doc(getFirestore(), path);
+};
 
 export const initializeDB = async (user: User) => {
-	try {
-		const { id, name, selectedBatch } = initialState;
-
-		const docref = doc(getFirestore(), `budgets/${user.uid}`);
-		const catref = doc(getFirestore(), `budgets/${user.uid}/budgets/${id}`);
-
-		const snapshot = await getDoc(docref);
-
-		if (snapshot.exists()) return;
-
-		const batch = writeBatch(getFirestore());
-
-		batch.set(docref, { seletedBudget: id });
-		batch.set(catref, { name, id, selectedBatch });
-
-		batch.commit();
-	} catch (error) {
-		console.log(error.message);
-	}
+	// try {
+	// 	const { id: budgetId, name, selectedBatch, batches } = initialState;
+	// 	const {id: batchId, date, total, name: batchName} = batches[0];
+	// 	const userRef = ref(user.uid);
+	// 	const budgetRef = ref(user.uid, budgetId);
+	// 	const batchRef = ref(user.uid, id, batches[0].id);
+	// 	const snapshot = await getDoc(userRef);
+	// 	if (snapshot.exists()) return;
+	// 	const batch = writeBatch(getFirestore());
+	// 	batch.set(userRef, { selectedBudget: budgetId});
+	// 	batch.set(budgetRef, { name, id, selectedBatch });
+	// 	batch.set(batchRef, {})
+	// 	batch.commit();
+	// } catch (error) {
+	// 	console.log(error.message);
+	// }
 };
 
 export const addBudget = (b: Budget, slice: BudgetSlice) => {

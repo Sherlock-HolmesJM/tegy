@@ -16,7 +16,7 @@ function App() {
 	useEffect(() => {
 		onStateChange(user => {
 			if (user) {
-				initializeDB(user);
+				initializeDB(user); // this can be done when the user registers
 			} else {
 				dispatch(toggledModal(ModalE.LOGIN));
 			}
