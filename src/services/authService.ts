@@ -19,11 +19,14 @@ const login = (email: string, password: string) =>
 
 const logout = () => signOut(getAuth());
 
+export const getCurrentUser = () => getAuth().currentUser;
+
 const authService = {
 	signUp,
 	login,
 	logout,
-	onStateChange
+	onStateChange,
+	getCurrentUser
 };
 
 export default authService;

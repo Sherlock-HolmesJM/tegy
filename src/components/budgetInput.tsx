@@ -14,6 +14,7 @@ import { ModalE, toggledModal } from "../app/uiSlice";
 import uid from "../utils/id";
 import Input from "./common/input";
 import Button from "./common/button";
+import budgetService from "../services/budgetService";
 
 const BudgetInput = () => {
 	const dispatch = useAppDispatch();
@@ -38,7 +39,11 @@ const BudgetInput = () => {
 				amounts: [{ amount, date: Date.now(), id: uid() }]
 			};
 
-			dispatch(addedBudget(budget));
+			dispatch((dispatch, getState) => {
+				console.log("dispatching func");
+				budgetService.addBudget(budget, getState());
+				dispatch(addedBudget(budget));
+			});
 			dispatch(updatedTotal());
 		}
 	};

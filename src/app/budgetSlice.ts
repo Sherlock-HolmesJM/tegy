@@ -8,7 +8,7 @@ import uid from "../utils/id";
 const batch = createBatch("batch 1", { start: new Date(), end: new Date() });
 const batch2 = createBatch("batch 2", { start: new Date(), end: new Date() });
 
-const initialState: BudgetSlice = {
+export const initialState: BudgetSlice = {
 	id: uid(),
 	name: "nepa_bill",
 	selectedBatch: batch.id,

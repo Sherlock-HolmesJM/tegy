@@ -8,13 +8,18 @@ import Login from "./components/modal/login";
 import SignUp from "./components/modal/signUp";
 import Tracker from "./components/tracker";
 import { onStateChange } from "./services/authService";
+import { initializeDB } from "./services/budgetService";
 
 function App() {
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
 		onStateChange(user => {
-			if (!user) dispatch(toggledModal(ModalE.LOGIN));
+			if (user) {
+				initializeDB(user);
+			} else {
+				dispatch(toggledModal(ModalE.LOGIN));
+			}
 		});
 		// eslint-disable-next-line
 	}, []);
