@@ -33,12 +33,13 @@ const Title = styled.div`
 	font-size: 18px;
 	font-weight: 700;
 	margin: 8px;
+	text-transform: uppercase;
 `;
 
 export const LoginRegister = styled.div`
 	font-size: 12px;
 	font-style: italic;
-	color: ${window.theme.primary};
+	color: black;
 	text-align: right;
 	font-weight: 600;
 	text-transform: uppercase;

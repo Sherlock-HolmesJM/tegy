@@ -42,7 +42,7 @@ function SignUp() {
 	};
 
 	return (
-		<ModalWrapper theme={window.theme} title="Sign-in">
+		<ModalWrapper theme={window.theme} title="register">
 			<Input
 				placeholder="email"
 				value={email}
@@ -58,7 +58,7 @@ function SignUp() {
 
 			<div>
 				<Button onClick={handleSubmit} color={window.theme.primary}>
-					sign-in
+					okay
 				</Button>
 				<Button onClick={handleClose} color={window.theme.secondary}>
 					cancel
