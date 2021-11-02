@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
 	ModalE,
@@ -8,7 +8,7 @@ import {
 } from "../../app/uiSlice";
 import Button from "../common/button";
 import Input from "../common/input";
-import { ModalWrapper } from "./base";
+import { LoginRegister, ModalWrapper } from "./base";
 import authService from "../../services/authService";
 import { toast } from "react-toastify";
 
@@ -19,20 +19,12 @@ function SignUp() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
-	// useEffect(() => {
-	// 	return authService.onStateChange(user => {
-	// 		if (!user) dispatch(toggledModal(ModalE.SIGN_UP));
-	// 	});
-	// 	// eslint-disable-next-line
-	// }, []);
-
 	if (!showModal) return null;
 
 	const handleSubmit = async () => {
+		dispatch(toggledLoading(""));
 		try {
 			if (!email || !password) throw Error("Empty fields not allowed.");
-
-			dispatch(toggledLoading(""));
 
 			await authService.signUp(email, password);
 
@@ -72,6 +64,10 @@ function SignUp() {
 					cancel
 				</Button>
 			</div>
+
+			<LoginRegister onClick={() => dispatch(toggledModal(ModalE.LOGIN))}>
+				Already have account? SIGN-IN
+			</LoginRegister>
 		</ModalWrapper>
 	);
 }

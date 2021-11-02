@@ -9,7 +9,7 @@ import {
 } from "../../app/uiSlice";
 import Button from "../common/button";
 import Input from "../common/input";
-import { ModalWrapper } from "./base";
+import { LoginRegister, ModalWrapper } from "./base";
 import authService from "../../services/authService";
 import { toast } from "react-toastify";
 
@@ -30,10 +30,9 @@ const Login = () => {
 	if (!showModal) return null;
 
 	const handleSubmit = async () => {
+		dispatch(toggledLoading(""));
 		try {
 			if (!email || !password) throw Error("Empty fields not allowed.");
-
-			dispatch(toggledLoading(""));
 
 			await authService.login(email, password);
 
@@ -75,18 +74,10 @@ const Login = () => {
 			</div>
 
 			<LoginRegister onClick={() => dispatch(toggledModal(ModalE.SIGN_UP))}>
-				<em>NO ACCOUNT? SIGN-UP</em>
+				NO ACCOUNT? SIGN-UP
 			</LoginRegister>
 		</ModalWrapper>
 	);
 };
-
-const LoginRegister = styled.div`
-	font-size: 12px;
-	color: ${window.theme.primary};
-	text-align: right;
-	font-weight: 600;
-	cursor: pointer;
-`;
 
 export default Login;

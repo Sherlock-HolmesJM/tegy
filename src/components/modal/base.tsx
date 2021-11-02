@@ -35,6 +35,16 @@ const Title = styled.div`
 	margin: 8px;
 `;
 
+export const LoginRegister = styled.div`
+	font-size: 12px;
+	font-style: italic;
+	color: ${window.theme.primary};
+	text-align: right;
+	font-weight: 600;
+	text-transform: uppercase;
+	cursor: pointer;
+`;
+
 const ModalWrapper: React.FC<{ theme: Theme; title: string }> = props => {
 	const dispatch = useAppDispatch();
 
