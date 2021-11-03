@@ -5,7 +5,7 @@ import {
 	writeBatch,
 	collection
 } from "firebase/firestore";
-import { getItem } from "../utils/budgetItem";
+import { getItem, sumItem } from "../utils/budgetItem";
 import { getCurrentUser } from "./authService";
 import { initialState, itemAdded } from "../app/budgetSlice";
 import { User } from "@firebase/auth";
@@ -68,17 +68,21 @@ export const addBudget = async (
 		if (item) item = { ...item, amounts: [...item.amounts, ...amounts] };
 		else item = bItem;
 
+		const total = sumItem([...batch.income, ...batch.expense, bItem]);
+
 		const { writer, usersRef } = getWriter();
 
-		const pathSegments = [
+		let pathSegments = [
 			getCurrentUser().uid,
 			"budgets",
 			selectedBudget,
 			"batches",
-			batch.id,
-			item.type,
-			item.id
+			batch.id
 		];
+
+		writer.update(doc(usersRef, ...pathSegments), { total });
+
+		pathSegments = [...pathSegments, item.type, item.id];
 
 		writer.set(doc(usersRef, ...pathSegments), item);
 
