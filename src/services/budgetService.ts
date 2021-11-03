@@ -59,9 +59,9 @@ export const addBudget = async (
 
 		const { type, description, amounts } = bItem;
 
-		let item = { ...getItem({ type, description }, state, batch) };
+		let item = getItem({ type, description }, state, batch);
 
-		if (item) item.amounts = [...item.amounts, ...amounts];
+		if (item) item = { ...item, amounts: [...item.amounts, ...amounts] };
 		else item = bItem;
 
 		const db = getFirestore();
