@@ -11,9 +11,9 @@ export const getBatch = (budgets: Budgets) => {
 	return batches.find(b => b.id === selectedBatch);
 };
 
-export const updateTotal = (batch: Batch) => {
+export const getTotal = (batch: Batch) => {
 	const { income, expense } = batch;
-	batch.total = sumItem([...income, ...expense]);
+	return sumItem([...income, ...expense]);
 };
 
 export const createBatch = (

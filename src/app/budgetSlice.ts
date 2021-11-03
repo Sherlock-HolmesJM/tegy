@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import { getItem, sumItem } from "../utils/budgetItem";
-import { getBatch, createBatch, updateTotal } from "../utils/batch";
+import { getBatch, createBatch, getTotal } from "../utils/batch";
 import uid from "../utils/id";
 import { getBudget } from "../utils/budget";
 
@@ -40,7 +40,7 @@ const budgetSlice = createSlice({
 				batch[type].push(payload);
 			}
 
-			updateTotal(batch);
+			batch.total = getTotal(batch);
 		},
 
 		itemRemoved: (state, { payload }: PayloadAction<ItemRemove>) => {
@@ -61,7 +61,7 @@ const budgetSlice = createSlice({
 				batch[type] = batch[type].filter(b => b.id !== id);
 			}
 
-			updateTotal(batch);
+			batch.total = getTotal(batch);
 		},
 
 		totalUpdated: (state, { payload }: PayloadAction<ItemFind>) => {
