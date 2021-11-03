@@ -2,14 +2,16 @@ import {
 	doc,
 	getDoc,
 	getFirestore,
-	updateDoc,
 	writeBatch,
 	collection
 } from "firebase/firestore";
 import { getItem } from "../utils/budgetItem";
 import { getCurrentUser } from "./authService";
-import { initialState } from "../app/budgetSlice";
+import { initialState, itemAdded } from "../app/budgetSlice";
 import { User } from "@firebase/auth";
+import { AppDispatch } from "../app/store";
+import { getBatch } from "../utils/batch";
+import { toggledLoading } from "../app/uiSlice";
 
 export const initializeDB = async (user: User) => {
 	try {
@@ -45,7 +47,47 @@ export const initializeDB = async (user: User) => {
 	}
 };
 
-export const addBudget = (b: BudgetItem, slice: Budgets) => {};
+export const addBudget = async (
+	bItem: BudgetItem,
+	state: Budgets,
+	dispatch: AppDispatch
+) => {
+	dispatch(toggledLoading(true));
+	try {
+		const { selectedBudget } = state;
+		const batch = getBatch(state);
+
+		const { type, description, amounts } = bItem;
+
+		let item = { ...getItem({ type, description }, state, batch) };
+
+		if (item) item.amounts = [...item.amounts, ...amounts];
+		else item = bItem;
+
+		const db = getFirestore();
+		const usersRef = collection(db, "users");
+		const writer = writeBatch(db);
+
+		const pathSegments = [
+			getCurrentUser().uid,
+			"budgets",
+			selectedBudget,
+			"batches",
+			batch.id,
+			item.type,
+			item.id
+		];
+
+		writer.set(doc(usersRef, ...pathSegments), item);
+
+		await writer.commit();
+
+		dispatch(itemAdded(bItem));
+	} catch (error) {
+		console.log(error.message);
+	}
+	dispatch(toggledLoading(false));
+};
 
 const budgetService = {
 	addBudget

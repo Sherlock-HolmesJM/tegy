@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import Select from "./common/select";
 import {
-	itemAdded,
 	batchChanged,
 	selectBatchList,
 	selectBatchId
@@ -39,10 +38,7 @@ const BudgetInput = () => {
 			};
 
 			dispatch((dispatch, getState) => {
-				console.log("dispatching func");
-				// budgetService.addBudget(budget, getState().budgets);
-
-				dispatch(itemAdded(item));
+				budgetService.addBudget(item, getState().budgets, dispatch);
 			});
 		}
 	};
