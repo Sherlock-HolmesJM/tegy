@@ -5,10 +5,9 @@ import { useAppDispatch, useAppSelector } from "../app/hooks";
 import Select from "./common/select";
 import {
 	itemAdded,
-	changedBatch,
+	batchChanged,
 	selectBatchList,
-	selectBatchId,
-	totalUpdated
+	selectBatchId
 } from "../app/budgetSlice";
 import { ModalE, toggledModal } from "../app/uiSlice";
 import uid from "../utils/id";
@@ -45,12 +44,11 @@ const BudgetInput = () => {
 
 				dispatch(itemAdded(item));
 			});
-			// dispatch(totalUpdated());
 		}
 	};
 
 	const handleBatchChange = id => {
-		dispatch(changedBatch({ batchId: id }));
+		dispatch(batchChanged({ batchId: id }));
 	};
 
 	const handleNewBatch = () => {

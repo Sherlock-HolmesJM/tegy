@@ -20,7 +20,7 @@ export const initialState: Budgets = {
 };
 
 const budgetSlice = createSlice({
-	name: "budget",
+	name: "budgets",
 
 	initialState,
 
@@ -69,11 +69,11 @@ const budgetSlice = createSlice({
 			batch.total = sumItem([getItem(payload, state, batch)]);
 		},
 
-		changedBatch: (state, { payload }: PayloadAction<{ batchId: string }>) => {
+		batchChanged: (state, { payload }: PayloadAction<{ batchId: string }>) => {
 			getBudget(state).selectedBatch = payload.batchId;
 		},
 
-		createdBatch: (state, { payload }: PayloadAction<Batch>) => {
+		batchCreated: (state, { payload }: PayloadAction<Batch>) => {
 			const budget = getBudget(state);
 			budget.batches.push(payload);
 			budget.selectedBatch = payload.id;
@@ -85,8 +85,8 @@ export const {
 	itemAdded,
 	itemRemoved,
 	totalUpdated,
-	changedBatch,
-	createdBatch
+	batchChanged,
+	batchCreated
 } = budgetSlice.actions;
 
 export const selectBatch = (state: RootState) => {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { createdBatch, selectBatchList } from "../../app/budgetSlice";
+import { batchCreated, selectBatchList } from "../../app/budgetSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { ModalE, selectModal, toggledModal } from "../../app/uiSlice";
 import { createBatch } from "../../utils/batch";
@@ -10,6 +10,7 @@ import { ModalWrapper } from "./base";
 
 const CreateBatch = () => {
 	const dispatch = useAppDispatch();
+
 	const showModal = useAppSelector(selectModal(ModalE.BATCH));
 	const { length: count } = useAppSelector(selectBatchList);
 
@@ -36,7 +37,7 @@ const CreateBatch = () => {
 			end: new Date(date.end)
 		});
 
-		dispatch(createdBatch(batch));
+		dispatch(batchCreated(batch));
 		handleClose();
 		toast.success("Created successfully.");
 	};

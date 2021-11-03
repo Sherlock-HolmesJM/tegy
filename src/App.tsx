@@ -18,7 +18,7 @@ function App() {
 			if (user) {
 				// initializeDB(user); // this can be done when the user registers
 			} else {
-				dispatch(toggledModal(ModalE.LOGIN));
+				// dispatch(toggledModal(ModalE.LOGIN));
 			}
 		});
 		// eslint-disable-next-line
