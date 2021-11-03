@@ -10,6 +10,7 @@
 
 # production
 /build
+/faunadb
 
 # misc
 .DS_Store
