@@ -1,4 +1,5 @@
 import strip from "../utils/striper";
+import { getCurrentUser } from "./authService";
 import { getPathSegments, getWriter } from "./httpService";
 
 const createBatch = async (
@@ -13,7 +14,7 @@ const createBatch = async (
 		const heads = { ...state.heads, batch: batch.id };
 
 		writer.set(strip(batch, ["income", "expense"]), getPathSegments(heads));
-		writer.update({ heads }, getPathSegments({ budget: heads.budget }));
+		writer.update({ heads }, [getCurrentUser().uid]);
 
 		await writer.commit();
 		onSuccess();
