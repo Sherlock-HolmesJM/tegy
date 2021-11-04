@@ -2,7 +2,13 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { createdBatch, selectBatchList } from "../../app/budgetSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { ModalE, selectModal, toggledModal } from "../../app/uiSlice";
+import {
+	ModalE,
+	selectModal,
+	toggledLoading,
+	toggledModal
+} from "../../app/uiSlice";
+import batchService from "../../services/batchService";
 import { createBatch } from "../../utils/batch";
 import Button from "../common/button";
 import Input from "../common/input";
@@ -32,14 +38,28 @@ const CreateBatch = () => {
 	};
 
 	const handleCreate = () => {
-		const batch = createBatch(name, {
-			start: new Date(date.start),
-			end: new Date(date.end)
-		});
+		dispatch(toggledLoading(1));
 
-		dispatch(createdBatch(batch));
-		handleClose();
-		toast.success("Created successfully.");
+		dispatch((dispatch, getState) => {
+			const batch = createBatch(name, {
+				start: new Date(date.start),
+				end: new Date(date.end)
+			});
+
+			batchService.createBatch(
+				batch,
+				getState().budgets,
+				() => {
+					dispatch(toggledLoading(1));
+					dispatch(createdBatch(batch));
+					handleClose();
+					toast.success("Created successfully.");
+				},
+				() => {
+					dispatch(toggledLoading(1));
+				}
+			);
+		});
 	};
 
 	const handleClose = () => {
