@@ -1,17 +1,14 @@
-import { itemAdded, itemRemoved } from "../app/budgetSlice";
-import { AppDispatch } from "../app/store";
-import { toggledLoading } from "../app/uiSlice";
 import { getBatch } from "../utils/batch";
 import { getItem, sumItem } from "../utils/budgetItem";
 import { getPathSegments, getWriter } from "./httpService";
 
 export const addItem = async (
-	bItem: BudgetItem,
-	state: Budgets,
-	dispatch: AppDispatch
+	payload: { item: BudgetItem; state: Budgets },
+	onSuccess: () => void,
+	onError: () => void
 ) => {
 	try {
-		dispatch(toggledLoading(true));
+		const { item: bItem, state } = payload;
 		const { heads } = state;
 		const batch = getBatch(state);
 
@@ -32,21 +29,20 @@ export const addItem = async (
 		writer.set(item, pathSegments);
 
 		await writer.commit();
-		dispatch(itemAdded(bItem));
+		onSuccess();
 	} catch (error) {
 		console.log(error.message);
+		onError();
 	}
-	dispatch(toggledLoading(false));
 };
 
 export const deleteItem = async (
-	bItem: BudgetItem,
-	amountId: string,
-	state: Budgets,
-	dispatch: AppDispatch
+	payload: { item: BudgetItem; amountId: string; state: Budgets },
+	onSuccess: () => void,
+	onError: () => void
 ) => {
 	try {
-		dispatch(toggledLoading(true));
+		const { item: bItem, amountId, state } = payload;
 		const { id, type, description } = bItem;
 
 		let batch = { ...getBatch(state) };
@@ -72,11 +68,11 @@ export const deleteItem = async (
 		writer.update({ total }, getPathSegments(state.heads));
 
 		await writer.commit();
-		dispatch(itemRemoved({ budget: bItem, amountId }));
+		onSuccess();
 	} catch (error) {
 		console.log(error.message);
+		onError();
 	}
-	dispatch(toggledLoading(false));
 };
 
 const itemService = { addItem, deleteItem };

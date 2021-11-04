@@ -6,9 +6,10 @@ import Select from "./common/select";
 import {
 	batchChanged,
 	selectBatchList,
-	selectBatchId
+	selectBatchId,
+	itemAdded
 } from "../app/budgetSlice";
-import { ModalE, toggledModal } from "../app/uiSlice";
+import { ModalE, toggledLoading, toggledModal } from "../app/uiSlice";
 import uid from "../utils/id";
 import Input from "./common/input";
 import Button from "./common/button";
@@ -38,7 +39,16 @@ const BudgetInput = () => {
 			};
 
 			dispatch((dispatch, getState) => {
-				itemService.addItem(item, getState().budgets, dispatch);
+				dispatch(toggledLoading(1));
+
+				itemService.addItem(
+					{ item, state: getState().budgets },
+					() => {
+						dispatch(itemAdded(item));
+						dispatch(toggledLoading(1));
+					},
+					() => dispatch(toggledLoading(1))
+				);
 			});
 		}
 	};
