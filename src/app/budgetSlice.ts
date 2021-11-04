@@ -78,7 +78,7 @@ const budgetSlice = createSlice({
 			state.heads.batch = payload.batchId;
 		},
 
-		batchCreated: (state, { payload }: PayloadAction<Batch>) => {
+		createdBatch: (state, { payload }: PayloadAction<Batch>) => {
 			const budget = getBudget(state);
 			budget.batches.push(payload);
 			state.heads.batch = payload.id;
@@ -91,7 +91,7 @@ export const {
 	itemRemoved,
 	totalUpdated,
 	batchChanged,
-	batchCreated
+	createdBatch
 } = budgetSlice.actions;
 
 export const selectBatch = (state: RootState) => {
