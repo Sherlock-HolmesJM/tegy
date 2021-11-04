@@ -6,6 +6,7 @@ import { User } from "@firebase/auth";
 import { AppDispatch } from "../app/store";
 import { getBatch } from "../utils/batch";
 import { toggledLoading } from "../app/uiSlice";
+import { strip } from "../utils/striper";
 
 /**
  * @param heads
@@ -26,8 +27,8 @@ const getWriter = () => {
 };
 
 export const loadApp = user => {
-	const { usersRef } = getWriter();
-	let pathSegments = [];
+	// const { usersRef } = getWriter();
+	// let pathSegments = [];
 };
 
 export const initializeDB = async (user: User) => {
@@ -37,17 +38,12 @@ export const initializeDB = async (user: User) => {
 
 		writer.set(doc(usersRef, user.uid), { heads });
 
-		const budget = { ...budgets[0] };
-		delete budget.batches;
-
 		let pathSegments = getPathSegments({ budget: heads.budget });
 
-		writer.set(doc(usersRef, ...pathSegments), budget);
+		const [budget] = budgets;
+		writer.set(doc(usersRef, ...pathSegments), strip(budgets, ["batches"]));
 
-		const batchObj = { ...budgets[0].batches[0] };
-
-		delete batchObj.expense;
-		delete batchObj.income;
+		const batchObj = strip(budget.batches[0], ["income", "expense"]);
 
 		pathSegments = getPathSegments(heads);
 
