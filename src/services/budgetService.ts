@@ -7,17 +7,17 @@ import { AppDispatch } from "../app/store";
 import { getBatch } from "../utils/batch";
 import { toggledLoading } from "../app/uiSlice";
 
-function getSegment(
-	budgetId: string,
-	batchId: string,
-	type: string,
-	itemId: string
-): string;
-function getSegment(budgetId: string, batchId: string): string;
-function getSegment(budgetId: string): string;
-function getSegment(): string {
-	return "";
-}
+/**
+ * @param heads
+ * @returns if batch, return path to a batch document; else, return path to a budget document
+ */
+const getPathSegments = (heads: { budget: string; batch?: string }) => {
+	const { uid } = getCurrentUser();
+
+	return heads.batch
+		? [uid, "budgets", heads.budget, "batches", heads.batch]
+		: [uid, "budgets", heads.budget];
+};
 
 const getWriter = () => {
 	const db = getFirestore();
@@ -40,7 +40,7 @@ export const initializeDB = async (user: User) => {
 		const budget = { ...budgets[0] };
 		delete budget.batches;
 
-		let pathSegments = [user.uid, "budgets", heads.budget];
+		let pathSegments = getPathSegments({ budget: heads.budget });
 
 		writer.set(doc(usersRef, ...pathSegments), budget);
 
@@ -49,7 +49,7 @@ export const initializeDB = async (user: User) => {
 		delete batchObj.expense;
 		delete batchObj.income;
 
-		pathSegments = [...pathSegments, "batches", batchObj.id];
+		pathSegments = getPathSegments(heads);
 
 		writer.set(doc(usersRef, ...pathSegments), batchObj);
 
@@ -80,13 +80,7 @@ export const addBudget = async (
 
 		const { writer, usersRef } = getWriter();
 
-		let pathSegments = [
-			getCurrentUser().uid,
-			"budgets",
-			heads.batch,
-			"batches",
-			batch.id
-		];
+		let pathSegments = getPathSegments(heads);
 
 		writer.update(doc(usersRef, ...pathSegments), { total });
 

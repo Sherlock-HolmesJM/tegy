@@ -14,11 +14,13 @@ declare global {
 
 	interface Budgets {
 		budgets: Budget[];
-		heads: {
-			budget: string;
-			batch: string;
-		};
+		heads: Heads;
 	}
+
+	type Heads = {
+		budget: string;
+		batch: string;
+	};
 
 	interface Budget {
 		id: string;
