@@ -1,4 +1,4 @@
-import { itemAdded } from "../app/budgetSlice";
+import { itemAdded, itemRemoved } from "../app/budgetSlice";
 import { AppDispatch } from "../app/store";
 import { toggledLoading } from "../app/uiSlice";
 import { getBatch } from "../utils/batch";
@@ -39,7 +39,45 @@ export const addItem = async (
 	dispatch(toggledLoading(false));
 };
 
-export const deleteItem = () => {};
+export const deleteItem = async (
+	bItem: BudgetItem,
+	amountId: string,
+	state: Budgets,
+	dispatch: AppDispatch
+) => {
+	try {
+		dispatch(toggledLoading(true));
+		const { id, type, description } = bItem;
+
+		let batch = { ...getBatch(state) };
+		let item = { ...getItem({ type, id, description }, state, batch) };
+		batch[type] = batch[type].filter(i => i.id !== item.id);
+
+		const writer = getWriter();
+		const pathSegments = [...getPathSegments(state.heads), type, id];
+
+		let total = {};
+
+		if (item.amounts.length > 1) {
+			item.amounts = item.amounts.filter(a => a.id !== amountId);
+			total = sumItem([...batch.income, ...batch.expense, item]);
+
+			writer.update(item, pathSegments);
+		} else {
+			total = sumItem([...batch.income, ...batch.expense]);
+
+			writer.delete(pathSegments);
+		}
+
+		writer.update({ total }, getPathSegments(state.heads));
+
+		await writer.commit();
+		dispatch(itemRemoved({ budget: bItem, amountId }));
+	} catch (error) {
+		console.log(error.message);
+	}
+	dispatch(toggledLoading(false));
+};
 
 const itemService = { addItem, deleteItem };
 

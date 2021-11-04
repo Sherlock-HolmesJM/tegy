@@ -12,6 +12,13 @@ declare global {
 
 	type ThemeField = "primary" | "secondary";
 
+	type Writer = {
+		set: (object: any, pathSegments: string[]) => any;
+		update: (object: any, pathSegments: string[]) => any;
+		delete: (pathSegments: string[]) => any;
+		commit: () => Promise<void>;
+	};
+
 	interface Budgets {
 		budgets: Budget[];
 		heads: Heads;

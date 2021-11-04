@@ -8,7 +8,8 @@ import deleteImg from "../../asset/delete.webp";
 import { useHistory } from "react-router";
 import { formatAmount, percentage } from "../../utils/money";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { itemRemoved, selectBatchTotal } from "../../app/budgetSlice";
+import { selectBatchTotal } from "../../app/budgetSlice";
+import itemService from "../../services/itemService";
 
 interface Props {
 	budget: BudgetItem;
@@ -45,9 +46,14 @@ function BudgetItem(props: Props) {
 			confirmButtonText: "Yes, delete it!"
 		}).then(result => {
 			if (result.isConfirmed) {
-				dispatch(
-					itemRemoved({ budget: props.budget, amountId: amounts[0].id })
-				);
+				dispatch((dispatch, getState) => {
+					itemService.deleteItem(
+						props.budget,
+						amounts[0].id,
+						getState().budgets,
+						dispatch
+					);
+				});
 			}
 		});
 	};

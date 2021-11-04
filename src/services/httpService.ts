@@ -1,13 +1,6 @@
 import { collection, getFirestore, writeBatch, doc } from "@firebase/firestore";
 import { getCurrentUser } from "./authService";
 
-type Writer = {
-	set: (object: any, pathSegments: string[]) => any;
-	update: (object: any, pathSegments: string[]) => any;
-	delete: (pathSegments: string[]) => any;
-	commit: () => Promise<void>;
-};
-
 export const getWriter = (): Writer => {
 	const db = getFirestore();
 	const usersRef = collection(db, "users");
@@ -23,7 +16,7 @@ export const getWriter = (): Writer => {
 
 /**
  * @param heads
- * @returns if batch, return path to a batch document; else, return path to a budget document
+ * @returns returns path segments upto a batch document with the condition that, if batch, return path to a batch document; else, return path to a budget document
  */
 export const getPathSegments = (heads: { budget: string; batch?: string }) => {
 	const { uid } = getCurrentUser();
