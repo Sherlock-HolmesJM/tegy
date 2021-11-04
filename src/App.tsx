@@ -8,7 +8,7 @@ import Login from "./components/modal/login";
 import SignUp from "./components/modal/signUp";
 import Tracker from "./components/tracker";
 import { onStateChange } from "./services/authService";
-import { initializeDB } from "./services/budgetService";
+import { setDB } from "./services/budgetService";
 
 function App() {
 	const dispatch = useAppDispatch();
@@ -16,7 +16,7 @@ function App() {
 	useEffect(() => {
 		onStateChange(user => {
 			if (user) {
-				initializeDB(user); // this can be done when the user registers
+				setDB(user); // this can be done when the user registers
 			} else {
 				dispatch(toggledModal(ModalE.LOGIN));
 			}

@@ -12,7 +12,7 @@ import { ModalE, toggledModal } from "../app/uiSlice";
 import uid from "../utils/id";
 import Input from "./common/input";
 import Button from "./common/button";
-import budgetService from "../services/budgetService";
+import itemService from "../services/itemService";
 
 const BudgetInput = () => {
 	const dispatch = useAppDispatch();
@@ -38,7 +38,7 @@ const BudgetInput = () => {
 			};
 
 			dispatch((dispatch, getState) => {
-				budgetService.addBudget(item, getState().budgets, dispatch);
+				itemService.addItem(item, getState().budgets, dispatch);
 			});
 		}
 	};
