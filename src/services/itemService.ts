@@ -1,4 +1,3 @@
-import { doc } from "@firebase/firestore";
 import { itemAdded } from "../app/budgetSlice";
 import { AppDispatch } from "../app/store";
 import { toggledLoading } from "../app/uiSlice";
@@ -11,26 +10,26 @@ export const addItem = async (
 	state: Budgets,
 	dispatch: AppDispatch
 ) => {
-	dispatch(toggledLoading(true));
 	try {
+		dispatch(toggledLoading(true));
 		const { heads } = state;
 		const batch = getBatch(state);
 
 		const { type, description, amounts } = bItem;
 
 		let item = getItem({ type, description }, state, batch);
-		const total = sumItem([...batch.income, ...batch.expense, item]);
+		const total = sumItem([...batch.income, ...batch.expense, bItem]);
 
-		if (item) item = { ...item, amounts: [...item.amounts, ...amounts] };
-		else item = bItem;
+		if (!item) item = bItem;
+		else item = { ...item, amounts: [...item.amounts, ...amounts] };
 
-		const { writer, usersRef } = getWriter();
+		const writer = getWriter();
 
 		let pathSegments = getPathSegments(heads);
-		writer.update(doc(usersRef, ...pathSegments), { total });
+		writer.update({ total }, pathSegments);
 
 		pathSegments = [...pathSegments, item.type, item.id];
-		writer.set(doc(usersRef, ...pathSegments), item);
+		writer.set(item, pathSegments);
 
 		await writer.commit();
 		dispatch(itemAdded(bItem));

@@ -1,4 +1,3 @@
-import { doc } from "firebase/firestore";
 import { initialState } from "../app/budgetSlice";
 import { User } from "@firebase/auth";
 import { strip } from "../utils/striper";
@@ -11,20 +10,20 @@ export const loadApp = user => {
 
 export const setDB = async (user: User) => {
 	try {
-		const { usersRef, writer } = getWriter();
+		const writer = getWriter();
 		const { budgets, heads } = initialState;
 
-		writer.set(doc(usersRef, user.uid), { heads });
+		writer.set({ heads }, [user.uid]);
 
 		let pathSegments = getPathSegments({ budget: heads.budget });
 
 		const [budget] = budgets;
-		writer.set(doc(usersRef, ...pathSegments), strip(budget, ["batches"]));
+		writer.set(strip(budget, ["batches"]), pathSegments);
 
 		pathSegments = getPathSegments(heads);
 
 		const batchObj = strip(budget.batches[0], ["income", "expense"]);
-		writer.set(doc(usersRef, ...pathSegments), batchObj);
+		writer.set(batchObj, pathSegments);
 
 		writer.commit();
 	} catch (error) {
