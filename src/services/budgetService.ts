@@ -27,8 +27,6 @@ const getWriter = () => {
 
 export const loadApp = user => {
 	const { usersRef } = getWriter();
-	// const { usersRef } = getWriter();
-	// const { usersRef } = getWriter();
 	let pathSegments = [];
 };
 
