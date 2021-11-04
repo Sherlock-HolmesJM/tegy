@@ -1,10 +1,4 @@
-import {
-	doc,
-	getDoc,
-	getFirestore,
-	writeBatch,
-	collection
-} from "firebase/firestore";
+import { doc, getFirestore, writeBatch, collection } from "firebase/firestore";
 import { getItem, sumItem } from "../utils/budgetItem";
 import { getCurrentUser } from "./authService";
 import { initialState, itemAdded } from "../app/budgetSlice";
@@ -13,26 +7,40 @@ import { AppDispatch } from "../app/store";
 import { getBatch } from "../utils/batch";
 import { toggledLoading } from "../app/uiSlice";
 
+function getSegment(
+	budgetId: string,
+	batchId: string,
+	type: string,
+	itemId: string
+): string;
+function getSegment(budgetId: string, batchId: string): string;
+function getSegment(budgetId: string): string;
+function getSegment(): string {
+	return "";
+}
+
 const getWriter = () => {
 	const db = getFirestore();
 
 	return { writer: writeBatch(db), usersRef: collection(db, "users") };
 };
 
+export const loadApp = user => {
+	const { usersRef } = getWriter();
+	let pathSegments = [];
+};
+
 export const initializeDB = async (user: User) => {
 	try {
 		const { usersRef, writer } = getWriter();
-		const { budgets, selectedBudget } = initialState;
+		const { budgets, heads } = initialState;
 
-		const snapshot = await getDoc(doc(usersRef, user.uid));
-		if (snapshot.exists()) return;
-
-		writer.set(doc(usersRef, user.uid), { selectedBudget });
+		writer.set(doc(usersRef, user.uid), { heads });
 
 		const budget = { ...budgets[0] };
 		delete budget.batches;
 
-		let pathSegments = [user.uid, "budgets", budget.id];
+		let pathSegments = [user.uid, "budgets", heads.budget];
 
 		writer.set(doc(usersRef, ...pathSegments), budget);
 
@@ -58,7 +66,7 @@ export const addBudget = async (
 ) => {
 	dispatch(toggledLoading(true));
 	try {
-		const { selectedBudget } = state;
+		const { heads } = state;
 		const batch = getBatch(state);
 
 		const { type, description, amounts } = bItem;
@@ -75,7 +83,7 @@ export const addBudget = async (
 		let pathSegments = [
 			getCurrentUser().uid,
 			"budgets",
-			selectedBudget,
+			heads.batch,
 			"batches",
 			batch.id
 		];

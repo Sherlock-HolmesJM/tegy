@@ -7,8 +7,8 @@ export const getBatch = (budgets: Budgets) => {
 
 	if (!budget) return undefined;
 
-	const { selectedBatch, batches } = budget;
-	return batches.find(b => b.id === selectedBatch);
+	const { batches } = budget;
+	return batches.find(b => b.id === budgets.heads.batch);
 };
 
 export const getTotal = (batch: Batch) => {
@@ -18,10 +18,11 @@ export const getTotal = (batch: Batch) => {
 
 export const createBatch = (
 	name: string,
-	date: { start: Date; end: Date }
+	date: { start: Date; end: Date },
+	id?: string
 ): Batch => {
 	return {
-		id: uid(),
+		id: id || uid(),
 		name,
 		date: {
 			start: date.start.getTime(),
