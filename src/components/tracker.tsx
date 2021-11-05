@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Route, Switch, useLocation } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 import { ToastContainer } from "react-toastify";
 import BudgetView from "./budgetView";
@@ -10,8 +10,7 @@ import BudgetItems from "./common/budgetItems";
 import {
 	batchLoaded,
 	selectBatch,
-	selectBatchTotal,
-	totalUpdated
+	selectBatchTotal
 } from "../model/budgetSlice";
 import { useAppDispatch, useAppSelector } from "../model/hooks";
 import { formatAmount } from "../utils/money";
@@ -19,15 +18,9 @@ import { getBatch } from "../services/batchService";
 import { toggledLoading } from "../model/uiSlice";
 
 function Tracker() {
-	const [, , type, id] = useLocation().pathname.split("/");
-
 	const dispatch = useAppDispatch();
 
 	const batch = useAppSelector(selectBatch);
-
-	useEffect(() => {
-		if (type && id) dispatch(totalUpdated({ type: type as ItemType, id }));
-	}, [type, id, dispatch]);
 
 	useEffect(() => {
 		if (!batch) {

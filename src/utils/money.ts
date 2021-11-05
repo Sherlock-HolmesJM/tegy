@@ -3,14 +3,15 @@ export const formatAmount = (value: number, sign = "") => {
 
 	const head = (value + "").split("");
 	const tails: string[] = [];
+	sign = head.includes("-") ? head.splice(0, 1)[0] : sign;
+
+	if (head.length <= 3) return `${sign} ${head.join("")}.00`;
 
 	for (let i = head.length; i > 3; i -= 3) {
 		const index = head.length - 3;
 		const tail = head.splice(index, 3).join("");
 		tails.push(tail);
 	}
-
-	sign = head.includes("-") ? head.splice(0, 1)[0] : sign;
 
 	if (tails.length === 0) return `${sign} ${head.join("")}.00`.trim();
 
