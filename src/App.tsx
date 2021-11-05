@@ -9,7 +9,7 @@ import Login from "./components/modal/login";
 import SignUp from "./components/modal/signUp";
 import Tracker from "./components/tracker";
 import { onStateChange } from "./services/authService";
-import { getAppFromDB } from "./services/budgetService";
+import { getAppFromDB as loadAddFromDB } from "./services/budgetService";
 
 function App() {
 	const dispatch = useAppDispatch();
@@ -20,7 +20,7 @@ function App() {
 				dispatch(() => {
 					dispatch(toggledLoading(1));
 
-					getAppFromDB(user, budgets => {
+					loadAddFromDB(user, budgets => {
 						dispatch(stateLoaded(budgets));
 						dispatch(toggledLoading(1));
 					});
