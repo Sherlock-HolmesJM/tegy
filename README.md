@@ -1,8 +1,10 @@
-# Budgety: keep track of your budget
+# Tegy: a simple budget tracking application
+
+## Description
+
+    Tegy tracks your budget by keeping record of your incomes and expenses, dates, available amount and total amounts in batches
 
 ![img](https://alltogether.swe.org/wp-content/uploads/2021/09/budget_header.jpg)
-
-<!-- [LINK TO SITE](https://budgety-47.netlify.app/) -->
 
 [LINK TO SITE](https://tegy.netlify.app)
 
