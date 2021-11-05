@@ -5,6 +5,12 @@ declare global {
 		border: (color?: string) => string;
 		theme: Theme;
 	}
+
+	interface Callback {
+		onSuccess: () => void;
+		onError: () => void;
+	}
+
 	interface Theme {
 		primary: string;
 		secondary: string;

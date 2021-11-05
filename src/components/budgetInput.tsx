@@ -14,6 +14,7 @@ import uid from "../utils/id";
 import Input from "./common/input";
 import Button from "./common/button";
 import itemService from "../services/itemService";
+import { updateHeads } from "../services/budgetService";
 
 const BudgetInput = () => {
 	const dispatch = useAppDispatch();
@@ -54,7 +55,17 @@ const BudgetInput = () => {
 	};
 
 	const handleBatchChange = id => {
-		dispatch(batchChanged({ batchId: id }));
+		dispatch((dispatch, getState) => {
+			const old_heads = { ...getState().budgets.heads };
+			const heads = { ...old_heads, batch: id };
+
+			dispatch(batchChanged({ batchId: id }));
+
+			updateHeads(heads, {
+				onSuccess: () => "",
+				onError: () => dispatch(batchChanged({ batchId: old_heads.batch }))
+			});
+		});
 	};
 
 	const handleNewBatch = () => {
