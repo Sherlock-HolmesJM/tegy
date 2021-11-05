@@ -1,14 +1,15 @@
 import { useEffect } from "react";
 import "./App.css";
+import { stateLoaded } from "./app/budgetSlice";
 import { useAppDispatch } from "./app/hooks";
-import { ModalE, toggledModal } from "./app/uiSlice";
+import { ModalE, toggledLoading, toggledModal } from "./app/uiSlice";
 import Loader from "./components/common/loader";
 import CreateBatch from "./components/modal/createBatch";
 import Login from "./components/modal/login";
 import SignUp from "./components/modal/signUp";
 import Tracker from "./components/tracker";
 import { onStateChange } from "./services/authService";
-import { setDB } from "./services/budgetService";
+import { getAppFromDB } from "./services/budgetService";
 
 function App() {
 	const dispatch = useAppDispatch();
@@ -16,7 +17,14 @@ function App() {
 	useEffect(() => {
 		onStateChange(user => {
 			if (user) {
-				setDB(user); // this can be done when the user registers
+				dispatch(() => {
+					dispatch(toggledLoading(1));
+
+					getAppFromDB(user, budgets => {
+						dispatch(stateLoaded(budgets));
+						dispatch(toggledLoading(1));
+					});
+				});
 			} else {
 				dispatch(toggledModal(ModalE.LOGIN));
 			}

@@ -1,5 +1,37 @@
-import { collection, getFirestore, writeBatch, doc } from "@firebase/firestore";
+import {
+	collection,
+	getFirestore,
+	writeBatch,
+	doc,
+	getDoc,
+	getDocs,
+	query
+} from "@firebase/firestore";
 import { getCurrentUser } from "./authService";
+
+export const get = async <T>(...pathSegments: string[]): Promise<T> => {
+	const db = getFirestore();
+	const usersRef = collection(db, "users");
+	const { uid } = getCurrentUser();
+
+	const res = await getDoc(doc(usersRef, ...pathSegments));
+
+	if (!res.exists() && pathSegments[0] === uid) {
+		return { message: "no doc found", code: 404 } as any;
+	}
+
+	return res.data() as T;
+};
+
+export const getList = async <T>(...pathSegments: string[]): Promise<T[]> => {
+	const db = getFirestore();
+	const usersRef = collection(db, "users", ...pathSegments);
+
+	const q = query(usersRef);
+	const res = await getDocs(q);
+
+	return res.docs.map(doc => doc.data()) as T[];
+};
 
 export const getWriter = (): Writer => {
 	const db = getFirestore();

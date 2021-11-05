@@ -30,6 +30,10 @@ const budgetSlice = createSlice({
 	initialState,
 
 	reducers: {
+		stateLoaded: (state, { payload }: PayloadAction<Budgets>) => {
+			return payload;
+		},
+
 		itemAdded: (state, { payload }: PayloadAction<BudgetItem>) => {
 			const batch = getBatch(state);
 
@@ -91,7 +95,8 @@ export const {
 	itemRemoved,
 	totalUpdated,
 	batchChanged,
-	createdBatch
+	createdBatch,
+	stateLoaded
 } = budgetSlice.actions;
 
 export const selectBatch = (state: RootState) => {
