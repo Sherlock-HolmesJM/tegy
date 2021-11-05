@@ -1,16 +1,20 @@
-import { initialState } from "../model/budgetSlice";
 import { User } from "@firebase/auth";
+import { initialState } from "../model/budgetSlice";
 import { strip } from "../utils/striper";
 import { getPathSegments, getWriter, get, getList } from "./httpService";
 
 export const getAppFromDB = async (
 	user: User,
-	cb: (budgets: Budgets) => void
+	onSuccess: (budgets: Budgets) => void,
+	onError: () => void
 ) => {
-	//@ts-ignore
-	const { heads, code } = await get<Budgets>(user.uid);
+	const state = await get<Budgets>(user.uid);
 
-	if (code) return setDB(user);
+	if (!state) {
+		setDB(user);
+		return onError();
+	}
+	const { heads } = state;
 
 	let budget = await get<Budget>(...getPathSegments({ budget: heads.budget }));
 
@@ -23,7 +27,7 @@ export const getAppFromDB = async (
 	batch = { ...batch, income, expense };
 	budget = { ...budget, batches: [batch] };
 
-	cb({ heads, budgets: [budget] });
+	onSuccess({ heads, budgets: [budget] });
 };
 
 export const setDB = async (user: User) => {
@@ -48,9 +52,3 @@ export const setDB = async (user: User) => {
 		console.log(error.message);
 	}
 };
-
-const budgetService = {
-	initializeDB: setDB
-};
-
-export default budgetService;

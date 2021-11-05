@@ -20,10 +20,14 @@ function App() {
 				dispatch(() => {
 					dispatch(toggledLoading(1));
 
-					loadAddFromDB(user, budgets => {
-						dispatch(stateLoaded(budgets));
-						dispatch(toggledLoading(1));
-					});
+					loadAddFromDB(
+						user,
+						budgets => {
+							dispatch(stateLoaded(budgets));
+							dispatch(toggledLoading(1));
+						},
+						() => dispatch(toggledLoading(1))
+					);
 				});
 			} else {
 				dispatch(toggledModal(ModalE.LOGIN));
