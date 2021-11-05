@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import styled from "styled-components";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { useAppDispatch, useAppSelector } from "../model/hooks";
 import Select from "./common/select";
 import {
 	batchChanged,
 	selectBatchList,
 	selectBatchId,
 	itemAdded
-} from "../app/budgetSlice";
-import { ModalE, toggledLoading, toggledModal } from "../app/uiSlice";
+} from "../model/budgetSlice";
+import { ModalE, toggledLoading, toggledModal } from "../model/uiSlice";
 import uid from "../utils/id";
 import Input from "./common/input";
 import Button from "./common/button";

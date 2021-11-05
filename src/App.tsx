@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import "./App.css";
-import { stateLoaded } from "./app/budgetSlice";
-import { useAppDispatch } from "./app/hooks";
-import { ModalE, toggledLoading, toggledModal } from "./app/uiSlice";
+import { stateLoaded } from "./model/budgetSlice";
+import { useAppDispatch } from "./model/hooks";
+import { ModalE, toggledLoading, toggledModal } from "./model/uiSlice";
 import Loader from "./components/common/loader";
 import CreateBatch from "./components/modal/createBatch";
 import Login from "./components/modal/login";

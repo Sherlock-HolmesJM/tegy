@@ -1,4 +1,4 @@
-import { initialState } from "../app/budgetSlice";
+import { initialState } from "../model/budgetSlice";
 import { User } from "@firebase/auth";
 import { strip } from "../utils/striper";
 import { getPathSegments, getWriter, get, getList } from "./httpService";

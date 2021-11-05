@@ -1,6 +1,6 @@
 import { useParams, Redirect } from "react-router";
-import { selectItem } from "../app/budgetSlice";
-import { useAppSelector } from "../app/hooks";
+import { selectItem } from "../model/budgetSlice";
+import { useAppSelector } from "../model/hooks";
 import { toBudgetList } from "../utils/budgetItem";
 import BudgetItems from "./common/budgetItems";
 

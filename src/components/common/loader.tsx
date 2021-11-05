@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { useAppSelector } from "../../app/hooks";
-import { selectLoading } from "../../app/uiSlice";
+import { useAppSelector } from "../../model/hooks";
+import { selectLoading } from "../../model/uiSlice";
 
 const Loader = () => {
 	const isLoading = useAppSelector(selectLoading);

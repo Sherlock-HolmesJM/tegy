@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { selectBatchTotal } from "../../app/budgetSlice";
-import { useAppSelector } from "../../app/hooks";
+import { selectBatchTotal } from "../../model/budgetSlice";
+import { useAppSelector } from "../../model/hooks";
 import { formatAmount, percentage } from "../../utils/money";
 import Badge from "./badge";
 

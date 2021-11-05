@@ -11,8 +11,8 @@ import {
 	selectBatch,
 	selectBatchTotal,
 	totalUpdated as updatedTotal
-} from "../app/budgetSlice";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
+} from "../model/budgetSlice";
+import { useAppDispatch, useAppSelector } from "../model/hooks";
 import { formatAmount } from "../utils/money";
 
 function Tracker() {

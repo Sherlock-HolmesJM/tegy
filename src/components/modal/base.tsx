@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { useAppDispatch } from "../../app/hooks";
-import { ModalE, toggledModal } from "../../app/uiSlice";
+import { useAppDispatch } from "../../model/hooks";
+import { ModalE, toggledModal } from "../../model/uiSlice";
 
 const Container = styled.div`
 	position: absolute;

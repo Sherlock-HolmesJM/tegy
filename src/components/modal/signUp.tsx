@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../model/hooks";
 import {
 	ModalE,
 	selectModal,
 	toggledLoading,
 	toggledModal
-} from "../../app/uiSlice";
+} from "../../model/uiSlice";
 import Button from "../common/button";
 import Input from "../common/input";
 import { LoginRegister, ModalWrapper } from "./base";

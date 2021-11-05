@@ -7,10 +7,10 @@ import expenseImg from "../../asset/expense.webp";
 import deleteImg from "../../asset/delete.webp";
 import { useHistory } from "react-router";
 import { formatAmount, percentage } from "../../utils/money";
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { itemRemoved, selectBatchTotal } from "../../app/budgetSlice";
+import { useAppSelector, useAppDispatch } from "../../model/hooks";
+import { itemRemoved, selectBatchTotal } from "../../model/budgetSlice";
 import itemService from "../../services/itemService";
-import { toggledLoading } from "../../app/uiSlice";
+import { toggledLoading } from "../../model/uiSlice";
 
 interface Props {
 	budget: BudgetItem;

@@ -7,7 +7,7 @@ import * as serviceWorker from "./serviceWorker";
 import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
 import App from "./App";
-import { store } from "./app/store";
+import { store } from "./model/store";
 import { firebaseConfig } from "./utils/config";
 
 initializeApp(firebaseConfig);
