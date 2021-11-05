@@ -14,7 +14,7 @@ export const getItem = (param: ItemFind, budgets: Budgets, batch?: Batch) => {
 		: undefined;
 };
 
-export const toBudgetList = (budget: BudgetItem): BudgetItem[] => {
+export const toItemList = (budget: BudgetItem): BudgetItem[] => {
 	budget = JSON.parse(JSON.stringify(budget));
 
 	return budget.amounts
