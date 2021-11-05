@@ -1,8 +1,17 @@
 import strip from "../utils/striper";
 import { getCurrentUser } from "./authService";
-import { getPathSegments, getWriter } from "./httpService";
+import { get, getList, getPathSegments, getWriter } from "./httpService";
 
-const createBatch = async (
+export const getBatch = async (state: Budgets) => {
+	const paths = getPathSegments(state.heads);
+	const batch = await get<Batch>(...paths);
+	const income = await getList<BudgetItem>(...paths, "income");
+	const expense = await getList<BudgetItem>(...paths, "expense");
+
+	return { ...batch, income, expense };
+};
+
+export const createBatch = async (
 	batch: Batch,
 	state: Budgets,
 	onSuccess: () => void,
@@ -12,9 +21,10 @@ const createBatch = async (
 		const writer = getWriter();
 
 		const heads = { ...state.heads, batch: batch.id };
+		const batchList = [...state.batchList, { id: batch.id, name: batch.name }];
 
 		writer.set(strip(batch, ["income", "expense"]), getPathSegments(heads));
-		writer.update({ heads }, [getCurrentUser().uid]);
+		writer.update({ heads, batchList }, [getCurrentUser().uid]);
 
 		await writer.commit();
 		onSuccess();
@@ -24,6 +34,6 @@ const createBatch = async (
 	}
 };
 
-const batchService = { createBatch };
+const batchService = { createBatch, getBatch };
 
 export default batchService;

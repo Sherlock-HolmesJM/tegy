@@ -27,7 +27,7 @@ function Select(props: Props) {
 			color={color}
 			len={len}
 			className={className}>
-			<div className="value">{selected.label ?? value}</div>
+			<div className="value">{selected?.label ?? value}</div>
 
 			{show && (
 				<div className="options scrollar-m">

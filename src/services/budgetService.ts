@@ -27,7 +27,7 @@ export const getAppFromDB = async (
 	batch = { ...batch, income, expense };
 	budget = { ...budget, batches: [batch] };
 
-	onSuccess({ heads, budgets: [budget] });
+	onSuccess({ ...state, budgets: [budget] });
 };
 
 export const setDB = async (user: User) => {
@@ -35,7 +35,7 @@ export const setDB = async (user: User) => {
 		const writer = getWriter();
 		const { budgets, heads } = initialState;
 
-		writer.set({ heads }, [user.uid]);
+		writer.set(strip(initialState, ["budgets"]), [user.uid]);
 
 		let pathSegments = getPathSegments({ budget: heads.budget });
 

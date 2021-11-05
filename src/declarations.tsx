@@ -21,6 +21,8 @@ declare global {
 
 	interface Budgets {
 		budgets: Budget[];
+		batchList: { id: string; name: string }[];
+		budgetList: { id: string; name: string }[];
 		heads: Heads;
 	}
 

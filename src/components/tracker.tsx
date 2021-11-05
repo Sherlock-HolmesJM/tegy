@@ -8,12 +8,15 @@ import Banner from "./common/banner";
 import SummaryLabel from "./common/summaryLabel";
 import BudgetItems from "./common/budgetItems";
 import {
+	batchLoaded,
 	selectBatch,
 	selectBatchTotal,
-	totalUpdated as updatedTotal
+	totalUpdated
 } from "../model/budgetSlice";
 import { useAppDispatch, useAppSelector } from "../model/hooks";
 import { formatAmount } from "../utils/money";
+import { getBatch } from "../services/batchService";
+import { toggledLoading } from "../model/uiSlice";
 
 function Tracker() {
 	const [, , type, id] = useLocation().pathname.split("/");
@@ -23,8 +26,21 @@ function Tracker() {
 	const batch = useAppSelector(selectBatch);
 
 	useEffect(() => {
-		if (type && id) dispatch(updatedTotal({ type: type as ItemType, id }));
+		if (type && id) dispatch(totalUpdated({ type: type as ItemType, id }));
 	}, [type, id, dispatch]);
+
+	useEffect(() => {
+		if (!batch) {
+			dispatch((dispatch, getState) => {
+				dispatch(toggledLoading(1));
+
+				getBatch(getState().budgets).then(batch => {
+					dispatch(batchLoaded(batch));
+					dispatch(toggledLoading(1));
+				});
+			});
+		}
+	}, [batch, dispatch]);
 
 	const total = useAppSelector(selectBatchTotal);
 
@@ -62,12 +78,12 @@ function Tracker() {
 							<BudgetItems
 								title="Income"
 								color="primary"
-								items={batch.income ?? []}
+								items={batch?.income ?? []}
 							/>
 							<BudgetItems
 								title="Expense"
 								color="secondary"
-								items={batch.expense ?? []}
+								items={batch?.expense ?? []}
 							/>
 						</>
 					</Route>

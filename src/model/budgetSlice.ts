@@ -21,7 +21,9 @@ export const initialState: Budgets = {
 	heads: {
 		budget: budget.id,
 		batch: batch.id
-	}
+	},
+	batchList: [{ id: batch.id, name: batch.name }],
+	budgetList: [{ id: budget.id, name: budget.name }]
 };
 
 const budgetSlice = createSlice({
@@ -86,6 +88,11 @@ const budgetSlice = createSlice({
 			const budget = getBudget(state);
 			budget.batches.push(payload);
 			state.heads.batch = payload.id;
+			state.batchList.push({ id: payload.id, name: payload.name });
+		},
+
+		batchLoaded: (state, { payload }: PayloadAction<Batch>) => {
+			getBudget(state).batches.push(payload);
 		}
 	}
 });
@@ -96,6 +103,7 @@ export const {
 	totalUpdated,
 	batchChanged,
 	createdBatch,
+	batchLoaded,
 	stateLoaded
 } = budgetSlice.actions;
 
@@ -108,13 +116,13 @@ export const selectItem = (param: ItemFind) => (state: RootState) => {
 };
 
 export const selectBatchTotal = (state: RootState) => {
-	return getBatch(state.budgets).total;
+	return getBatch(state.budgets)?.total ?? { income: 0, expense: 0 };
 };
 
 export const selectBatchId = (state: RootState) => state.budgets.heads.batch;
 
 export const selectBatchList = (state: RootState): SelectOption[] => {
-	return getBudget(state.budgets).batches.map(batch => ({
+	return state.budgets.batchList.map(batch => ({
 		label: batch.name,
 		value: batch.id
 	}));
