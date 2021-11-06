@@ -7,10 +7,10 @@ export const getItem = (param: ItemFind, budgets: Budgets, batch?: Batch) => {
 
 	const list = b[type] ?? [];
 
-	return id
+	return description
+		? list.find(b => b.description.toLowerCase() === description.toLowerCase())
+		: id
 		? list.find(b => b.id === id)
-		: description
-		? list.find(b => b.description === description)
 		: undefined;
 };
 
