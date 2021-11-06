@@ -17,8 +17,6 @@ function App() {
 	useEffect(() => {
 		onStateChange(user => {
 			if (user) {
-				return;
-
 				dispatch(() => {
 					dispatch(toggledLoading(1));
 

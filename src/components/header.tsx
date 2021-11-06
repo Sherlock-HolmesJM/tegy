@@ -4,8 +4,6 @@ import Logout from "./common/logout";
 interface Props {}
 
 function Header(props: Props) {
-	const {} = props;
-
 	return (
 		<Headerr>
 			<div className="header-title">
