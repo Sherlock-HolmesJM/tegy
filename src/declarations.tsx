@@ -14,6 +14,7 @@ declare global {
 	interface Theme {
 		primary: string;
 		secondary: string;
+		gray: string;
 	}
 
 	type ThemeField = "primary" | "secondary";

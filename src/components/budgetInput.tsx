@@ -139,7 +139,7 @@ const Wrapper = styled.div<{ ctheme: Color }>`
 	align-items: center;
 	min-height: 40px;
 	padding: 5px 2px;
-	background-color: #e2dede;
+	background-color: ${window.theme.gray};
 	border-bottom: 1px groove ${props => props.ctheme.selectedColor};
 
 	.input-icon.hide {

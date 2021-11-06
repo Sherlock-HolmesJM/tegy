@@ -31,6 +31,7 @@
 	<body class="scrollar">
 		<noscript>You need to enable JavaScript to run this app.</noscript>
 		<div id="root"></div>
+
 		<!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -41,12 +42,22 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+
+		<!-- DEV USE: for color picking -->
+		<style>
+			.ug {
+				color: #eeecec;
+			}
+		</style>
+		
 		<script>
+			//for debugging
 			window.border = (color = "red") => `border: 1px solid ${color};`;
 			
 			window.theme = {
 				primary: "#32c4c9",
-				secondary: "#f33333"
+				secondary: "#f33333",
+				gray: "#e2dede",
 			};
 		</script>
 	</body>

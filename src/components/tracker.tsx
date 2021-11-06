@@ -16,6 +16,7 @@ import { useAppDispatch, useAppSelector } from "../model/hooks";
 import { formatAmount } from "../utils/money";
 import { getBatch } from "../services/batchService";
 import { toggledLoading } from "../model/uiSlice";
+import Header from "./header";
 
 function Tracker() {
 	const dispatch = useAppDispatch();
@@ -40,6 +41,8 @@ function Tracker() {
 	return (
 		<Wrapper>
 			<ToastContainer theme="colored" position="top-center" />
+
+			<Header />
 
 			<Banner>
 				<div className="banner-content">
