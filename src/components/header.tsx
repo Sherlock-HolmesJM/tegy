@@ -1,6 +1,5 @@
-import React from "react";
 import styled from "styled-components";
-import Button from "./common/button";
+import Logout from "./common/logout";
 
 interface Props {}
 
@@ -13,7 +12,7 @@ function Header(props: Props) {
 				<em>Tegy</em>
 			</div>
 
-			<Button>Logout</Button>
+			<Logout />
 		</Headerr>
 	);
 }
