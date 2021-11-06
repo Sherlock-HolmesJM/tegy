@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../model/hooks";
@@ -24,6 +24,8 @@ const BudgetInput = () => {
 	const [amount, setAmount] = useState(0);
 	const [description, setDescription] = useState("");
 	const [type, setType] = useState<ItemType>("income");
+
+	const descRef = useRef<HTMLInputElement>(null);
 
 	const { theme } = window;
 	const selectedColor = type === "income" ? theme.primary : theme.secondary;
@@ -72,6 +74,11 @@ const BudgetInput = () => {
 		dispatch(toggledModal(ModalE.BATCH));
 	};
 
+	const handleTypeSelect = (value: string) => {
+		setType(value as ItemType);
+		descRef.current.select();
+	};
+
 	return (
 		<Wrapper onKeyPress={handleInput} ctheme={{ selectedColor, ...theme }}>
 			<Button
@@ -91,7 +98,7 @@ const BudgetInput = () => {
 
 			<Select
 				color={selectedColor}
-				onSelect={value => setType(value as ItemType)}
+				onSelect={handleTypeSelect}
 				value={type}
 				options={[
 					{ value: "income", label: "+" },
@@ -104,7 +111,9 @@ const BudgetInput = () => {
 				className="input-description"
 				value={description}
 				onChange={e => setDescription(e.target.value)}
+				onFocus={e => e.target.select()}
 				color={selectedColor}
+				ref={descRef}
 			/>
 
 			<Input
