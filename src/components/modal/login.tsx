@@ -1,11 +1,6 @@
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../model/hooks";
-import {
-	ModalE,
-	selectModal,
-	toggledLoading,
-	toggledModal
-} from "../../model/uiSlice";
+import { ModalE, selectModal, toggledModal } from "../../model/uiSlice";
 import Button from "../common/button";
 import Input from "../common/input";
 import { LoginRegister, ModalWrapper } from "./base";
@@ -22,7 +17,6 @@ const Login = () => {
 	if (!showModal) return null;
 
 	const handleSubmit = async () => {
-		dispatch(toggledLoading(""));
 		try {
 			if (!email || !password) throw Error("Empty fields not allowed.");
 
@@ -34,7 +28,6 @@ const Login = () => {
 		} catch (error) {
 			toast.error(error.message);
 		}
-		dispatch(toggledLoading(""));
 	};
 
 	const handleClose = () => {

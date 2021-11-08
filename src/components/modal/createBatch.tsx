@@ -2,12 +2,7 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { createdBatch, selectBatchList } from "../../model/budgetSlice";
 import { useAppDispatch, useAppSelector } from "../../model/hooks";
-import {
-	ModalE,
-	selectModal,
-	toggledLoading,
-	toggledModal
-} from "../../model/uiSlice";
+import { ModalE, selectModal, toggledModal } from "../../model/uiSlice";
 import batchService from "../../services/batchService";
 import { createBatch } from "../../utils/batch";
 import Button from "../common/button";
@@ -38,8 +33,6 @@ const CreateBatch = () => {
 	};
 
 	const handleCreate = () => {
-		dispatch(toggledLoading(1));
-
 		dispatch((dispatch, getState) => {
 			const batch = createBatch(name, {
 				start: new Date(date.start),
@@ -50,14 +43,11 @@ const CreateBatch = () => {
 				batch,
 				getState().budgets,
 				() => {
-					dispatch(toggledLoading(1));
 					dispatch(createdBatch(batch));
 					handleClose();
 					toast.success("Created successfully.");
 				},
-				() => {
-					dispatch(toggledLoading(1));
-				}
+				() => {}
 			);
 		});
 	};

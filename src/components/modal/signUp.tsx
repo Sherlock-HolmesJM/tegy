@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../model/hooks";
 import {
 	ModalE,
 	selectModal,
-	toggledLoading,
+	setLoading,
 	toggledModal
 } from "../../model/uiSlice";
 import Button from "../common/button";
@@ -22,7 +22,6 @@ function SignUp() {
 	if (!showModal) return null;
 
 	const handleSubmit = async () => {
-		dispatch(toggledLoading(""));
 		try {
 			if (!email || !password) throw Error("Empty fields not allowed.");
 
@@ -34,7 +33,7 @@ function SignUp() {
 		} catch (error) {
 			toast.error(error.message);
 		}
-		dispatch(toggledLoading(""));
+		dispatch(setLoading(0));
 	};
 
 	const handleClose = () => {

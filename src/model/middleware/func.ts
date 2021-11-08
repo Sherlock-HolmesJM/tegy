@@ -1,12 +1,22 @@
-import { PayloadAction } from "@reduxjs/toolkit";
 // import { toast } from "react-toastify";
 import { Middleware } from "redux";
-import { toggledLoading } from "../uiSlice";
+import { RootState } from "../store";
+import { setLoading } from "../uiSlice";
 // import { getCurrentUser } from "../../services/authService";
 // import { ModalE, toggledLoading, toggledModal } from "../uiSlice";
 
-export const checks: Middleware = store => next => (action: PayloadAction) => {
-	// store.dispatch(toggledLoading(''))
+export const checks: Middleware = store => next => action => {
+	const { dispatch, getState } = store;
+
+	if (typeof action === "function") {
+		dispatch(setLoading(1));
+		action(dispatch, getState);
+		return;
+	}
+
+	if (action.type.includes("budgets/")) dispatch(setLoading(0));
+	if (action.type.includes("ui/toggledModal"))
+		stopLoading(dispatch, getState());
 
 	next(action);
 
@@ -19,6 +29,10 @@ export const checks: Middleware = store => next => (action: PayloadAction) => {
 	// 	store.dispatch(toggledLoading(1));
 	// 	next(action);
 	// }
+};
+
+const stopLoading = (dispatch, state: RootState) => {
+	if (state.ui.loading) dispatch(setLoading(0));
 };
 
 export default checks;

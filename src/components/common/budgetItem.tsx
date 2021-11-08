@@ -10,7 +10,6 @@ import { formatAmount, percentage } from "../../utils/money";
 import { useAppSelector, useAppDispatch } from "../../model/hooks";
 import { itemRemoved, selectBatchTotal } from "../../model/budgetSlice";
 import itemService from "../../services/itemService";
-import { toggledLoading } from "../../model/uiSlice";
 
 interface Props {
 	budget: BudgetItem;
@@ -48,8 +47,6 @@ function BudgetItem(props: Props) {
 		}).then(result => {
 			if (result.isConfirmed) {
 				dispatch((dispatch, getState) => {
-					dispatch(toggledLoading(1));
-
 					const item = props.budget;
 					const amountId = amounts[0].id;
 
@@ -61,9 +58,8 @@ function BudgetItem(props: Props) {
 						},
 						() => {
 							dispatch(itemRemoved({ budget: item, amountId }));
-							dispatch(toggledLoading(1));
 						},
-						() => dispatch(toggledLoading(1))
+						() => {}
 					);
 				});
 			}

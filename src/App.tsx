@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import "./App.css";
 import { stateLoaded } from "./model/budgetSlice";
 import { useAppDispatch } from "./model/hooks";
-import { ModalE, toggledLoading, toggledModal } from "./model/uiSlice";
+import { ModalE, toggledModal } from "./model/uiSlice";
 import Loader from "./components/common/loader";
 import CreateBatch from "./components/modal/createBatch";
 import Login from "./components/modal/login";
@@ -18,15 +18,11 @@ function App() {
 		onStateChange(user => {
 			if (user) {
 				dispatch(() => {
-					dispatch(toggledLoading(1));
-
 					loadAddFromDB(
 						user,
-						budgets => {
-							dispatch(stateLoaded(budgets));
-							dispatch(toggledLoading(1));
-						},
-						() => dispatch(toggledLoading(1))
+						budgets => dispatch(stateLoaded(budgets)),
+
+						() => ""
 					);
 				});
 			} else {

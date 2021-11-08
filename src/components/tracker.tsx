@@ -15,7 +15,6 @@ import {
 import { useAppDispatch, useAppSelector } from "../model/hooks";
 import { formatAmount } from "../utils/money";
 import { getBatch } from "../services/batchService";
-import { toggledLoading } from "../model/uiSlice";
 import Header from "./header";
 
 function Tracker() {
@@ -26,11 +25,8 @@ function Tracker() {
 	useEffect(() => {
 		if (!batch) {
 			dispatch((dispatch, getState) => {
-				dispatch(toggledLoading(1));
-
 				getBatch(getState().budgets).then(batch => {
 					dispatch(batchLoaded(batch));
-					dispatch(toggledLoading(1));
 				});
 			});
 		}

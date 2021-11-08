@@ -13,7 +13,7 @@ const uiSlice = createSlice({
 
 	initialState: {
 		modal: [],
-		loading: false
+		loading: 0
 	},
 
 	reducers: {
@@ -32,13 +32,13 @@ const uiSlice = createSlice({
 			}
 		},
 
-		toggledLoading: (state, action) => {
-			state.loading = !state.loading;
+		setLoading: (state, action: PayloadAction<1 | 0>) => {
+			state.loading = action.payload;
 		}
 	}
 });
 
-export const { toggledModal, toggledLoading } = uiSlice.actions;
+export const { toggledModal, setLoading } = uiSlice.actions;
 
 export const selectModal = (modal: ModalE) => (state: RootState) =>
 	state.ui.modal[modal];
