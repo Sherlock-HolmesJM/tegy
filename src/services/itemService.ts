@@ -4,13 +4,9 @@ import { getBatch } from "../utils/batch";
 import { getItem, sumItem } from "../utils/budgetItem";
 import { getPathSegments, getWriter } from "./httpService";
 
-export const addItem = async (
-	payload: { item: BudgetItem; state: Budgets },
-	onSuccess: () => void,
-	onError: () => void
-) => {
+export const addItem = async (bItem: BudgetItem, cb: Callback) => {
 	try {
-		const { item: bItem, state } = payload;
+		const state = store.getState().budgets;
 		const { heads } = state;
 		const batch = getBatch(state);
 
@@ -31,21 +27,20 @@ export const addItem = async (
 		writer.set(item, pathSegments);
 
 		await writer.commit();
-		onSuccess();
+		cb.onSuccess();
 	} catch (error) {
 		console.log(error.message);
 		store.dispatch(setLoading(0));
-		onError();
 	}
 };
 
 export const deleteItem = async (
-	payload: { item: BudgetItem; amountId: string; state: Budgets },
-	onSuccess: () => void,
-	onError: () => void
+	payload: { item: BudgetItem; amountId: string },
+	cb: Callback
 ) => {
 	try {
-		const { item: bItem, amountId, state } = payload;
+		const state = store.getState().budgets;
+		const { item: bItem, amountId } = payload;
 		const { id, type, description } = bItem;
 
 		let batch = { ...getBatch(state) };
@@ -71,11 +66,10 @@ export const deleteItem = async (
 		writer.update({ total }, getPathSegments(state.heads));
 
 		await writer.commit();
-		onSuccess();
+		cb.onSuccess();
 	} catch (error) {
 		console.log(error.message);
 		store.dispatch(setLoading(0));
-		onError();
 	}
 };
 

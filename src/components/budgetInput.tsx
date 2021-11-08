@@ -13,7 +13,7 @@ import { ModalE, toggledModal } from "../model/uiSlice";
 import uid from "../utils/id";
 import Input from "./common/input";
 import Button from "./common/button";
-import itemService from "../services/itemService";
+import { addItem } from "../services/itemService";
 import { updateHeads } from "../services/budgetService";
 
 const BudgetInput = () => {
@@ -41,12 +41,10 @@ const BudgetInput = () => {
 				amounts: [{ amount, date: Date.now(), id: uid() }]
 			};
 
-			dispatch((dispatch, getState) => {
-				itemService.addItem(
-					{ item, state: getState().budgets },
-					() => dispatch(itemAdded(item)),
-					() => ""
-				);
+			dispatch(dispatch => {
+				addItem(item, {
+					onSuccess: () => dispatch(itemAdded(item))
+				});
 			});
 		}
 	};

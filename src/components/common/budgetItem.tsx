@@ -9,7 +9,7 @@ import { useHistory } from "react-router";
 import { formatAmount, percentage } from "../../utils/money";
 import { useAppSelector, useAppDispatch } from "../../model/hooks";
 import { itemRemoved, selectBatchTotal } from "../../model/budgetSlice";
-import itemService from "../../services/itemService";
+import { deleteItem } from "../../services/itemService";
 
 interface Props {
 	budget: BudgetItem;
@@ -46,20 +46,17 @@ function BudgetItem(props: Props) {
 			confirmButtonText: "Yes, delete it!"
 		}).then(result => {
 			if (result.isConfirmed) {
-				dispatch((dispatch, getState) => {
+				dispatch(dispatch => {
 					const item = props.budget;
 					const amountId = amounts[0].id;
 
-					itemService.deleteItem(
+					deleteItem(
+						{ item, amountId },
 						{
-							item,
-							amountId,
-							state: getState().budgets
-						},
-						() => {
-							dispatch(itemRemoved({ budget: item, amountId }));
-						},
-						() => {}
+							onSuccess: () => {
+								dispatch(itemRemoved({ budget: item, amountId }));
+							}
+						}
 					);
 				});
 			}
