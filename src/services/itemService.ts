@@ -1,8 +1,8 @@
 import { store } from "../model/store";
-import { setLoading } from "../model/uiSlice";
 import { getBatch } from "../utils/batch";
 import { getItem, sumItem } from "../utils/budgetItem";
 import { getPathSegments, getWriter } from "./httpService";
+import log from "./logger";
 
 export const addItem = async (bItem: BudgetItem, cb: Callback) => {
 	try {
@@ -29,8 +29,7 @@ export const addItem = async (bItem: BudgetItem, cb: Callback) => {
 		await writer.commit();
 		cb.success();
 	} catch (error) {
-		console.log(error.message);
-		store.dispatch(setLoading(0));
+		log(error);
 	}
 };
 
@@ -68,8 +67,7 @@ export const deleteItem = async (
 		await writer.commit();
 		cb.success();
 	} catch (error) {
-		console.log(error.message);
-		store.dispatch(setLoading(0));
+		log(error);
 	}
 };
 

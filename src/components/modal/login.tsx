@@ -6,6 +6,7 @@ import Input from "../common/input";
 import { LoginRegister, ModalWrapper } from "./base";
 import authService from "../../services/authService";
 import { toast } from "react-toastify";
+import log from "../../services/logger";
 
 const Login = () => {
 	const dispatch = useAppDispatch();
@@ -28,7 +29,7 @@ const Login = () => {
 				toast.success("Successfully logged in.");
 			});
 		} catch (error) {
-			toast.error(error.message);
+			log(error);
 		}
 	};
 

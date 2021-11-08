@@ -1,8 +1,8 @@
 import { store } from "../model/store";
-import { setLoading } from "../model/uiSlice";
 import strip from "../utils/striper";
 import { getCurrentUser } from "./authService";
 import { get, getList, getPathSegments, getWriter } from "./httpService";
+import log from "./logger";
 
 export const getBatch = async () => {
 	const { heads } = store.getState().budgets;
@@ -28,8 +28,7 @@ export const createBatch = async (batch: Batch, cb: Callback) => {
 		await writer.commit();
 		cb.success();
 	} catch (error) {
-		console.log(error.message);
-		store.dispatch(setLoading(0));
+		log(error);
 	}
 };
 

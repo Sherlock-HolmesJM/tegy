@@ -24,8 +24,7 @@ function App() {
 				dispatch(toggledModal(ModalE.LOGIN));
 			}
 		});
-		// eslint-disable-next-line
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<div className="App">

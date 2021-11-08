@@ -28,7 +28,7 @@ function SignUp() {
 				toast.success("Accounted created successfully.");
 			});
 		} catch (error) {
-			toast.error(error.message);
+			console.log(error);
 		}
 	};
 
