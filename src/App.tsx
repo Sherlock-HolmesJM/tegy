@@ -18,12 +18,7 @@ function App() {
 		onStateChange(user => {
 			if (user) {
 				dispatch(() => {
-					loadAddFromDB(
-						user,
-						budgets => dispatch(stateLoaded(budgets)),
-
-						() => ""
-					);
+					loadAddFromDB(user, budgets => dispatch(stateLoaded(budgets)));
 				});
 			} else {
 				dispatch(toggledModal(ModalE.LOGIN));

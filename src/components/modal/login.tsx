@@ -16,15 +16,17 @@ const Login = () => {
 
 	if (!showModal) return null;
 
-	const handleSubmit = async () => {
+	const handleSubmit = () => {
 		try {
 			if (!email || !password) throw Error("Empty fields not allowed.");
 
-			await authService.login(email, password);
+			dispatch(async () => {
+				await authService.login(email, password);
 
-			dispatch(toggledModal(ModalE.LOGIN));
+				dispatch(toggledModal(ModalE.LOGIN));
 
-			toast.success("Successfully logged in.");
+				toast.success("Successfully logged in.");
+			});
 		} catch (error) {
 			toast.error(error.message);
 		}

@@ -16,15 +16,17 @@ function SignUp() {
 
 	if (!showModal) return null;
 
-	const handleSubmit = async () => {
+	const handleSubmit = () => {
 		try {
 			if (!email || !password) throw Error("Empty fields not allowed.");
 
-			await authService.signUp(email, password);
+			dispatch(async () => {
+				await authService.signUp(email, password);
 
-			dispatch(toggledModal(ModalE.SIGN_UP));
+				dispatch(toggledModal(ModalE.SIGN_UP));
 
-			toast.success("Accounted created successfully.");
+				toast.success("Accounted created successfully.");
+			});
 		} catch (error) {
 			toast.error(error.message);
 		}
