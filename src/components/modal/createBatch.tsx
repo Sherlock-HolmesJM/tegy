@@ -33,22 +33,19 @@ const CreateBatch = () => {
 	};
 
 	const handleCreate = () => {
-		dispatch((dispatch, getState) => {
+		dispatch(dispatch => {
 			const batch = createBatch(name, {
 				start: new Date(date.start),
 				end: new Date(date.end)
 			});
 
-			batchService.createBatch(
-				batch,
-				getState().budgets,
-				() => {
+			batchService.createBatch(batch, {
+				onSuccess: () => {
 					dispatch(createdBatch(batch));
 					handleClose();
 					toast.success("Created successfully.");
-				},
-				() => {}
-			);
+				}
+			});
 		});
 	};
 

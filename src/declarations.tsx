@@ -8,7 +8,7 @@ declare global {
 
 	interface Callback {
 		onSuccess: () => void;
-		onError: () => void;
+		onError?: () => void;
 	}
 
 	interface Theme {

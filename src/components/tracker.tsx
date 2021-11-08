@@ -24,8 +24,8 @@ function Tracker() {
 
 	useEffect(() => {
 		if (!batch) {
-			dispatch((dispatch, getState) => {
-				getBatch(getState().budgets).then(batch => {
+			dispatch(dispatch => {
+				getBatch().then(batch => {
 					dispatch(batchLoaded(batch));
 				});
 			});
