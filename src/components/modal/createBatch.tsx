@@ -40,7 +40,7 @@ const CreateBatch = () => {
 			});
 
 			batchService.createBatch(batch, {
-				onSuccess: () => {
+				success: () => {
 					dispatch(createdBatch(batch));
 					handleClose();
 					toast.success("Created successfully.");

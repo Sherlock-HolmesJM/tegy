@@ -53,7 +53,7 @@ function BudgetItem(props: Props) {
 					deleteItem(
 						{ item, amountId },
 						{
-							onSuccess: () => {
+							success: () => {
 								dispatch(itemRemoved({ budget: item, amountId }));
 							}
 						}

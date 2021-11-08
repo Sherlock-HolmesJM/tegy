@@ -27,7 +27,7 @@ export const addItem = async (bItem: BudgetItem, cb: Callback) => {
 		writer.set(item, pathSegments);
 
 		await writer.commit();
-		cb.onSuccess();
+		cb.success();
 	} catch (error) {
 		console.log(error.message);
 		store.dispatch(setLoading(0));
@@ -66,7 +66,7 @@ export const deleteItem = async (
 		writer.update({ total }, getPathSegments(state.heads));
 
 		await writer.commit();
-		cb.onSuccess();
+		cb.success();
 	} catch (error) {
 		console.log(error.message);
 		store.dispatch(setLoading(0));

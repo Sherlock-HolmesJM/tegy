@@ -43,7 +43,7 @@ const BudgetInput = () => {
 
 			dispatch(dispatch => {
 				addItem(item, {
-					onSuccess: () => dispatch(itemAdded(item))
+					success: () => dispatch(itemAdded(item))
 				});
 			});
 		}
@@ -57,8 +57,7 @@ const BudgetInput = () => {
 			dispatch(batchChanged({ batchId: id }));
 
 			updateHeads(heads, {
-				onSuccess: () => "",
-				onError: () => dispatch(batchChanged({ batchId: old_heads.batch }))
+				error: () => dispatch(batchChanged({ batchId: old_heads.batch }))
 			});
 		});
 	};

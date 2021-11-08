@@ -11,11 +11,11 @@ export const updateHeads = async (heads: Heads, cb: Callback) => {
 		const writer = getWriter();
 		writer.update({ heads }, [getCurrentUser().uid]);
 		await writer.commit();
-		cb.onSuccess();
+		cb.success();
 	} catch (error) {
 		console.log(error.message);
 		store.dispatch(setLoading(0));
-		cb.onError();
+		cb.error();
 	}
 };
 

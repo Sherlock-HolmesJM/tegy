@@ -26,7 +26,7 @@ export const createBatch = async (batch: Batch, cb: Callback) => {
 		writer.update({ heads, batchList }, [getCurrentUser().uid]);
 
 		await writer.commit();
-		cb.onSuccess();
+		cb.success();
 	} catch (error) {
 		console.log(error.message);
 		store.dispatch(setLoading(0));
