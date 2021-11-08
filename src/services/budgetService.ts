@@ -1,5 +1,7 @@
 import { User } from "@firebase/auth";
 import { initialState } from "../model/budgetSlice";
+import { store } from "../model/store";
+import { setLoading } from "../model/uiSlice";
 import { strip } from "../utils/striper";
 import { getCurrentUser } from "./authService";
 import { getPathSegments, getWriter, get, getList } from "./httpService";
@@ -12,6 +14,7 @@ export const updateHeads = async (heads: Heads, cb: Callback) => {
 		cb.onSuccess();
 	} catch (error) {
 		console.log(error.message);
+		store.dispatch(setLoading(0));
 		cb.onError();
 	}
 };
@@ -62,6 +65,7 @@ export const setDB = async (user: User) => {
 
 		writer.commit();
 	} catch (error) {
+		store.dispatch(setLoading(0));
 		console.log(error.message);
 	}
 };

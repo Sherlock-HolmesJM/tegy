@@ -1,3 +1,5 @@
+import { store } from "../model/store";
+import { setLoading } from "../model/uiSlice";
 import strip from "../utils/striper";
 import { getCurrentUser } from "./authService";
 import { get, getList, getPathSegments, getWriter } from "./httpService";
@@ -30,6 +32,7 @@ export const createBatch = async (
 		onSuccess();
 	} catch (error) {
 		console.log(error.message);
+		store.dispatch(setLoading(0));
 		onError();
 	}
 };

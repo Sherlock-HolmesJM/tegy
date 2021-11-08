@@ -1,11 +1,6 @@
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../model/hooks";
-import {
-	ModalE,
-	selectModal,
-	setLoading,
-	toggledModal
-} from "../../model/uiSlice";
+import { ModalE, selectModal, toggledModal } from "../../model/uiSlice";
 import Button from "../common/button";
 import Input from "../common/input";
 import { LoginRegister, ModalWrapper } from "./base";
@@ -33,7 +28,6 @@ function SignUp() {
 		} catch (error) {
 			toast.error(error.message);
 		}
-		dispatch(setLoading(0));
 	};
 
 	const handleClose = () => {

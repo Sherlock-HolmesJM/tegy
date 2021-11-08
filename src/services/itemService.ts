@@ -1,3 +1,5 @@
+import { store } from "../model/store";
+import { setLoading } from "../model/uiSlice";
 import { getBatch } from "../utils/batch";
 import { getItem, sumItem } from "../utils/budgetItem";
 import { getPathSegments, getWriter } from "./httpService";
@@ -32,6 +34,7 @@ export const addItem = async (
 		onSuccess();
 	} catch (error) {
 		console.log(error.message);
+		store.dispatch(setLoading(0));
 		onError();
 	}
 };
@@ -71,6 +74,7 @@ export const deleteItem = async (
 		onSuccess();
 	} catch (error) {
 		console.log(error.message);
+		store.dispatch(setLoading(0));
 		onError();
 	}
 };

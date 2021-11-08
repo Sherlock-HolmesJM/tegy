@@ -15,8 +15,7 @@ export const checks: Middleware = store => next => action => {
 	}
 
 	if (action.type.includes("budgets/")) dispatch(setLoading(0));
-	if (action.type.includes("ui/toggledModal"))
-		stopLoading(dispatch, getState());
+	if (action.type.includes("ui/toggledModal")) stopLoader(dispatch, getState());
 
 	next(action);
 
@@ -31,7 +30,7 @@ export const checks: Middleware = store => next => action => {
 	// }
 };
 
-const stopLoading = (dispatch, state: RootState) => {
+const stopLoader = (dispatch, state: RootState) => {
 	if (state.ui.loading) dispatch(setLoading(0));
 };
 
