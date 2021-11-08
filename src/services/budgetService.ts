@@ -11,7 +11,6 @@ export const updateHeads = async (heads: Heads, cb: Callback) => {
 		const writer = getWriter();
 		writer.update({ heads }, [getCurrentUser().uid]);
 		await writer.commit();
-		cb.success();
 	} catch (error) {
 		console.log(error.message);
 		store.dispatch(setLoading(0));
@@ -21,14 +20,13 @@ export const updateHeads = async (heads: Heads, cb: Callback) => {
 
 export const getAppFromDB = async (
 	user: User,
-	onSuccess: (budgets: Budgets) => void,
-	onError: () => void
+	success: (budgets: Budgets) => void
 ) => {
 	const state = await get<Budgets>(user.uid);
 
 	if (!state) {
 		setDB(user);
-		return onError();
+		return;
 	}
 	const { heads } = state;
 
@@ -43,7 +41,7 @@ export const getAppFromDB = async (
 	batch = { ...batch, income, expense };
 	budget = { ...budget, batches: [batch] };
 
-	onSuccess({ ...state, budgets: [budget] });
+	success({ ...state, budgets: [budget] });
 };
 
 export const setDB = async (user: User) => {
