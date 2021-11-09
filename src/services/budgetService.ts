@@ -20,26 +20,32 @@ export const getAppFromDB = async (
 	user: User,
 	success: (budgets: Budgets) => void
 ) => {
-	const state = await get<Budgets>(user.uid);
+	try {
+		const state = await get<Budgets>(user.uid);
 
-	if (!state) {
-		setDB(user);
-		return;
+		if (!state) {
+			setDB(user);
+			return;
+		}
+		const { heads } = state;
+
+		let budget = await get<Budget>(
+			...getPathSegments({ budget: heads.budget })
+		);
+
+		const pathsegments = getPathSegments(heads);
+
+		let batch = await get<Batch>(...pathsegments);
+		const income = await getList<BudgetItem>(...pathsegments, "income");
+		const expense = await getList<BudgetItem>(...pathsegments, "expense");
+
+		batch = { ...batch, income, expense };
+		budget = { ...budget, batches: [batch] };
+
+		success({ ...state, budgets: [budget] });
+	} catch (error) {
+		log(error);
 	}
-	const { heads } = state;
-
-	let budget = await get<Budget>(...getPathSegments({ budget: heads.budget }));
-
-	const pathsegments = getPathSegments(heads);
-
-	let batch = await get<Batch>(...pathsegments);
-	const income = await getList<BudgetItem>(...pathsegments, "income");
-	const expense = await getList<BudgetItem>(...pathsegments, "expense");
-
-	batch = { ...batch, income, expense };
-	budget = { ...budget, batches: [batch] };
-
-	success({ ...state, budgets: [budget] });
 };
 
 export const setDB = async (user: User) => {

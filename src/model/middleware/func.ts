@@ -1,9 +1,6 @@
-// import { toast } from "react-toastify";
 import { Middleware } from "redux";
 import { RootState } from "../store";
 import { setLoading } from "../uiSlice";
-// import { getCurrentUser } from "../../services/authService";
-// import { ModalE, toggledLoading, toggledModal } from "../uiSlice";
 
 export const checks: Middleware = store => next => action => {
 	const { dispatch, getState } = store;
@@ -18,16 +15,6 @@ export const checks: Middleware = store => next => action => {
 	if (action.type.includes("ui/toggledModal")) stopLoader(dispatch, getState());
 
 	next(action);
-
-	// if (!getCurrentUser()) {
-	// 	if (!action?.type?.includes("ui/"))
-	// 		toast.warn("Please login to perform this action.");
-
-	// 	next(toggledModal(ModalE.LOGIN));
-	// } else {
-	// 	store.dispatch(toggledLoading(1));
-	// 	next(action);
-	// }
 };
 
 const stopLoader = (dispatch, state: RootState) => {
