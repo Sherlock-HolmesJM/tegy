@@ -1,5 +1,5 @@
 import { User } from "@firebase/auth";
-import { initialState } from "../model/budgetSlice";
+import { store } from "../model/store";
 import { strip } from "../utils/striper";
 import { getCurrentUser } from "./authService";
 import { getPathSegments, getWriter, get, getList } from "./httpService";
@@ -23,10 +23,8 @@ export const getAppFromDB = async (
 	try {
 		const state = await get<Budgets>(user.uid);
 
-		if (!state) {
-			setDB(user);
-			return;
-		}
+		if (!state) throw Error("not found");
+
 		const { heads } = state;
 
 		let budget = await get<Budget>(
@@ -44,16 +42,20 @@ export const getAppFromDB = async (
 
 		success({ ...state, budgets: [budget] });
 	} catch (error) {
+		if (error.message === "not found") setDB(user);
 		log(error);
 	}
 };
 
-export const setDB = async (user: User) => {
+export const setDB = async (user: User, cb?: () => void) => {
 	try {
-		const writer = getWriter();
-		const { budgets, heads } = initialState;
+		const state = store.getState().budgets;
+		console.log(state, "state");
 
-		writer.set(strip(initialState, ["budgets"]), [user.uid]);
+		const writer = getWriter();
+		const { budgets, heads } = state;
+
+		writer.set(strip(state, ["budgets"]), [user.uid]);
 
 		let pathSegments = getPathSegments({ budget: heads.budget });
 
@@ -68,5 +70,6 @@ export const setDB = async (user: User) => {
 		writer.commit();
 	} catch (error) {
 		log(error);
+		cb && cb();
 	}
 };

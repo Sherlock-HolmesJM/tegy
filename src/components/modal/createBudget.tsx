@@ -2,6 +2,8 @@ import { useState } from "react";
 import { createdBudget } from "../../model/budgetSlice";
 import { useAppDispatch, useAppSelector } from "../../model/hooks";
 import { ModalE, selectModal } from "../../model/uiSlice";
+import { getCurrentUser } from "../../services/authService";
+import { setDB } from "../../services/stateService";
 import { createBatch } from "../../utils/batch";
 import uid from "../../utils/id";
 import Button from "../common/button";
@@ -30,7 +32,13 @@ const CreateBudget = () => {
 			batchList: [{ id: batch.id, name: batch.name }]
 		};
 
-		dispatch(createdBudget(budget));
+		dispatch((dispatch, getState) => {
+			// const oldState = getState().budgets;
+
+			dispatch(createdBudget(budget));
+
+			setDB(getCurrentUser(), () => {});
+		});
 	};
 
 	return (
