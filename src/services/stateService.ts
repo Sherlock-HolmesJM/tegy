@@ -1,5 +1,6 @@
 import { User } from "@firebase/auth";
 import { store } from "../model/store";
+import { getBudget } from "../utils/budget";
 import { strip } from "../utils/striper";
 import { getCurrentUser } from "./authService";
 import { getPathSegments, getWriter, get, getList } from "./httpService";
@@ -49,23 +50,20 @@ export const getAppFromDB = async (
 
 export const setDB = async (user: User, cb?: () => void) => {
 	try {
-		const state = store.getState().budgets;
-		console.log(state, "state");
-
 		const writer = getWriter();
-		const { budgets, heads } = state;
+		const state = store.getState().budgets;
+
+		const { heads } = state;
+		const budget = getBudget(state);
+		const batch = budget.batches[0];
 
 		writer.set(strip(state, ["budgets"]), [user.uid]);
 
 		let pathSegments = getPathSegments({ budget: heads.budget });
-
-		const [budget] = budgets;
 		writer.set(strip(budget, ["batches"]), pathSegments);
 
 		pathSegments = getPathSegments(heads);
-
-		const batchObj = strip(budget.batches[0], ["income", "expense"]);
-		writer.set(batchObj, pathSegments);
+		writer.set(strip(batch, ["income", "expense"]), pathSegments);
 
 		writer.commit();
 	} catch (error) {
