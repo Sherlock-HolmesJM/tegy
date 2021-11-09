@@ -48,7 +48,7 @@ export const getAppFromDB = async (
 	}
 };
 
-export const setDB = async (user: User, cb?: () => void) => {
+export const setDB = async (user: User, cb?: Callback) => {
 	try {
 		const writer = getWriter();
 		const state = store.getState().budgets;
@@ -65,9 +65,10 @@ export const setDB = async (user: User, cb?: () => void) => {
 		pathSegments = getPathSegments(heads);
 		writer.set(strip(batch, ["income", "expense"]), pathSegments);
 
-		writer.commit();
-	} catch (error) {
-		log(error);
-		cb && cb();
+		await writer.commit();
+		cb && cb.success();
+	} catch (err) {
+		log(err);
+		cb && cb.error();
 	}
 };

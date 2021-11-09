@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { createdBudget } from "../../model/budgetSlice";
+import { createdBudget, stateLoaded } from "../../model/budgetSlice";
 import { useAppDispatch, useAppSelector } from "../../model/hooks";
-import { ModalE, selectModal } from "../../model/uiSlice";
+import { ModalE, selectModal, toggledModal } from "../../model/uiSlice";
 import { getCurrentUser } from "../../services/authService";
 import { setDB } from "../../services/stateService";
 import { createBatch } from "../../utils/batch";
@@ -9,8 +9,6 @@ import uid from "../../utils/id";
 import Button from "../common/button";
 import Input from "../common/input";
 import { ModalWrapper } from "./base";
-
-// interface Props {}
 
 const CreateBudget = () => {
 	const dispatch = useAppDispatch();
@@ -33,11 +31,15 @@ const CreateBudget = () => {
 		};
 
 		dispatch((dispatch, getState) => {
-			// const oldState = getState().budgets;
+			const oldSate = getState().budgets;
 
 			dispatch(createdBudget(budget));
+			dispatch(toggledModal(ModalE.BUDGET));
 
-			setDB(getCurrentUser(), () => {});
+			setDB(getCurrentUser(), {
+				success: () => {},
+				error: () => dispatch(stateLoaded(oldSate))
+			});
 		});
 	};
 
