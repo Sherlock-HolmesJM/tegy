@@ -1,4 +1,5 @@
 import { store } from "../model/store";
+import { getBudget } from "../utils/budget";
 import strip from "../utils/striper";
 import { getCurrentUser } from "./authService";
 import { get, getList, getPathSegments, getWriter } from "./httpService";
@@ -17,10 +18,11 @@ export const getBatch = async () => {
 export const createBatch = async (batch: Batch, cb: Callback) => {
 	try {
 		const state = store.getState().budgets;
+		const budget = getBudget(state);
 		const writer = getWriter();
 
 		const heads = { ...state.heads, batch: batch.id };
-		const batchList = [...state.batchList, { id: batch.id, name: batch.name }];
+		const batchList = [...budget.batchList, { id: batch.id, name: batch.name }];
 
 		writer.set(strip(batch, ["income", "expense"]), getPathSegments(heads));
 		writer.update({ heads, batchList }, [getCurrentUser().uid]);

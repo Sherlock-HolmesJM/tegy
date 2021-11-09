@@ -9,7 +9,8 @@ import Login from "./components/modal/login";
 import SignUp from "./components/modal/signUp";
 import Tracker from "./components/tracker";
 import { onStateChange } from "./services/authService";
-import { getAppFromDB as loadAddFromDB } from "./services/budgetService";
+import { getAppFromDB as loadAppFromDB } from "./services/budgetService";
+import CreateBudget from "./components/modal/createBudget";
 
 function App() {
 	const dispatch = useAppDispatch();
@@ -18,7 +19,7 @@ function App() {
 		onStateChange(user => {
 			if (user) {
 				dispatch(() => {
-					loadAddFromDB(user, budgets => dispatch(stateLoaded(budgets)));
+					loadAppFromDB(user, budgets => dispatch(stateLoaded(budgets)));
 				});
 			} else {
 				dispatch(toggledModal(ModalE.LOGIN));
@@ -34,6 +35,7 @@ function App() {
 			<Login />
 			<SignUp />
 			<CreateBatch />
+			<CreateBudget />
 
 			{/* Page */}
 			<Tracker />

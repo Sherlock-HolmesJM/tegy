@@ -28,7 +28,6 @@ declare global {
 
 	interface Budgets {
 		budgets: Budget[];
-		batchList: { id: string; name: string }[];
 		budgetList: { id: string; name: string }[];
 		heads: Heads;
 	}
@@ -42,6 +41,7 @@ declare global {
 		id: string;
 		name: string;
 		batches: Batch[];
+		batchList: { id: string; name: string }[];
 	}
 
 	interface Batch {

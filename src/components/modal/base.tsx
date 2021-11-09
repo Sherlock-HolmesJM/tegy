@@ -2,6 +2,28 @@ import styled from "styled-components";
 import { useAppDispatch } from "../../model/hooks";
 import { ModalE, toggledModal } from "../../model/uiSlice";
 
+/**
+ * NOTE: To create a MODAL, use the ModalWrapper and pass your modal as child.
+ */
+
+const ModalWrapper: React.FC<{ theme: Theme; title: string }> = props => {
+	const dispatch = useAppDispatch();
+
+	const handleClose = e => {
+		if (e.target.dataset.close) dispatch(toggledModal(ModalE.CLOSE));
+	};
+
+	return (
+		<Container onClick={handleClose} data-close>
+			<Modal ctheme={props.theme}>
+				<Title>{props.title}</Title>
+
+				{props.children}
+			</Modal>
+		</Container>
+	);
+};
+
 const Container = styled.div`
 	position: absolute;
 	top: 1px;
@@ -22,7 +44,6 @@ const Modal = styled.div<{ ctheme: Theme }>`
 	width: min(350px, 100%);
 	margin: 10px;
 	background: white;
-	min-height: 200px;
 	border-radius: 5px;
 	padding: 15px;
 	border: 1px solid ${props => props.ctheme.primary};
@@ -45,24 +66,6 @@ export const LoginRegister = styled.div`
 	text-transform: uppercase;
 	cursor: pointer;
 `;
-
-const ModalWrapper: React.FC<{ theme: Theme; title: string }> = props => {
-	const dispatch = useAppDispatch();
-
-	const handleClose = e => {
-		if (e.target.dataset.close) dispatch(toggledModal(ModalE.CLOSE));
-	};
-
-	return (
-		<Container onClick={handleClose} data-close>
-			<Modal ctheme={props.theme}>
-				<Title>{props.title}</Title>
-
-				{props.children}
-			</Modal>
-		</Container>
-	);
-};
 
 export { Modal, Title, ModalWrapper };
 
