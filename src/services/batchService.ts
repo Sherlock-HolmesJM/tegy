@@ -24,8 +24,9 @@ export const createBatch = async (batch: Batch, cb: Callback) => {
 		const heads = { ...state.heads, batch: batch.id };
 		const batchList = [...budget.batchList, { id: batch.id, name: batch.name }];
 
+		writer.update({ heads }, [getCurrentUser().uid]);
+		writer.update({ batchList }, getPathSegments({ budget: heads.budget }));
 		writer.set(strip(batch, ["income", "expense"]), getPathSegments(heads));
-		writer.update({ heads, batchList }, [getCurrentUser().uid]);
 
 		await writer.commit();
 		cb.success();

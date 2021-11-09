@@ -43,7 +43,7 @@ const CreateBatch = () => {
 				success: () => {
 					dispatch(createdBatch(batch));
 					handleClose();
-					toast.success("Created successfully.");
+					toast.success("Batch created successfully.");
 				}
 			});
 		});
