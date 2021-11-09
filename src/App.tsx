@@ -9,7 +9,7 @@ import Login from "./components/modal/login";
 import SignUp from "./components/modal/signUp";
 import Tracker from "./components/tracker";
 import { onStateChange } from "./services/authService";
-import { getAppFromDB as loadAppFromDB } from "./services/budgetService";
+import { getAppFromDB as loadAppFromDB } from "./services/stateService";
 import CreateBudget from "./components/modal/createBudget";
 
 function App() {

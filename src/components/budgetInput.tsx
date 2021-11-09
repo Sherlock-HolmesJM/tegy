@@ -14,7 +14,7 @@ import uid from "../utils/id";
 import Input from "./common/input";
 import Button from "./common/button";
 import { addItem } from "../services/itemService";
-import { updateHeads } from "../services/budgetService";
+import { updateHeads } from "../services/stateService";
 
 const BudgetInput = () => {
 	const dispatch = useAppDispatch();
