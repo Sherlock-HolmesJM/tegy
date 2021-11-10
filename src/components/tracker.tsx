@@ -10,7 +10,8 @@ import BudgetItems from "./common/budgetItems";
 import {
 	batchLoaded,
 	selectBatch,
-	selectBatchTotal
+	selectBatchTotal,
+	selectBudget
 } from "../model/budgetSlice";
 import { useAppDispatch, useAppSelector } from "../model/hooks";
 import { formatAmount } from "../utils/money";
@@ -21,6 +22,7 @@ function Tracker() {
 	const dispatch = useAppDispatch();
 
 	const batch = useAppSelector(selectBatch);
+	const budget = useAppSelector(selectBudget);
 
 	useEffect(() => {
 		if (!batch) {
@@ -43,8 +45,10 @@ function Tracker() {
 			<Banner>
 				<div className="banner-content">
 					<div className="banner-title">
-						Available budget in Oct
-						<span className="banner-title-hide">ober, 2021</span>
+						Available budget{" "}
+						<span className="banner-title-hide">
+							for {budget.name.toUpperCase()}
+						</span>
 					</div>
 
 					<div className="banner-amount">

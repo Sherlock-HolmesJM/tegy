@@ -8,6 +8,7 @@ interface Props {}
 
 function Header(props: Props) {
 	const dispatch = useAppDispatch();
+
 	const { primary } = window.theme;
 
 	return (
@@ -17,7 +18,7 @@ function Header(props: Props) {
 				<em className="header-title-content">Tegy</em>
 			</div>
 
-			<div>
+			<div className="header-aside">
 				<Button
 					color={primary}
 					onClick={() => dispatch(toggledModal(ModalE.BUDGET))}>
@@ -45,6 +46,9 @@ const Headerr = styled.header`
 	.header-title-content {
 		display: inline-block;
 		margin-right: 10px;
+	}
+	.header-aside {
+		display: flex;
 	}
 `;
 

@@ -140,4 +140,6 @@ export const selectBatchList = (state: RootState): SelectOption[] => {
 	}));
 };
 
+export const selectBudget = (state: RootState) => getBudget(state.budgets);
+
 export default budgetSlice.reducer;
