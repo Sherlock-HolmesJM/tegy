@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { createdBudget, stateLoaded } from "../../model/budgetSlice";
 import { useAppDispatch, useAppSelector } from "../../model/hooks";
 import { ModalE, selectModal, toggledModal } from "../../model/uiSlice";
@@ -18,6 +19,8 @@ const CreateBudget = () => {
 	if (!show) return null;
 
 	const handleCreate = () => {
+		if (!name) return toast.error("Name cannot be blank");
+
 		const batch = createBatch("batch 1", {
 			start: new Date(),
 			end: new Date()
@@ -37,7 +40,7 @@ const CreateBudget = () => {
 			dispatch(toggledModal(ModalE.BUDGET));
 
 			setDB(getCurrentUser(), {
-				success: () => {},
+				success: () => toast.success("Created successfully"),
 				error: () => dispatch(stateLoaded(oldSate))
 			});
 		});
