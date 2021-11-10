@@ -12,8 +12,8 @@ export const updateHeads = async (heads: Heads, cb: Callback) => {
 		writer.update({ heads }, [getCurrentUser().uid]);
 		await writer.commit();
 	} catch (error) {
-		log(error);
-		cb.error();
+		log.error(error);
+		cb?.error && cb.error();
 	}
 };
 
@@ -43,8 +43,10 @@ export const getAppFromDB = async (
 
 		success({ ...state, budgets: [budget] });
 	} catch (error) {
-		if (error.message === "not found") setDB(user);
-		log(error);
+		if (error.message === "not found") {
+			setDB(user);
+			log.neutral();
+		} else log.error(error);
 	}
 };
 
@@ -66,9 +68,9 @@ export const setDB = async (user: User, cb?: Callback) => {
 		writer.set(strip(batch, ["income", "expense"]), pathSegments);
 
 		await writer.commit();
-		cb && cb.success();
+		cb?.success && cb.success();
 	} catch (err) {
-		log(err);
-		cb && cb.error();
+		log.error(err);
+		cb?.error && cb.error();
 	}
 };

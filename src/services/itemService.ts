@@ -29,7 +29,7 @@ export const addItem = async (bItem: BudgetItem, cb: Callback) => {
 		await writer.commit();
 		cb.success();
 	} catch (error) {
-		log(error);
+		log.error(error);
 	}
 };
 
@@ -67,7 +67,7 @@ export const deleteItem = async (
 		await writer.commit();
 		cb.success();
 	} catch (error) {
-		log(error);
+		log.error(error);
 	}
 };
 

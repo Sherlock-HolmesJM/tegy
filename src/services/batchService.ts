@@ -31,7 +31,7 @@ export const createBatch = async (batch: Batch, cb: Callback) => {
 		await writer.commit();
 		cb.success();
 	} catch (error) {
-		log(error);
+		log.error(error);
 	}
 };
 

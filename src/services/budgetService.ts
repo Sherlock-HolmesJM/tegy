@@ -19,6 +19,6 @@ export const createBudget = (budget: Budget) => {
 
 		writer.set(strip(budget, ["batches"]), paths);
 	} catch (error) {
-		log(error);
+		log.error(error);
 	}
 };
