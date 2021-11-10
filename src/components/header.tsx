@@ -1,13 +1,20 @@
+import { useState } from "react";
 import styled from "styled-components";
-import { useAppDispatch } from "../model/hooks";
+import { selectBudget, selectBudgetList } from "../model/budgetSlice";
+import { useAppDispatch, useAppSelector } from "../model/hooks";
 import { ModalE, toggledModal } from "../model/uiSlice";
 import Button from "./common/button";
 import Logout from "./common/logout";
+import Select from "./common/select";
 
 interface Props {}
 
 function Header(props: Props) {
 	const dispatch = useAppDispatch();
+
+	const list = useAppSelector(selectBudgetList);
+	const budget = useAppSelector(selectBudget);
+	const [value, setValue] = useState("");
 
 	const { primary } = window.theme;
 
@@ -24,7 +31,12 @@ function Header(props: Props) {
 					onClick={() => dispatch(toggledModal(ModalE.BUDGET))}>
 					New Budget
 				</Button>
-				{/* <Button color={primary}>settings</Button> */}
+				<Select
+					value={value || budget.id}
+					options={list}
+					onSelect={setValue}
+					color={window.theme.gray}
+				/>
 				<Logout />
 			</div>
 		</Headerr>

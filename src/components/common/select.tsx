@@ -62,7 +62,7 @@ const Wrapper = styled.div<{ len: number }>`
 		line-height: 11px;
 		${border_radius};
 		border: 1px solid ${props => props.color || "#e2dede"};
-		background-color: white;
+		background-color: #f5f4f4;
 	}
 
 	.options {
@@ -71,6 +71,7 @@ const Wrapper = styled.div<{ len: number }>`
 		top: 40px;
 		width: clamp(35px, calc(40px * (${props => props.len} / 3)), 200px);
 		max-height: 200px;
+		z-index: 111;
 	}
 
 	.option {

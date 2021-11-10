@@ -142,4 +142,10 @@ export const selectBatchList = (state: RootState): SelectOption[] => {
 
 export const selectBudget = (state: RootState) => getBudget(state.budgets);
 
+export const selectBudgetList = (state: RootState): SelectOption[] =>
+	state.budgets.budgetList.map(budget => ({
+		label: budget.name.toUpperCase(),
+		value: budget.id
+	}));
+
 export default budgetSlice.reducer;
