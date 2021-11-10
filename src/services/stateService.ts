@@ -17,7 +17,7 @@ export const updateHeads = async (heads: Heads, cb: Callback) => {
 	}
 };
 
-export const getAppFromDB = async (
+export const loadBudget = async (
 	user: User,
 	success: (budgets: Budgets) => void
 ) => {
@@ -44,13 +44,13 @@ export const getAppFromDB = async (
 		success({ ...state, budgets: [budget] });
 	} catch (error) {
 		if (error.message === "not found") {
-			setDB(user);
+			setBudget(user);
 			log.neutral();
 		} else log.error(error);
 	}
 };
 
-export const setDB = async (user: User, cb?: Callback) => {
+export const setBudget = async (user: User, cb?: Callback) => {
 	try {
 		const writer = getWriter();
 		const state = store.getState().budgets;

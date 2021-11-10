@@ -80,11 +80,11 @@ const budgetSlice = createSlice({
 			batch.total = sumItem([getItem(payload, state, batch)]);
 		},
 
-		batchChanged: (state, { payload }: PayloadAction<{ batchId: string }>) => {
-			state.heads.batch = payload.batchId;
+		headsUpdated: (state, { payload }: PayloadAction<Heads>) => {
+			state.heads = payload;
 		},
 
-		createdBatch: (state, { payload }: PayloadAction<Batch>) => {
+		batchCreated: (state, { payload }: PayloadAction<Batch>) => {
 			const budget = getBudget(state);
 			budget.batches.push(payload);
 			state.heads.batch = payload.id;
@@ -95,7 +95,7 @@ const budgetSlice = createSlice({
 			getBudget(state).batches.push(payload);
 		},
 
-		createdBudget: (state, { payload }: PayloadAction<Budget>) => {
+		budgetCreated: (state, { payload }: PayloadAction<Budget>) => {
 			state.budgets.push(payload);
 
 			state.heads = {
@@ -112,11 +112,11 @@ export const {
 	itemAdded,
 	itemRemoved,
 	totalUpdated,
-	batchChanged,
-	createdBatch,
+	headsUpdated,
+	batchCreated,
 	batchLoaded,
 	stateLoaded,
-	createdBudget
+	budgetCreated
 } = budgetSlice.actions;
 
 export const selectBatch = (state: RootState) => {
@@ -131,7 +131,7 @@ export const selectBatchTotal = (state: RootState) => {
 	return getBatch(state.budgets)?.total ?? { income: 0, expense: 0 };
 };
 
-export const selectBatchId = (state: RootState) => state.budgets.heads.batch;
+export const selectHeads = (state: RootState) => state.budgets.heads;
 
 export const selectBatchList = (state: RootState): SelectOption[] => {
 	return getBudget(state.budgets).batchList.map(batch => ({

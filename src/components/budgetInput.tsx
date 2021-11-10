@@ -4,9 +4,9 @@ import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../model/hooks";
 import Select from "./common/select";
 import {
-	batchChanged,
+	headsUpdated,
 	selectBatchList,
-	selectBatchId,
+	selectHeads,
 	itemAdded
 } from "../model/budgetSlice";
 import { ModalE, toggledModal } from "../model/uiSlice";
@@ -19,7 +19,7 @@ import { updateHeads } from "../services/stateService";
 const BudgetInput = () => {
 	const dispatch = useAppDispatch();
 	const batchList = useAppSelector(selectBatchList);
-	const batchId = useAppSelector(selectBatchId);
+	const heads = useAppSelector(selectHeads);
 
 	const [amount, setAmount] = useState(0);
 	const [description, setDescription] = useState("");
@@ -49,16 +49,14 @@ const BudgetInput = () => {
 		}
 	};
 
-	const handleBatchChange = id => {
-		dispatch((dispatch, getState) => {
-			const old_heads = { ...getState().budgets.heads };
-			const heads = { ...old_heads, batch: id };
+	const handleBatchChange = (id: string) => {
+		const old_heads = { ...heads };
+		const newHeads = { ...old_heads, batch: id };
 
-			dispatch(batchChanged({ batchId: id }));
+		dispatch(headsUpdated(newHeads));
 
-			updateHeads(heads, {
-				error: () => dispatch(batchChanged({ batchId: old_heads.batch }))
-			});
+		updateHeads(newHeads, {
+			error: () => dispatch(headsUpdated(old_heads))
 		});
 	};
 
@@ -83,7 +81,7 @@ const BudgetInput = () => {
 			<Select
 				color={theme.primary}
 				onSelect={handleBatchChange}
-				value={batchId}
+				value={heads.batch}
 				options={batchList}
 				className="input-hide"
 			/>
