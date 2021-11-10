@@ -30,7 +30,8 @@ const CreateBudget = () => {
 			id: uid(),
 			name,
 			batches: [batch],
-			batchList: [{ id: batch.id, name: batch.name }]
+			batchList: [{ id: batch.id, name: batch.name }],
+			head: batch.id
 		};
 
 		dispatch((dispatch, getState) => {

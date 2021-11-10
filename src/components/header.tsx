@@ -1,8 +1,12 @@
-import { useState } from "react";
 import styled from "styled-components";
-import { selectBudget, selectBudgetList } from "../model/budgetSlice";
+import {
+	headsUpdated,
+	selectBudgetList,
+	selectHeads
+} from "../model/budgetSlice";
 import { useAppDispatch, useAppSelector } from "../model/hooks";
 import { ModalE, toggledModal } from "../model/uiSlice";
+import { updateHeads } from "../services/stateService";
 import Button from "./common/button";
 import Logout from "./common/logout";
 import Select from "./common/select";
@@ -13,10 +17,19 @@ function Header(props: Props) {
 	const dispatch = useAppDispatch();
 
 	const list = useAppSelector(selectBudgetList);
-	const budget = useAppSelector(selectBudget);
-	const [value, setValue] = useState("");
+	const heads = useAppSelector(selectHeads);
 
 	const { primary } = window.theme;
+
+	const handleBudgetChange = (id: string) => {
+		const oldHeads = { ...heads };
+		const newHeads = { ...heads, budget: id };
+
+		dispatch(headsUpdated(newHeads));
+		updateHeads(newHeads, {
+			error: () => dispatch(headsUpdated(oldHeads))
+		});
+	};
 
 	return (
 		<Headerr>
@@ -32,9 +45,9 @@ function Header(props: Props) {
 					New Budget
 				</Button>
 				<Select
-					value={value || budget.id}
+					value={heads.budget}
 					options={list}
-					onSelect={setValue}
+					onSelect={handleBudgetChange}
 					color={window.theme.gray}
 				/>
 				<Logout />

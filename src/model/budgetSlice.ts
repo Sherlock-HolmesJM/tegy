@@ -14,14 +14,15 @@ const budget: Budget = {
 	id: "u93838938838383id",
 	name: "default",
 	batches: [batch],
-	batchList: [{ id: batch.id, name: batch.name }]
+	batchList: [{ id: batch.id, name: batch.name }],
+	head: batch.id
 };
 
 export const initialState: Budgets = {
 	budgets: [budget],
 	heads: {
 		budget: budget.id,
-		batch: batch.id
+		batch: budget.head
 	},
 	budgetList: [{ id: budget.id, name: budget.name }]
 };
@@ -134,10 +135,12 @@ export const selectBatchTotal = (state: RootState) => {
 export const selectHeads = (state: RootState) => state.budgets.heads;
 
 export const selectBatchList = (state: RootState): SelectOption[] => {
-	return getBudget(state.budgets).batchList.map(batch => ({
-		label: batch.name,
-		value: batch.id
-	}));
+	return (
+		getBudget(state.budgets)?.batchList.map(batch => ({
+			label: batch.name,
+			value: batch.id
+		})) ?? []
+	);
 };
 
 export const selectBudget = (state: RootState) => getBudget(state.budgets);

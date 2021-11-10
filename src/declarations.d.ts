@@ -42,6 +42,7 @@ declare global {
 		name: string;
 		batches: Batch[];
 		batchList: { id: string; name: string }[];
+		head: string;
 	}
 
 	interface Batch {
