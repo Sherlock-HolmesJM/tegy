@@ -47,7 +47,7 @@ function Tracker() {
 					<div className="banner-title">
 						Available budget{" "}
 						<span className="banner-title-hide">
-							for {budget.name.toUpperCase()}
+							for {budget?.name.toUpperCase()}
 						</span>
 					</div>
 
