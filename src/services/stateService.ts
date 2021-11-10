@@ -6,10 +6,13 @@ import { getCurrentUser } from "./authService";
 import { getPathSegments, getWriter, get, getList } from "./httpService";
 import log from "./logger";
 
-export const updateHeads = async (heads: Heads, cb: Callback) => {
+export const updateHeads = async ({ batch, budget }: Heads, cb?: Callback) => {
 	try {
 		const writer = getWriter();
-		writer.update({ heads }, [getCurrentUser().uid]);
+
+		writer.update({ heads: { batch, budget } }, [getCurrentUser().uid]);
+		writer.update({ head: batch }, getPathSegments({ budget: budget }));
+
 		await writer.commit();
 	} catch (error) {
 		log.error(error);
@@ -17,7 +20,7 @@ export const updateHeads = async (heads: Heads, cb: Callback) => {
 	}
 };
 
-export const getAppFromDB = async (
+export const loadState = async (
 	user: User,
 	success: (budgets: Budgets) => void
 ) => {
@@ -44,13 +47,13 @@ export const getAppFromDB = async (
 		success({ ...state, budgets: [budget] });
 	} catch (error) {
 		if (error.message === "not found") {
-			setDB(user);
+			setBudget(user);
 			log.neutral();
 		} else log.error(error);
 	}
 };
 
-export const setDB = async (user: User, cb?: Callback) => {
+export const setBudget = async (user: User, cb?: Callback) => {
 	try {
 		const writer = getWriter();
 		const state = store.getState().budgets;
@@ -72,5 +75,22 @@ export const setDB = async (user: User, cb?: Callback) => {
 	} catch (err) {
 		log.error(err);
 		cb?.error && cb.error();
+	}
+};
+
+export const loadBudget = async (id: string, cb: Callback) => {
+	try {
+		const budget = await get<Budget>(...getPathSegments({ budget: id }));
+
+		const heads = { batch: budget.head, budget: id };
+
+		const batch = await get<Batch>(...getPathSegments(heads));
+		budget.batches = [batch];
+
+		await updateHeads(heads);
+
+		cb?.success && cb.success(budget);
+	} catch (error) {
+		log.error(error);
 	}
 };

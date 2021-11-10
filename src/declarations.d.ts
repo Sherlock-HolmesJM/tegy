@@ -7,7 +7,7 @@ declare global {
 	}
 
 	interface Callback {
-		success?: () => void;
+		success?: (value?: T) => void;
 		error?: () => void;
 	}
 
@@ -42,6 +42,7 @@ declare global {
 		name: string;
 		batches: Batch[];
 		batchList: { id: string; name: string }[];
+		head: string;
 	}
 
 	interface Batch {

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { createdBudget, stateLoaded } from "../../model/budgetSlice";
+import { budgetCreated, stateLoaded } from "../../model/budgetSlice";
 import { useAppDispatch, useAppSelector } from "../../model/hooks";
 import { ModalE, selectModal, toggledModal } from "../../model/uiSlice";
 import { getCurrentUser } from "../../services/authService";
-import { setDB } from "../../services/stateService";
+import { setBudget } from "../../services/stateService";
 import { createBatch } from "../../utils/batch";
 import uid from "../../utils/id";
 import Button from "../common/button";
@@ -30,16 +30,17 @@ const CreateBudget = () => {
 			id: uid(),
 			name,
 			batches: [batch],
-			batchList: [{ id: batch.id, name: batch.name }]
+			batchList: [{ id: batch.id, name: batch.name }],
+			head: batch.id
 		};
 
 		dispatch((dispatch, getState) => {
 			const oldSate = getState().budgets;
 
-			dispatch(createdBudget(budget));
+			dispatch(budgetCreated(budget));
 			dispatch(toggledModal(ModalE.BUDGET));
 
-			setDB(getCurrentUser(), {
+			setBudget(getCurrentUser(), {
 				success: () => toast.success("Created successfully"),
 				error: () => dispatch(stateLoaded(oldSate))
 			});

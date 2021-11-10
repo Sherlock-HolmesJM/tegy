@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { createdBatch, selectBatchList } from "../../model/budgetSlice";
+import { batchCreated, selectBatchList } from "../../model/budgetSlice";
 import { useAppDispatch, useAppSelector } from "../../model/hooks";
 import { ModalE, selectModal, toggledModal } from "../../model/uiSlice";
 import batchService from "../../services/batchService";
@@ -41,7 +41,7 @@ const CreateBatch = () => {
 
 			batchService.createBatch(batch, {
 				success: () => {
-					dispatch(createdBatch(batch));
+					dispatch(batchCreated(batch));
 					dispatch(toggledModal(ModalE.BATCH));
 					toast.success("Batch created successfully.");
 				}
