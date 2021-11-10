@@ -140,7 +140,7 @@ const Wrapper = styled.div<{ ctheme: Color }>`
 		width: 100px;
 	}
 
-	@media screen and (max-width: 620px) {
+	@media screen and (max-width: 615px) {
 		.input-hide {
 			display: none;
 		}

@@ -12,6 +12,7 @@ import { getBudget } from "../utils/budget";
 import Button from "./common/button";
 import Logout from "./common/logout";
 import Select from "./common/select";
+import Menu from "../asset/menu";
 
 function Header() {
 	const dispatch = useAppDispatch();
@@ -49,7 +50,7 @@ function Header() {
 	return (
 		<Headerr>
 			<div className="header-title">
-				{/* <em className="header-title-content">==</em> */}
+				<Menu className="header-menu" />
 				<em className="header-title-content">Tegy</em>
 			</div>
 
@@ -79,16 +80,33 @@ const Headerr = styled.header`
 	background-color: ${window.theme.gray};
 
 	.header-title {
+		display: flex;
+		align-items: center;
 		font-size: 23px;
 		font-weight: 700;
 		color: ${window.theme.primary};
+		gap: 5px;
 	}
 	.header-title-content {
 		display: inline-block;
-		margin-right: 10px;
 	}
+
+	.header-menu {
+		display: none;
+		cursor: pointer;
+	}
+
 	.header-aside {
 		display: flex;
+	}
+
+	@media (max-width: 615px) {
+		.header-aside {
+			display: none;
+		}
+		.header-menu {
+			display: inline-block;
+		}
 	}
 `;
 
