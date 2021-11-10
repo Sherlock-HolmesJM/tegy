@@ -83,6 +83,7 @@ const budgetSlice = createSlice({
 
 		headsUpdated: (state, { payload }: PayloadAction<Heads>) => {
 			state.heads = payload;
+			getBudget(state).head = payload.batch;
 		},
 
 		batchCreated: (state, { payload }: PayloadAction<Batch>) => {
