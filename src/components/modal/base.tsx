@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useAppDispatch } from "../../model/hooks";
 import { ModalE, toggledModal } from "../../model/uiSlice";
+import Button from "../common/button";
 
 /**
  * NOTE: To create a MODAL, use the ModalWrapper and pass your modal as child.
@@ -21,6 +22,18 @@ const ModalWrapper: React.FC<{ theme: Theme; title: string }> = props => {
 				{props.children}
 			</Modal>
 		</Container>
+	);
+};
+
+const Cancel = ({ modal }: { modal: ModalE }) => {
+	const dispatch = useAppDispatch();
+
+	return (
+		<Button
+			onClick={() => dispatch(toggledModal(modal))}
+			color={window.theme.secondary}>
+			Cancel
+		</Button>
 	);
 };
 
@@ -67,6 +80,6 @@ export const LoginRegister = styled.div`
 	cursor: pointer;
 `;
 
-export { Modal, Title, ModalWrapper };
+export { Modal, Title, ModalWrapper, Cancel };
 
 export default Container;

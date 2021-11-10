@@ -7,7 +7,7 @@ import batchService from "../../services/batchService";
 import { createBatch } from "../../utils/batch";
 import Button from "../common/button";
 import Input from "../common/input";
-import { ModalWrapper } from "./base";
+import { ModalWrapper, Cancel } from "./base";
 
 const CreateBatch = () => {
 	const dispatch = useAppDispatch();
@@ -42,15 +42,11 @@ const CreateBatch = () => {
 			batchService.createBatch(batch, {
 				success: () => {
 					dispatch(createdBatch(batch));
-					handleClose();
+					dispatch(toggledModal(ModalE.BATCH));
 					toast.success("Batch created successfully.");
 				}
 			});
 		});
-	};
-
-	const handleClose = () => {
-		dispatch(toggledModal(ModalE.BATCH));
 	};
 
 	return (
@@ -80,9 +76,7 @@ const CreateBatch = () => {
 				<Button color={window.theme.primary} onClick={handleCreate}>
 					create
 				</Button>
-				<Button color={window.theme.secondary} onClick={handleClose}>
-					Cancel
-				</Button>
+				<Cancel modal={ModalE.BATCH} />
 			</div>
 		</ModalWrapper>
 	);

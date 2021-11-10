@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../model/hooks";
 import { ModalE, selectModal, toggledModal } from "../../model/uiSlice";
 import Button from "../common/button";
 import Input from "../common/input";
-import { LoginRegister, ModalWrapper } from "./base";
+import { LoginRegister, ModalWrapper, Cancel } from "./base";
 import authService from "../../services/authService";
 import { toast } from "react-toastify";
 
@@ -32,10 +32,6 @@ function SignUp() {
 		}
 	};
 
-	const handleClose = () => {
-		dispatch(toggledModal(ModalE.SIGN_UP));
-	};
-
 	return (
 		<ModalWrapper theme={window.theme} title="register">
 			<Input
@@ -55,9 +51,7 @@ function SignUp() {
 				<Button onClick={handleSubmit} color={window.theme.primary}>
 					okay
 				</Button>
-				<Button onClick={handleClose} color={window.theme.secondary}>
-					cancel
-				</Button>
+				<Cancel modal={ModalE.SIGN_UP} />
 			</div>
 
 			<LoginRegister onClick={() => dispatch(toggledModal(ModalE.LOGIN))}>
