@@ -105,6 +105,13 @@ const budgetSlice = createSlice({
 			};
 
 			state.budgetList.push({ id: payload.id, name: payload.name });
+		},
+
+		budgetLoaded: (state, { payload }: PayloadAction<Budget>) => {
+			const { id, head } = payload;
+
+			state.heads = { budget: id, batch: head };
+			state.budgets.push(payload);
 		}
 	}
 });
@@ -117,7 +124,8 @@ export const {
 	batchCreated,
 	batchLoaded,
 	stateLoaded,
-	budgetCreated
+	budgetCreated,
+	budgetLoaded
 } = budgetSlice.actions;
 
 export const selectBatch = (state: RootState) => {
@@ -145,10 +153,6 @@ export const selectBatchList = (state: RootState): SelectOption[] => {
 
 export const selectBudget = (state: RootState) => getBudget(state.budgets);
 
-export const selectBudgetList = (state: RootState): SelectOption[] =>
-	state.budgets.budgetList.map(budget => ({
-		label: budget.name.toUpperCase(),
-		value: budget.id
-	}));
+export const selectBudgetList = (state: RootState) => state.budgets.budgetList;
 
 export default budgetSlice.reducer;

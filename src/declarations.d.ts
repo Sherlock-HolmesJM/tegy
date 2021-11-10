@@ -7,7 +7,7 @@ declare global {
 	}
 
 	interface Callback {
-		success?: () => void;
+		success?: (value?: T) => void;
 		error?: () => void;
 	}
 
