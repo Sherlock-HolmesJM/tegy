@@ -10,12 +10,12 @@ import log from "../../services/logger";
 
 const Login = () => {
 	const dispatch = useAppDispatch();
-	const showModal = useAppSelector(selectModal(ModalE.LOGIN));
+	const isLogin = useAppSelector(selectModal(ModalE.LOGIN));
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
-	if (!showModal) return null;
+	if (!isLogin) return null;
 
 	const handleSubmit = () => {
 		try {

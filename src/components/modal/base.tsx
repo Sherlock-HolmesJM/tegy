@@ -39,15 +39,14 @@ const Cancel = ({ modal }: { modal: ModalE }) => {
 
 const Container = styled.div`
 	position: absolute;
-	top: 1px;
-	left: 1px;
-	width: 99.7%;
-	height: 99.7vh;
+	top: 0;
+	width: 100vw;
+	height: 100vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	background-color: #0505051d;
-	z-index: 1;
+	z-index: 111;
 `;
 
 const Modal = styled.div<{ ctheme: Theme }>`

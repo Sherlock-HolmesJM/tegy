@@ -17,7 +17,7 @@ function App() {
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
-		onStateChange(user => {
+		return onStateChange(user => {
 			if (user) {
 				dispatch(() => {
 					loadState(user, budgets => dispatch(stateLoaded(budgets)));
@@ -32,13 +32,13 @@ function App() {
 		<div className="App">
 			<Loader />
 
+			<Settings />
+
 			{/* Modals */}
 			<Login />
 			<SignUp />
 			<CreateBatch />
 			<CreateBudget />
-
-			<Settings />
 
 			{/* Page */}
 			<Tracker />

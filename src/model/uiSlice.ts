@@ -29,7 +29,6 @@ const uiSlice = createSlice({
 			if (payload === ModalE.CLOSE) {
 				close();
 			} else {
-				close(payload);
 				state.modal[payload] = !state.modal[payload];
 			}
 		},

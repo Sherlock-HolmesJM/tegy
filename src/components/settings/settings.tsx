@@ -8,7 +8,6 @@ interface Props {}
 
 function Settings(props: Props) {
 	const dispatch = useAppDispatch();
-	// const {} = props
 
 	const isSetting = useAppSelector(selectModal(ModalE.SETTING));
 

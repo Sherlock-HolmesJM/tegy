@@ -18,7 +18,7 @@ const Logout = () => {
 		else dispatch(toggledModal(ModalE.LOGIN));
 	};
 
-	return <div onClick={handleClick}>Logout</div>;
+	return <div onClick={handleClick}>{text}</div>;
 };
 
 export default Logout;
