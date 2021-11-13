@@ -66,7 +66,9 @@ function Header() {
 					onSelect={handleBudgetChange}
 					color={window.theme.gray}
 				/>
-				<Button onClick={() => <Logout />}>Logout</Button>
+				<Button>
+					<Logout />
+				</Button>
 			</div>
 		</Headerr>
 	);

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../model/hooks";
 import { ModalE, toggledModal } from "../../model/uiSlice";
 import authService from "../../services/authService";
-import Button from "./button";
 
 const Logout = () => {
 	const dispatch = useAppDispatch();
@@ -19,11 +18,7 @@ const Logout = () => {
 		else dispatch(toggledModal(ModalE.LOGIN));
 	};
 
-	handleClick();
-
-	console.log("hello");
-
-	return <em></em>;
+	return <div onClick={handleClick}>Logout</div>;
 };
 
 export default Logout;

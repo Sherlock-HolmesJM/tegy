@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../../model/hooks";
 import { ModalE, selectModal, toggledModal } from "../../model/uiSlice";
+import Logout from "../common/logout";
 import Header from "./header";
 
 interface Props {}
@@ -34,7 +35,9 @@ function Settings(props: Props) {
 				</ul>
 
 				<ul>
-					<li>Logout</li>
+					<li>
+						<Logout />
+					</li>
 				</ul>
 			</div>
 		</Modal>
