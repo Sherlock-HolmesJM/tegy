@@ -1,8 +1,13 @@
+import { useAppDispatch } from "../model/hooks";
+import { ModalE, toggledModal } from "../model/uiSlice";
+
 const Menu = (props: { className?: string }) => {
 	const color = window.theme.primary;
+	const dispatch = useAppDispatch();
 
 	return (
 		<svg
+			onClick={() => dispatch(toggledModal(ModalE.SETTING))}
 			className={props.className}
 			xmlns="http://www.w3.org/2000/svg"
 			xmlnsXlink="http://www.w3.org/1999/xlink"

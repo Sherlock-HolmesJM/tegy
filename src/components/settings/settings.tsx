@@ -1,13 +1,20 @@
 import styled from "styled-components";
+import { useAppDispatch, useAppSelector } from "../../model/hooks";
+import { ModalE, selectModal, toggledModal } from "../../model/uiSlice";
 import Header from "./header";
 
 interface Props {}
 
 function Settings(props: Props) {
+	const dispatch = useAppDispatch();
 	// const {} = props
 
+	const isSetting = useAppSelector(selectModal(ModalE.SETTING));
+
+	if (!isSetting) return null;
+
 	return (
-		<Modal>
+		<Modal onClick={() => dispatch(toggledModal(ModalE.SETTING))}>
 			<div className="setting">
 				<Header />
 
@@ -50,7 +57,6 @@ const Modal = styled.div`
 		background: ${window.theme.gray};
 		border-top-right-radius: 5px;
 		border-bottom-right-radius: 5px;
-		background: linear-gradient(145deg, #f2eeee, #cbc8c8);
 		box-shadow: 1px 5px 30px #1f1e1e5c;
 	}
 

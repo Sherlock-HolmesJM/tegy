@@ -66,7 +66,7 @@ function Header() {
 					onSelect={handleBudgetChange}
 					color={window.theme.gray}
 				/>
-				<Logout />
+				<Button onClick={() => <Logout />}>Logout</Button>
 			</div>
 		</Headerr>
 	);
@@ -85,14 +85,14 @@ const Headerr = styled.header`
 		font-size: 23px;
 		font-weight: 700;
 		color: ${window.theme.primary};
-		gap: 5px;
+		gap: 15px;
 	}
 	.header-title-content {
 		display: inline-block;
 	}
 
 	.header-menu {
-		display: none;
+		/* display: none; */
 		cursor: pointer;
 	}
 

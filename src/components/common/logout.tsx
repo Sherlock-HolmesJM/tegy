@@ -19,7 +19,11 @@ const Logout = () => {
 		else dispatch(toggledModal(ModalE.LOGIN));
 	};
 
-	return <Button onClick={handleClick}>{text}</Button>;
+	handleClick();
+
+	console.log("hello");
+
+	return <em></em>;
 };
 
 export default Logout;

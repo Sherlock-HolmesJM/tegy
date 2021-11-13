@@ -6,6 +6,7 @@ export enum ModalE {
 	SIGN_UP,
 	BATCH,
 	BUDGET,
+	SETTING,
 	CLOSE
 }
 

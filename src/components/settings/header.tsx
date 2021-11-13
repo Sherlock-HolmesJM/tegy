@@ -11,7 +11,7 @@ function Header(props: Props) {
 
 const Wrapper = styled.div`
 	width: 100%;
-	height: 150px;
+	height: 130px;
 	background-image: url(${setting_header});
 `;
 
