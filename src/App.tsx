@@ -11,6 +11,7 @@ import Tracker from "./components/tracker";
 import { onStateChange } from "./services/authService";
 import { loadState } from "./services/stateService";
 import CreateBudget from "./components/modal/createBudget";
+import Settings from "./components/settings/settings";
 
 function App() {
 	const dispatch = useAppDispatch();
@@ -36,6 +37,8 @@ function App() {
 			<SignUp />
 			<CreateBatch />
 			<CreateBudget />
+
+			<Settings />
 
 			{/* Page */}
 			<Tracker />
