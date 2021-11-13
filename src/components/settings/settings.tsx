@@ -19,11 +19,6 @@ function Settings(props: Props) {
 				<Header />
 
 				<ul>
-					<li>New Batch</li>
-					<li>New Budget</li>
-				</ul>
-
-				<ul>
 					<li>Select Batch</li>
 					<li>Select Budget</li>
 				</ul>
@@ -31,6 +26,11 @@ function Settings(props: Props) {
 				<ul>
 					<li>Edit Batch</li>
 					<li>Edit Budget</li>
+				</ul>
+
+				<ul>
+					<li>New Batch</li>
+					<li>New Budget</li>
 				</ul>
 
 				<ul>
@@ -77,6 +77,7 @@ const Modal = styled.div`
 		padding: 8px 25px;
 		cursor: pointer;
 		border: 1px solid ${window.theme.gray};
+		text-transform: capitalize;
 	}
 `;
 
