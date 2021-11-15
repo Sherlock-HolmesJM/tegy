@@ -36,7 +36,6 @@ const Select = ({ value, onSelect, options }: SelectProps) => {
 	const raiseSelect = (value: string) => {
 		setDropdown(false); // close the list after selection
 		onSelect(value); // raise select event
-		console.log("raising...");
 	};
 
 	return (

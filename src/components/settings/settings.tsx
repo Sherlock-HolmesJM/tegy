@@ -25,7 +25,9 @@ function Settings() {
 
 				<ul>
 					<li>
-						<BatchSelect />
+						<div className="setting-select">
+							<BatchSelect />
+						</div>
 					</li>
 					<li>Select Budget</li>
 				</ul>
@@ -71,6 +73,10 @@ const Modal = styled.div`
 		border-top-right-radius: 5px;
 		border-bottom-right-radius: 5px;
 		box-shadow: 1px 5px 30px #1f1e1e5c;
+	}
+
+	.setting-select {
+		height: 35px;
 	}
 
 	ul {
