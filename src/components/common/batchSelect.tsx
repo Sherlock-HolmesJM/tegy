@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
 	headsUpdated,
 	selectBatchList,
@@ -14,11 +13,7 @@ function BatchSelect() {
 	const heads = useAppSelector(selectHeads);
 	const batchList = useAppSelector(selectBatchList);
 
-	const [batchId, setBatch] = useState(heads.batch);
-
 	const handleSelect = (id: string) => {
-		setBatch(id);
-
 		const old_heads = { ...heads };
 		const newHeads = { ...old_heads, batch: id };
 
@@ -29,7 +24,9 @@ function BatchSelect() {
 		});
 	};
 
-	return <Select value={batchId} options={batchList} onSelect={handleSelect} />;
+	return (
+		<Select value={heads.batch} options={batchList} onSelect={handleSelect} />
+	);
 }
 
 export default BatchSelect;

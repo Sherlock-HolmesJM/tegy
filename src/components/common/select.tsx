@@ -13,14 +13,16 @@ const Select = ({ value, onSelect, options }: SelectProps) => {
 	const valueContainerRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		window.addEventListener("click", ({ target }: any) => {
+		const fn = ({ target }: any) => {
 			if (!target.closest("." + marker)) setDropdown(false);
-		});
+		};
 
-		return () => {}; // for cleanup
+		window.addEventListener("click", fn);
 
-		// eslint-disable-next-line
-	}, []);
+		return () => {
+			window.removeEventListener("click", fn);
+		};
+	}, [marker]);
 
 	const label = options.find(({ value: v }) => v === value)?.label ?? "Empty";
 
@@ -34,6 +36,7 @@ const Select = ({ value, onSelect, options }: SelectProps) => {
 	const raiseSelect = (value: string) => {
 		setDropdown(false); // close the list after selection
 		onSelect(value); // raise select event
+		console.log("raising...");
 	};
 
 	return (
