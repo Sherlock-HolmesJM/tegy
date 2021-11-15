@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../../model/hooks";
 import { ModalE, selectModal, toggledModal } from "../../model/uiSlice";
 import BatchSelect from "../common/batchSelect";
+import BudgetSelect from "../common/budgetSelect";
 import Logout from "../common/logout";
 import { CreateBatchButton } from "../modal/createBatch";
 import { CreateBudgetButton } from "../modal/createBudget";
@@ -29,7 +30,11 @@ function Settings() {
 							<BatchSelect />
 						</div>
 					</li>
-					<li>Select Budget</li>
+					<li>
+						<div className="setting-select">
+							<BudgetSelect />
+						</div>
+					</li>
 				</ul>
 
 				<ul>
@@ -75,10 +80,6 @@ const Modal = styled.div`
 		box-shadow: 1px 5px 30px #1f1e1e5c;
 	}
 
-	.setting-select {
-		height: 35px;
-	}
-
 	ul {
 		padding: 0;
 		margin: 0;
@@ -95,6 +96,10 @@ const Modal = styled.div`
 		cursor: pointer;
 		border: 1px solid ${window.theme.gray};
 		text-transform: capitalize;
+	}
+
+	.setting-select {
+		height: inherit;
 	}
 `;
 

@@ -11,6 +11,7 @@ const Select = ({ value, onSelect, options }: SelectProps) => {
 	const [dropdown, setDropdown] = useState(false);
 	const [marker] = useState("d" + Date.now()); // unique marker needed by event listener
 	const valueContainerRef = useRef<HTMLDivElement>(null);
+	const selectOptionsRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		const fn = ({ target }: any) => {
@@ -30,7 +31,7 @@ const Select = ({ value, onSelect, options }: SelectProps) => {
 
 	const wrapperProps = {
 		len: options.map(({ value }) => value.length).sort((a, b) => b - a)[0] ?? 1,
-		height: (valueContainerRef.current?.offsetHeight ?? 34) + 2
+		top: (valueContainerRef.current?.offsetHeight ?? 34) + 2
 	};
 
 	const raiseSelect = (value: string) => {
@@ -49,35 +50,34 @@ const Select = ({ value, onSelect, options }: SelectProps) => {
 				{<DropdownIcon />}
 			</div>
 
-			<div className="select-options">
-				{options.map((item, index) => (
-					<div
-						key={index}
-						className="select-option"
-						onClick={() => raiseSelect(item.value)}>
-						{item.label}
-					</div>
-				))}
-			</div>
+			{options.length > 0 && (
+				<div className="select-options" ref={selectOptionsRef}>
+					{options.map((item, index) => (
+						<div
+							key={index}
+							className="select-option"
+							onClick={() => raiseSelect(item.value)}>
+							{item.label}
+						</div>
+					))}
+				</div>
+			)}
 		</Wrapper>
 	);
 };
 
 export default Select;
 
-const Wrapper = styled.div<{ len: number; height: number }>`
+const Wrapper = styled.div<{ len: number; top: number }>`
 	position: relative;
 	min-width: 80px;
 	height: inherit;
-	z-index: 1;
 
 	.select-value-container {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		border-radius: 3px;
-		/* width: 100%; */
-		/* background: white; */
 		gap: 30px;
 		cursor: pointer;
 		height: inherit;
@@ -92,19 +92,20 @@ const Wrapper = styled.div<{ len: number; height: number }>`
 
 	.select-options {
 		position: absolute;
-		top: ${props => props.height + "px"};
+		top: ${props => props.top + "px"};
+		box-shadow: 1px 1px 3px #d7d7d7;
+		background: #fff;
+		width: ${props => `clamp(100px, calc(28px * ${props.len / 3}), 130px)`};
+		cursor: pointer;
+		z-index: 1;
 	}
 	.select-option {
 		display: flex;
 		align-items: center;
-		height: 48px;
-		padding: 10px;
+		height: 40px;
+		padding: 8px;
 		gap: 20px;
 		font-size: 16px;
-		box-shadow: 0px 2px 10px #d7d7d7;
-		cursor: pointer;
-		background: #fff;
-		width: ${props => `clamp(200px, calc(28px * ${props.len / 3}), 300px)`};
 	}
 	.select-option:hover {
 		background: #f6f6f6;

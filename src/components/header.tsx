@@ -20,7 +20,11 @@ function Header() {
 				<Button color={primary}>
 					<CreateBudgetButton />
 				</Button>
-				<BudgetSelect />
+
+				<div className="header-budget-select">
+					<BudgetSelect />
+				</div>
+
 				<Button>
 					<Logout />
 				</Button>
@@ -55,6 +59,15 @@ const Headerr = styled.header`
 
 	.header-aside {
 		display: flex;
+		align-items: center;
+	}
+
+	.header-budget-select {
+		border: 1px solid ${window.theme.primary};
+		background: white;
+		border-radius: 4px;
+		height: 33px;
+		text-transform: capitalize;
 	}
 
 	@media (max-width: 615px) {
