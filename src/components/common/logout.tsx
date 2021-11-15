@@ -8,7 +8,7 @@ const Logout = () => {
 	const [text, setText] = useState<"logout" | "login">("logout");
 
 	useEffect(() => {
-		authService.onStateChange(user => {
+		return authService.onStateChange(user => {
 			setText(user ? "logout" : "login");
 		});
 	}, []);

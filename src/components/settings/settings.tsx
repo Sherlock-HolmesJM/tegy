@@ -6,9 +6,7 @@ import { CreateBatchButton } from "../modal/createBatch";
 import { CreateBudgetButton } from "../modal/createBudget";
 import Header from "./header";
 
-interface Props {}
-
-function Settings(props: Props) {
+function Settings() {
 	const dispatch = useAppDispatch();
 
 	const isSetting = useAppSelector(selectModal(ModalE.SETTING));
