@@ -16,6 +16,9 @@ const Select = ({ value, onSelect, options }: SelectProps) => {
 		window.addEventListener("click", ({ target }: any) => {
 			if (!target.closest("." + marker)) setDropdown(false);
 		});
+
+		return () => {}; // for cleanup
+
 		// eslint-disable-next-line
 	}, []);
 
