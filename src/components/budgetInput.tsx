@@ -2,7 +2,6 @@ import { useState, useRef } from "react";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 import { useAppDispatch } from "../model/hooks";
-import Select from "./common/selectO";
 import { itemAdded } from "../model/budgetSlice";
 import uid from "../utils/id";
 import Input from "./common/input";
@@ -10,6 +9,7 @@ import Button from "./common/button";
 import { addItem } from "../services/itemService";
 import { CreateBatchButton } from "./modal/createBatch";
 import BatchSelect from "./common/batchSelect";
+import Select from "./common/select";
 
 const BudgetInput = () => {
 	const dispatch = useAppDispatch();
@@ -53,19 +53,20 @@ const BudgetInput = () => {
 				<CreateBatchButton />
 			</Button>
 
-			<div className="input-batch-select input-hide">
+			<div className="input-select input-batch input-hide">
 				<BatchSelect />
 			</div>
 
-			<Select
-				color={selectedColor}
-				onSelect={handleTypeSelect}
-				value={type}
-				options={[
-					{ value: "income", label: "+" },
-					{ value: "expense", label: "-" }
-				]}
-			/>
+			<div className="input-select input-type">
+				<Select
+					onSelect={handleTypeSelect}
+					value={type}
+					options={[
+						{ value: "income", label: "+" },
+						{ value: "expense", label: "-" }
+					]}
+				/>
+			</div>
 
 			<Input
 				placeholder="Description"
@@ -107,11 +108,16 @@ const Wrapper = styled.div<{ ctheme: Color }>`
 		display: none;
 	}
 
-	.input-batch-select {
+	.input-select {
 		border: 1px solid ${window.theme.primary};
 		background: white;
 		border-radius: 4px;
 		height: 33px;
+		margin: 4px;
+	}
+
+	.input-type {
+		border-color: ${props => props.ctheme.selectedColor};
 	}
 
 	.input-amount {

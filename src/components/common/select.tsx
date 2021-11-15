@@ -70,7 +70,6 @@ export default Select;
 
 const Wrapper = styled.div<{ len: number; top: number }>`
 	position: relative;
-	min-width: 80px;
 	height: inherit;
 
 	.select-value-container {
@@ -78,7 +77,7 @@ const Wrapper = styled.div<{ len: number; top: number }>`
 		justify-content: space-between;
 		align-items: center;
 		border-radius: 3px;
-		gap: 30px;
+		gap: 10px;
 		cursor: pointer;
 		height: inherit;
 		padding: 0 4px;
@@ -116,7 +115,7 @@ const Wrapper = styled.div<{ len: number; top: number }>`
 
 const DropdownIcon = () => (
 	<svg
-		width="12"
+		width="8"
 		height="8"
 		viewBox="0 0 12 8"
 		fill="none"
