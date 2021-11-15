@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../model/hooks";
 import { ModalE, selectModal, toggledModal } from "../../model/uiSlice";
 import Logout from "../common/logout";
 import { CreateBatchButton } from "../modal/createBatch";
+import { CreateBudgetButton } from "../modal/createBudget";
 import Header from "./header";
 
 interface Props {}
@@ -33,7 +34,9 @@ function Settings(props: Props) {
 					<li>
 						<CreateBatchButton />
 					</li>
-					<li>New Budget</li>
+					<li>
+						<CreateBudgetButton />
+					</li>
 				</ul>
 
 				<ul>

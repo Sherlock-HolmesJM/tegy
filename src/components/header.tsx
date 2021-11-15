@@ -6,13 +6,13 @@ import {
 	selectHeads
 } from "../model/budgetSlice";
 import { useAppDispatch, useAppSelector } from "../model/hooks";
-import { ModalE, toggledModal } from "../model/uiSlice";
 import { loadBudget, updateHeads } from "../services/stateService";
 import { getBudget } from "../utils/budget";
 import Button from "./common/button";
 import Logout from "./common/logout";
 import Select from "./common/select";
 import Menu from "../asset/menu";
+import { CreateBudgetButton } from "./modal/createBudget";
 
 function Header() {
 	const dispatch = useAppDispatch();
@@ -55,10 +55,8 @@ function Header() {
 			</div>
 
 			<div className="header-aside">
-				<Button
-					color={primary}
-					onClick={() => dispatch(toggledModal(ModalE.BUDGET))}>
-					New Budget
+				<Button color={primary}>
+					<CreateBudgetButton />
 				</Button>
 				<Select
 					value={heads.budget}

@@ -11,6 +11,14 @@ import Button from "../common/button";
 import Input from "../common/input";
 import { ModalWrapper, Cancel } from "./base";
 
+const CreateBudgetButton = () => {
+	const dispatch = useAppDispatch();
+
+	return (
+		<div onClick={() => dispatch(toggledModal(ModalE.BUDGET))}>New Budget</div>
+	);
+};
+
 const CreateBudget = () => {
 	const dispatch = useAppDispatch();
 	const show = useAppSelector(selectModal(ModalE.BUDGET));
@@ -64,5 +72,7 @@ const CreateBudget = () => {
 		</ModalWrapper>
 	);
 };
+
+export { CreateBudgetButton };
 
 export default CreateBudget;
