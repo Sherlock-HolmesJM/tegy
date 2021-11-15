@@ -9,12 +9,12 @@ import {
 	selectHeads,
 	itemAdded
 } from "../model/budgetSlice";
-import { ModalE, toggledModal } from "../model/uiSlice";
 import uid from "../utils/id";
 import Input from "./common/input";
 import Button from "./common/button";
 import { addItem } from "../services/itemService";
 import { updateHeads } from "../services/stateService";
+import { CreateBatchButton } from "./modal/createBatch";
 
 const BudgetInput = () => {
 	const dispatch = useAppDispatch();
@@ -60,10 +60,6 @@ const BudgetInput = () => {
 		});
 	};
 
-	const handleNewBatch = () => {
-		dispatch(toggledModal(ModalE.BATCH));
-	};
-
 	const handleTypeSelect = (value: string) => {
 		setType(value as ItemType);
 		descRef.current.select();
@@ -71,11 +67,8 @@ const BudgetInput = () => {
 
 	return (
 		<Wrapper onKeyPress={handleInput} ctheme={{ selectedColor, ...theme }}>
-			<Button
-				className="input-hide"
-				onClick={handleNewBatch}
-				color={theme.primary}>
-				New batch
+			<Button className="input-hide" color={theme.primary}>
+				<CreateBatchButton />
 			</Button>
 
 			<Select

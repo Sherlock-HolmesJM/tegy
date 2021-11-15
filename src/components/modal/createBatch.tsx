@@ -9,6 +9,14 @@ import Button from "../common/button";
 import Input from "../common/input";
 import { ModalWrapper, Cancel } from "./base";
 
+const CreateBatchButton = () => {
+	const dispatch = useAppDispatch();
+
+	return (
+		<div onClick={() => dispatch(toggledModal(ModalE.BATCH))}>New Batch</div>
+	);
+};
+
 const CreateBatch = () => {
 	const dispatch = useAppDispatch();
 
@@ -81,5 +89,7 @@ const CreateBatch = () => {
 		</ModalWrapper>
 	);
 };
+
+export { CreateBatchButton };
 
 export default CreateBatch;
