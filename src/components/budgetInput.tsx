@@ -1,25 +1,18 @@
 import { useState, useRef } from "react";
 import { toast } from "react-toastify";
 import styled from "styled-components";
-import { useAppDispatch, useAppSelector } from "../model/hooks";
-import Select from "./common/select";
-import {
-	headsUpdated,
-	selectBatchList,
-	selectHeads,
-	itemAdded
-} from "../model/budgetSlice";
+import { useAppDispatch } from "../model/hooks";
+import Select from "./common/selectO";
+import { itemAdded } from "../model/budgetSlice";
 import uid from "../utils/id";
 import Input from "./common/input";
 import Button from "./common/button";
 import { addItem } from "../services/itemService";
-import { updateHeads } from "../services/stateService";
 import { CreateBatchButton } from "./modal/createBatch";
+import BatchSelect from "./common/batchSelect";
 
 const BudgetInput = () => {
 	const dispatch = useAppDispatch();
-	const batchList = useAppSelector(selectBatchList);
-	const heads = useAppSelector(selectHeads);
 
 	const [amount, setAmount] = useState(0);
 	const [description, setDescription] = useState("");
@@ -49,17 +42,6 @@ const BudgetInput = () => {
 		}
 	};
 
-	const handleBatchChange = (id: string) => {
-		const old_heads = { ...heads };
-		const newHeads = { ...old_heads, batch: id };
-
-		dispatch(headsUpdated(newHeads));
-
-		updateHeads(newHeads, {
-			error: () => dispatch(headsUpdated(old_heads))
-		});
-	};
-
 	const handleTypeSelect = (value: string) => {
 		setType(value as ItemType);
 		descRef.current.select();
@@ -71,13 +53,9 @@ const BudgetInput = () => {
 				<CreateBatchButton />
 			</Button>
 
-			<Select
-				color={theme.primary}
-				onSelect={handleBatchChange}
-				value={heads.batch}
-				options={batchList}
-				className="input-hide"
-			/>
+			<div className="input-batch-select input-hide">
+				<BatchSelect />
+			</div>
 
 			<Select
 				color={selectedColor}
@@ -127,6 +105,13 @@ const Wrapper = styled.div<{ ctheme: Color }>`
 
 	.input-icon.hide {
 		display: none;
+	}
+
+	.input-batch-select {
+		border: 1px solid ${window.theme.primary};
+		background: white;
+		border-radius: 4px;
+		height: 33px;
 	}
 
 	.input-amount {

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../../model/hooks";
 import { ModalE, selectModal, toggledModal } from "../../model/uiSlice";
+import BatchSelect from "../common/batchSelect";
 import Logout from "../common/logout";
 import { CreateBatchButton } from "../modal/createBatch";
 import { CreateBudgetButton } from "../modal/createBudget";
@@ -13,13 +14,19 @@ function Settings() {
 
 	if (!isSetting) return null;
 
+	const handleClose = ({ target }) => {
+		if (target.dataset.setting) dispatch(toggledModal(ModalE.SETTING));
+	};
+
 	return (
-		<Modal onClick={() => dispatch(toggledModal(ModalE.SETTING))}>
+		<Modal onClick={handleClose} data-setting>
 			<div className="setting">
 				<Header />
 
 				<ul>
-					<li>Select Batch</li>
+					<li>
+						<BatchSelect />
+					</li>
 					<li>Select Budget</li>
 				</ul>
 

@@ -10,7 +10,7 @@ import { loadBudget, updateHeads } from "../services/stateService";
 import { getBudget } from "../utils/budget";
 import Button from "./common/button";
 import Logout from "./common/logout";
-import Select from "./common/select";
+import Select from "./common/selectO";
 import Menu from "../asset/menu";
 import { CreateBudgetButton } from "./modal/createBudget";
 
