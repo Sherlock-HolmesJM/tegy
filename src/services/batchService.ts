@@ -18,11 +18,9 @@ export const getBatch = async () => {
 export const createBatch = async (batch: Batch, cb: Callback) => {
 	try {
 		const state = store.getState().budgets;
-		const budget = getBudget(state);
+		const { batchList } = getBudget(state);
 		const writer = getWriter();
-
-		const heads = { ...state.heads, batch: batch.id };
-		const batchList = [...budget.batchList, { id: batch.id, name: batch.name }];
+		const { heads } = state;
 
 		writer.update({ heads }, [getCurrentUser().uid]);
 		writer.update({ batchList }, getPathSegments({ budget: heads.budget }));

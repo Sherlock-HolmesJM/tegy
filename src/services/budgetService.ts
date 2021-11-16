@@ -6,10 +6,7 @@ import log from "./logger";
 
 export const createBudget = (budget: Budget) => {
 	try {
-		const { budgetList: blist } = store.getState().budgets;
-
-		const heads: Heads = { batch: budget.batches[0].id, budget: budget.id };
-		const budgetList = [...blist, { id: budget.id, name: budget.name }];
+		const { budgetList, heads } = store.getState().budgets;
 
 		const writer = getWriter();
 
