@@ -45,10 +45,8 @@ function Tracker() {
 			<Banner>
 				<div className="banner-content">
 					<div className="banner-title">
-						Available budget{" "}
-						<span className="banner-title-hide">
-							for {budget?.name.toUpperCase()}
-						</span>
+						Balance of <span className="banner-title-hide">{budget?.name}</span>{" "}
+						budget
 					</div>
 
 					<div className="banner-amount">
@@ -102,6 +100,9 @@ const Wrapper = styled.div`
 		font-size: min(25px, 8vw);
 		font-weight: 300;
 	}
+	.banner-title-hide {
+		text-transform: capitalize;
+	}
 	.banner-amount {
 		font-size: min(50px, 15vw);
 		margin: 10px 0;
@@ -114,9 +115,9 @@ const Wrapper = styled.div`
 	}
 
 	@media (max-width: 435px) {
-		.banner-title-hide {
+		/* .banner-title-hide {
 			display: none;
-		}
+		} */
 	}
 `;
 

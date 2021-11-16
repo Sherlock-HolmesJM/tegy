@@ -18,7 +18,7 @@ const Wrapper = styled.div`
 	position: relative;
 	background-image: url(${banner});
 	background-position: center;
-	min-height: 250px;
+	min-height: 230px;
 
 	.banner-overlay {
 		position: absolute;

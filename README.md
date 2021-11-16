@@ -8,6 +8,8 @@
 
     You can use Tegy as your rough record, later, write it down in your book; or use it as your main budget recorder. Either way, with Tegy, you never have to have a messy record.
 
+    So, what are you waiting for? Give Tegy a try.
+
 ### Batch
 
     A Batch consist of the following:

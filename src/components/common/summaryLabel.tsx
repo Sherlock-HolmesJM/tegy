@@ -37,9 +37,9 @@ const Wrapper = styled.div<{ theme: Theme }>`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	width: min(350px, 95%);
+	width: min(330px, 90%);
 	font-weight: 300;
-	padding: 10px;
+	padding: 7px;
 	border-radius: 5px;
 	color: white;
 	margin: 5px;
