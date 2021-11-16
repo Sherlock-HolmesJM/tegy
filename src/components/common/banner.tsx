@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import banner from "../../asset/banner.png";
+import banner from "../../asset/banner.webp";
 
 interface Props {}
 
