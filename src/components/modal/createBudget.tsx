@@ -9,7 +9,7 @@ import { createBatch } from "../../utils/batch";
 import uid from "../../utils/id";
 import Button from "../common/button";
 import Input from "../common/input";
-import { ModalWrapper, CancelButton } from "./base";
+import { Modal, CancelButton } from "./base";
 
 const CreateBudgetButton = () => {
 	const dispatch = useAppDispatch();
@@ -56,7 +56,7 @@ const CreateBudget = () => {
 	};
 
 	return (
-		<ModalWrapper theme={window.theme} title="create new batch">
+		<Modal theme={window.theme} title="create new batch">
 			<Input
 				value={name}
 				onChange={e => setName(e.target.value)}
@@ -69,7 +69,7 @@ const CreateBudget = () => {
 				</Button>
 				<CancelButton modal={ModalE.BUDGET} />
 			</div>
-		</ModalWrapper>
+		</Modal>
 	);
 };
 

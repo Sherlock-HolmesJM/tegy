@@ -7,7 +7,7 @@ import Button from "../common/button";
  * NOTE: To create a MODAL, use the ModalWrapper and pass your modal as child.
  */
 
-const ModalWrapper: React.FC<{ theme: Theme; title: string }> = props => {
+const Modal: React.FC<{ theme: Theme; title: string }> = props => {
 	const dispatch = useAppDispatch();
 
 	const handleClose = e => {
@@ -16,11 +16,11 @@ const ModalWrapper: React.FC<{ theme: Theme; title: string }> = props => {
 
 	return (
 		<Container onClick={handleClose} data-close>
-			<Modal ctheme={props.theme}>
+			<Box ctheme={props.theme}>
 				<Title>{props.title}</Title>
 
 				{props.children}
-			</Modal>
+			</Box>
 		</Container>
 	);
 };
@@ -49,7 +49,7 @@ const Container = styled.div`
 	z-index: 2;
 `;
 
-const Modal = styled.div<{ ctheme: Theme }>`
+const Box = styled.div<{ ctheme: Theme }>`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -60,6 +60,7 @@ const Modal = styled.div<{ ctheme: Theme }>`
 	padding: 15px;
 	border: 1px solid ${props => props.ctheme.primary};
 	box-shadow: 5px 5px 5px #0000002d;
+	gap: 10px;
 `;
 
 const Title = styled.div`
@@ -79,6 +80,6 @@ export const LoginRegister = styled.div`
 	cursor: pointer;
 `;
 
-export { Modal, Title, ModalWrapper, CancelButton };
+export { Box, Title, Modal, CancelButton };
 
 export default Container;

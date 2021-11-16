@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../model/hooks";
 import { ModalE, selectModal, toggledModal } from "../../model/uiSlice";
 import Button from "../common/button";
 import Input from "../common/input";
-import { LoginRegister, ModalWrapper, CancelButton } from "./base";
+import { LoginRegister, Modal, CancelButton } from "./base";
 import authService from "../../services/authService";
 import { toast } from "react-toastify";
 
@@ -23,7 +23,7 @@ function SignUp() {
 			dispatch(async () => {
 				await authService.signUp(email, password);
 
-				dispatch(toggledModal(ModalE.SIGN_UP));
+				dispatch(toggledModal(ModalE.CLOSE_MODALS));
 
 				toast.success("Accounted created successfully.");
 			});
@@ -33,7 +33,7 @@ function SignUp() {
 	};
 
 	return (
-		<ModalWrapper theme={window.theme} title="register">
+		<Modal theme={window.theme} title="register">
 			<Input
 				placeholder="email"
 				value={email}
@@ -57,7 +57,7 @@ function SignUp() {
 			<LoginRegister onClick={() => dispatch(toggledModal(ModalE.LOGIN))}>
 				Already have account? SIGN-IN
 			</LoginRegister>
-		</ModalWrapper>
+		</Modal>
 	);
 }
 
