@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../../model/hooks";
 import { ModalE, selectModal, toggledModal } from "../../model/uiSlice";
@@ -37,7 +38,7 @@ function Settings() {
 					</li>
 				</ul>
 
-				<ul>
+				<ul onClick={() => toast.info("Under construction")}>
 					<li>Edit Batch</li>
 					<li>Edit Budget</li>
 				</ul>
