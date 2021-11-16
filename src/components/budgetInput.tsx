@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 import { useAppDispatch } from "../model/hooks";
-import { itemAdded } from "../model/budgetSlice";
+import { itemAdded, itemRemoved } from "../model/budgetSlice";
 import uid from "../utils/id";
 import Input from "./common/input";
 import Button from "./common/button";
@@ -34,10 +34,10 @@ const BudgetInput = () => {
 				amounts: [{ amount, date: Date.now(), id: uid() }]
 			};
 
-			dispatch(dispatch => {
-				addItem(item, {
-					success: () => dispatch(itemAdded(item))
-				});
+			dispatch(itemAdded(item));
+
+			addItem(item, {
+				error: () => dispatch(itemRemoved(item))
 			});
 		}
 	};

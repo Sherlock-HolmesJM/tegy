@@ -55,11 +55,9 @@ const budgetSlice = createSlice({
 			batch.total = getTotal(batch);
 		},
 
-		itemRemoved: (state, { payload }: PayloadAction<ItemRemove>) => {
-			const {
-				budget: { id, type, description },
-				amountId
-			} = payload;
+		itemRemoved: (state, { payload }: PayloadAction<BudgetItem>) => {
+			const { id, type, description, amounts } = payload;
+			const amountId = amounts[0].id;
 
 			const batch = getBatch(state);
 
