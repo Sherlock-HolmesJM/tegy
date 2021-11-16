@@ -12,6 +12,7 @@ import { onStateChange } from "./services/authService";
 import { loadState } from "./services/stateService";
 import CreateBudget from "./components/modal/createBudget";
 import Settings from "./components/settings/settings";
+import About from "./components/modal/about";
 
 function App() {
 	const dispatch = useAppDispatch();
@@ -31,6 +32,8 @@ function App() {
 	return (
 		<div className="App">
 			<Loader />
+
+			<About />
 
 			<Settings />
 
