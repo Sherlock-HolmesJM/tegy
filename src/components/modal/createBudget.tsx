@@ -49,7 +49,6 @@ const CreateBudget = () => {
 			dispatch(toggledModal(ModalE.BUDGET));
 
 			setBudget(getCurrentUser(), {
-				success: () => toast.success("Created successfully"),
 				error: () => dispatch(stateLoaded(oldSate))
 			});
 		});
