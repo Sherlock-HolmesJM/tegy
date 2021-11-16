@@ -29,9 +29,10 @@ export const createBatch = async (batch: Batch, cb: Callback) => {
 		writer.set(strip(batch, ["income", "expense"]), getPathSegments(heads));
 
 		await writer.commit();
-		cb.success();
+		cb.success && cb.success();
 	} catch (error) {
 		log.error(error);
+		cb.error && cb.error();
 	}
 };
 
