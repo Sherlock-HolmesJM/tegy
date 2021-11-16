@@ -7,7 +7,7 @@ import batchService from "../../services/batchService";
 import { createBatch } from "../../utils/batch";
 import Button from "../common/button";
 import Input from "../common/input";
-import { ModalWrapper, Cancel } from "./base";
+import { ModalWrapper, CancelButton } from "./base";
 
 const CreateBatchButton = () => {
 	const dispatch = useAppDispatch();
@@ -84,7 +84,7 @@ const CreateBatch = () => {
 				<Button color={window.theme.primary} onClick={handleCreate}>
 					create
 				</Button>
-				<Cancel modal={ModalE.BATCH} />
+				<CancelButton modal={ModalE.BATCH} />
 			</div>
 		</ModalWrapper>
 	);

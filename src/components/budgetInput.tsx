@@ -114,6 +114,7 @@ const Wrapper = styled.div<{ ctheme: Color }>`
 		border-radius: 4px;
 		height: 33px;
 		margin: 4px;
+		text-transform: capitalize;
 	}
 
 	.input-type {

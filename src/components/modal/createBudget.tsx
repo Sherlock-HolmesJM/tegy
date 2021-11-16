@@ -9,7 +9,7 @@ import { createBatch } from "../../utils/batch";
 import uid from "../../utils/id";
 import Button from "../common/button";
 import Input from "../common/input";
-import { ModalWrapper, Cancel } from "./base";
+import { ModalWrapper, CancelButton } from "./base";
 
 const CreateBudgetButton = () => {
 	const dispatch = useAppDispatch();
@@ -67,7 +67,7 @@ const CreateBudget = () => {
 				<Button color={window.theme.primary} onClick={handleCreate}>
 					create
 				</Button>
-				<Cancel modal={ModalE.BUDGET} />
+				<CancelButton modal={ModalE.BUDGET} />
 			</div>
 		</ModalWrapper>
 	);

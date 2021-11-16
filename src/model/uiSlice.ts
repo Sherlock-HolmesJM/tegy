@@ -7,7 +7,7 @@ export enum ModalE {
 	BATCH,
 	BUDGET,
 	SETTING,
-	CLOSE
+	CLOSE_MODALS
 }
 
 const uiSlice = createSlice({
@@ -20,14 +20,11 @@ const uiSlice = createSlice({
 
 	reducers: {
 		toggledModal: (state, { payload }: PayloadAction<ModalE>) => {
-			const close = (key = -1) => {
-				state.modal = state.modal.map((value, index) =>
-					index === key ? value : false
-				);
-			};
+			const closeAllButOne = (key = -1) =>
+				state.modal.map((value, index) => (index === key ? value : false));
 
-			if (payload === ModalE.CLOSE) {
-				close();
+			if (payload === ModalE.CLOSE_MODALS) {
+				state.modal = closeAllButOne(ModalE.SETTING);
 			} else {
 				state.modal[payload] = !state.modal[payload];
 			}

@@ -16,8 +16,8 @@ function Settings() {
 
 	if (!isSetting) return null;
 
-	const handleClose = ({ target }) => {
-		if (target.dataset.setting) dispatch(toggledModal(ModalE.SETTING));
+	const handleClose = ({ target: { dataset } }: any) => {
+		if (dataset.setting) dispatch(toggledModal(ModalE.SETTING));
 	};
 
 	return (
@@ -73,7 +73,7 @@ const Modal = styled.div`
 	z-index: 1;
 
 	.setting {
-		width: max(20%, 180px);
+		width: 200px;
 		height: inherit;
 		background: ${window.theme.gray};
 		border-top-right-radius: 5px;

@@ -11,7 +11,7 @@ const ModalWrapper: React.FC<{ theme: Theme; title: string }> = props => {
 	const dispatch = useAppDispatch();
 
 	const handleClose = e => {
-		if (e.target.dataset.close) dispatch(toggledModal(ModalE.CLOSE));
+		if (e.target.dataset.close) dispatch(toggledModal(ModalE.CLOSE_MODALS));
 	};
 
 	return (
@@ -25,7 +25,7 @@ const ModalWrapper: React.FC<{ theme: Theme; title: string }> = props => {
 	);
 };
 
-const Cancel = ({ modal }: { modal: ModalE }) => {
+const CancelButton = ({ modal }: { modal: ModalE }) => {
 	const dispatch = useAppDispatch();
 
 	return (
@@ -46,7 +46,7 @@ const Container = styled.div`
 	justify-content: center;
 	align-items: center;
 	background-color: #0505051d;
-	z-index: 111;
+	z-index: 2;
 `;
 
 const Modal = styled.div<{ ctheme: Theme }>`
@@ -79,6 +79,6 @@ export const LoginRegister = styled.div`
 	cursor: pointer;
 `;
 
-export { Modal, Title, ModalWrapper, Cancel };
+export { Modal, Title, ModalWrapper, CancelButton };
 
 export default Container;
