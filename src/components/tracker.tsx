@@ -45,7 +45,7 @@ function Tracker() {
 			<Banner>
 				<div className="banner-content">
 					<div className="banner-title">
-						Balance of <span className="banner-title-hide">{budget?.name}</span>{" "}
+						Balance of <span className="banner-title-sub">{budget.name}</span>{" "}
 						budget
 					</div>
 
@@ -100,7 +100,7 @@ const Wrapper = styled.div`
 		font-size: min(25px, 8vw);
 		font-weight: 300;
 	}
-	.banner-title-hide {
+	.banner-title-sub {
 		text-transform: capitalize;
 	}
 	.banner-amount {
@@ -112,12 +112,6 @@ const Wrapper = styled.div`
 		display: flex;
 		justify-content: center;
 		flex-wrap: wrap;
-	}
-
-	@media (max-width: 435px) {
-		/* .banner-title-hide {
-			display: none;
-		} */
 	}
 `;
 
