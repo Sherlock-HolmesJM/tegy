@@ -46,7 +46,7 @@ function Tracker() {
 				<div className="banner-content">
 					<div className="banner-title">
 						Balance of <span className="banner-title-sub">{budget.name}</span>{" "}
-						budget
+						Budget
 					</div>
 
 					<div className="banner-amount">
