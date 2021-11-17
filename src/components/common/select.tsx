@@ -35,8 +35,8 @@ const Select = ({ value, onSelect, options }: SelectProps) => {
 	};
 
 	const raiseSelect = (value: string) => {
-		setDropdown(false); // close the list after selection
-		onSelect(value); // raise select event
+		setDropdown(false);
+		onSelect(value);
 	};
 
 	return (
@@ -47,7 +47,7 @@ const Select = ({ value, onSelect, options }: SelectProps) => {
 				ref={valueContainerRef}>
 				<div className="select-value">{label}</div>
 
-				{<DropdownIcon />}
+				<div>{<DropdownIcon />}</div>
 			</div>
 
 			{options.length > 0 && (
@@ -80,7 +80,7 @@ const Wrapper = styled.div<{ len: number; top: number }>`
 		gap: 10px;
 		cursor: pointer;
 		height: inherit;
-		padding: 0 4px;
+		padding: 0 6px 4px 5px;
 	}
 	.select-value {
 		flex-grow: 1;
@@ -116,7 +116,7 @@ const Wrapper = styled.div<{ len: number; top: number }>`
 const DropdownIcon = () => (
 	<svg
 		width="8"
-		height="8"
+		height="10"
 		viewBox="0 0 12 8"
 		fill="none"
 		xmlns="http://www.w3.org/2000/svg">
