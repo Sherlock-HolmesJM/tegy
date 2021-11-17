@@ -15,8 +15,7 @@ function About() {
 				<div>
 					Tegy keeps record of the <span>incomes</span> and{" "}
 					<span>expenses</span> of your budget in <span>batches</span>, though
-					you can use only one batch, the default batch, if you like. That's all
-					it is. Nothing more.
+					you can use only one batch, the default batch, if you like. That's it.
 				</div>
 
 				<div>
