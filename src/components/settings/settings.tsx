@@ -63,14 +63,14 @@ function Settings() {
 }
 
 const Modal = styled.div`
-	position: absolute;
+	position: fixed;
 	top: 0;
 	width: 100vw;
 	height: 100vh;
 	background: #00000014;
 	display: flex;
 	align-items: flex-end;
-	z-index: 1;
+	z-index: 2;
 
 	.setting {
 		width: 200px;

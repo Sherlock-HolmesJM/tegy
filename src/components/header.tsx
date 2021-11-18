@@ -34,11 +34,14 @@ function Header() {
 }
 
 const Headerr = styled.header`
+	position: sticky;
+	top: 0;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	padding: 2px 12px;
 	background-color: ${window.theme.gray};
+	z-index: 1;
 
 	.header-title {
 		display: flex;

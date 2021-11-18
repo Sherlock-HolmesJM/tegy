@@ -96,6 +96,8 @@ interface Color extends Theme {
 }
 
 const Wrapper = styled.div<{ ctheme: Color }>`
+	position: sticky;
+	top: 36px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -103,6 +105,7 @@ const Wrapper = styled.div<{ ctheme: Color }>`
 	padding: 5px 2px;
 	background-color: ${window.theme.gray};
 	border-bottom: 1px groove ${props => props.ctheme.selectedColor};
+	z-index: 1;
 
 	.input-icon.hide {
 		display: none;
