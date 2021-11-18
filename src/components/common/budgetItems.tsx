@@ -41,7 +41,7 @@ const Wrapper = styled.div`
 	.title {
 		display: flex;
 		justify-content: space-between;
-		font-size: clamp(20px, 7vw, 25px);
+		font-size: clamp(18px, 5vw, 20px);
 		font-weight: 600;
 		text-align: left;
 		padding: 0 5px;
