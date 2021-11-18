@@ -13,7 +13,7 @@ function BudgetItems({ title, items, color, single }: Props) {
 	if (items.length === 0) return null;
 
 	return (
-		<Wrapper data-aos="fade-right">
+		<Wrapper data-aos="fade-right" data-aos-once="true">
 			<div className="title">
 				<div>{title}</div>
 
@@ -56,6 +56,10 @@ const Wrapper = styled.div`
 		overflow-y: scroll;
 		max-height: 39vh;
 		padding: 5px;
+
+		@media (max-width: 500px) {
+			max-height: 100%;
+		}
 	}
 `;
 
