@@ -172,9 +172,10 @@ const Wrapper = styled.div`
 		width: 18px;
 		height: 16px;
 		cursor: pointer;
-	}
-	.item-delete.hide {
-		visibility: hidden;
+
+		&.hide {
+			visibility: hidden;
+		}
 	}
 
 	.item-datetime {
