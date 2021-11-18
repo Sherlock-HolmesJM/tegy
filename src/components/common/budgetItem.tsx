@@ -14,6 +14,7 @@ import {
 	selectBatchTotal
 } from "../../model/budgetSlice";
 import { deleteItem } from "../../services/itemService";
+import { useState } from "react";
 
 interface Props {
 	budget: BudgetItem;
@@ -21,6 +22,12 @@ interface Props {
 }
 
 function BudgetItem(props: Props) {
+	const dispatch = useAppDispatch();
+	const history = useHistory();
+	const { income } = useAppSelector(selectBatchTotal);
+
+	const [hoverAnim, setHover] = useState<"" | "animate">("");
+
 	const {
 		color,
 		budget: { description, id, type, amounts }
@@ -34,16 +41,6 @@ function BudgetItem(props: Props) {
 
 	const deleteImgClasses =
 		amounts.length > 1 ? "item-delete hide" : "item-delete";
-
-	const dispatch = useAppDispatch();
-	const history = useHistory();
-	const { income } = useAppSelector(selectBatchTotal);
-
-	const handleClick = e => {
-		if (e.target.dataset.delete) return;
-
-		history.push(`/view/${type}/${id}`);
-	};
 
 	const handleDelete = () => {
 		Swal.fire({
@@ -69,8 +66,20 @@ function BudgetItem(props: Props) {
 		});
 	};
 
+	const handleClick = e => {
+		if (e.target.dataset.delete) return;
+
+		setHover("animate");
+
+		setTimeout(() => {
+			setHover("");
+			history.push(`/view/${type}/${id}`);
+		}, 400);
+	};
+
 	return (
 		<Wrapper color={theme[color]}>
+			<div className={`item-overlay ${hoverAnim}`}></div>
 			<div className="item-img-div">
 				<img
 					src={type === "income" ? incomeImg : expenseImg}
@@ -112,13 +121,36 @@ function BudgetItem(props: Props) {
 }
 
 const Wrapper = styled.div`
+	position: relative;
 	display: flex;
+	justify-content: center;
 	width: 100%;
 	background: white;
 	border-radius: 5px;
-
 	&:last-child {
 		margin: 0;
+	}
+
+	.item-overlay {
+		position: absolute;
+		height: 100%;
+		width: 0;
+		background: #2e2d2d21;
+		border-radius: 50px;
+
+		&.animate {
+			animation: item-hover 0.3s ease forwards;
+		}
+	}
+
+	@keyframes item-hover {
+		0% {
+			width: 0px;
+		}
+
+		100% {
+			width: 99%;
+		}
 	}
 
 	.item-img-div {
