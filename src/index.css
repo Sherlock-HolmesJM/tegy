@@ -15,20 +15,20 @@ body {
 	width: 3px;
 }
 .scrollar::-webkit-scrollbar-track {
-	background: rgb(216, 210, 210);
+	background: rgb(255, 255, 255);
 }
 .scrollar::-webkit-scrollbar-thumb {
-	background: rgb(122, 126, 122);
+	background: rgb(214, 214, 214);
 }
 
 .scrollar-m::-webkit-scrollbar {
 	width: 1px;
 }
 .scrollar-m::-webkit-scrollbar-track {
-	background: rgb(216, 210, 210);
+	background: rgb(255, 255, 255);
 }
 .scrollar-m::-webkit-scrollbar-thumb {
-	background: rgb(122, 126, 122);
+	background: rgb(203, 206, 203);
 }
 
 code {

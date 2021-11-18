@@ -28,8 +28,12 @@ function BudgetItem(props: Props) {
 
 	const { theme } = window;
 	const sign = type === "income" ? "+" : "-";
+
 	const totalAmount = amounts.reduce((acc, next) => acc + next.amount, 0);
 	const { date } = amounts[amounts.length - 1];
+
+	const deleteImgClasses =
+		amounts.length > 1 ? "item-delete hide" : "item-delete";
 
 	const dispatch = useAppDispatch();
 	const history = useHistory();
@@ -65,7 +69,7 @@ function BudgetItem(props: Props) {
 
 	return (
 		<Wrapper color={theme[color]}>
-			<div className="img-div">
+			<div className="item-img-div">
 				<img
 					src={type === "income" ? incomeImg : expenseImg}
 					alt="inc"
@@ -74,33 +78,31 @@ function BudgetItem(props: Props) {
 				/>
 			</div>
 
-			<div className="content-group">
-				<div className="budgetItem-content">
-					<div className="description" onClick={handleClick}>
+			<div className="item-content-group">
+				<div className="item-content">
+					<div className="item-description" onClick={handleClick}>
 						{description}
 					</div>
 
 					<div className="amount">
 						<div>{formatAmount(totalAmount, sign)}</div>
 
-						<Badge className={`item-badge item-badge-${type}`}>
+						<Badge className={`item-badge ${type}`}>
 							{percentage(income, totalAmount) + "%"}
 						</Badge>
 
-						{amounts.length === 1 && (
-							<img
-								src={deleteImg}
-								alt="D"
-								onClick={handleDelete}
-								className="delete-div"
-								width="100%"
-								height="100%"
-							/>
-						)}
+						<img
+							src={deleteImg}
+							alt="D"
+							onClick={handleDelete}
+							className={deleteImgClasses}
+							width="100%"
+							height="100%"
+						/>
 					</div>
 				</div>
 
-				<div className="datetime">
+				<div className="item-datetime">
 					<Moment fromNow>{new Date(date)}</Moment>
 				</div>
 			</div>
@@ -110,37 +112,43 @@ function BudgetItem(props: Props) {
 
 const Wrapper = styled.div`
 	display: flex;
-	padding-right: 7px;
-	margin-bottom: 5px;
 	width: 100%;
 	background: white;
-	border: 1px solid lightgray;
 	border-radius: 5px;
 
 	&:last-child {
 		margin: 0;
 	}
 
-	.img-div {
+	.item-img-div {
 		flex-basis: 40px;
 		margin-right: 8px;
+
+		img {
+			border-radius: 50%;
+		}
 	}
 
-	.content-group {
+	.item-content-group {
 		flex-grow: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
 	}
 
-	.description {
-		text-transform: capitalize;
-		cursor: pointer;
-	}
-
-	.budgetItem-content {
+	.item-content {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		font-size: 18px;
 		height: 60%;
+	}
+
+	.item-description {
+		flex-grow: 1;
+		text-align: left;
+		text-transform: capitalize;
+		cursor: pointer;
 	}
 
 	.amount {
@@ -153,18 +161,23 @@ const Wrapper = styled.div`
 
 	.item-badge {
 		background: #ff000030;
-	}
-	.item-badge-income {
-		display: none;
+		min-width: 30px;
+
+		&.income {
+			display: none;
+		}
 	}
 
-	.delete-div {
+	.item-delete {
 		width: 18px;
 		height: 16px;
 		cursor: pointer;
 	}
+	.item-delete.hide {
+		visibility: hidden;
+	}
 
-	.datetime {
+	.item-datetime {
 		font-size: 12px;
 		text-align: left;
 	}

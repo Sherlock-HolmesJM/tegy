@@ -50,9 +50,12 @@ const Wrapper = styled.div`
 	}
 
 	.item-group {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
 		overflow-y: scroll;
-		background-color: #f0e8e8;
-		max-height: 43vh;
+		max-height: 39vh;
+		padding: 5px;
 	}
 `;
 
