@@ -13,9 +13,14 @@ import { loadState } from "./services/stateService";
 import CreateBudget from "./components/modal/createBudget";
 import Settings from "./components/settings/settings";
 import About from "./components/modal/about";
+import AOS from "aos";
 
 function App() {
 	const dispatch = useAppDispatch();
+
+	useEffect(() => {
+		AOS.init();
+	}, []);
 
 	useEffect(() => {
 		return onStateChange(user => {

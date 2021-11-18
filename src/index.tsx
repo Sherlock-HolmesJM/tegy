@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { initializeApp } from "firebase/app";
+import "aos/dist/aos.css";
 import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
 import App from "./App";

@@ -20,7 +20,7 @@ function BudgetItems({ title, items, color, single }: Props) {
 				{single && <Link to="/">Back</Link>}
 			</div>
 
-			<div className="item-group scrollar">
+			<div className="item-group scrollar" data-aos="zoom-in-up">
 				{items.map(budget => (
 					<BudgetItem
 						key={budget.amounts[0].date}
