@@ -39,7 +39,9 @@ function BudgetItem(props: Props) {
 	const history = useHistory();
 	const { income } = useAppSelector(selectBatchTotal);
 
-	const handleClick = () => {
+	const handleClick = e => {
+		if (e.target.dataset.delete) return;
+
 		history.push(`/view/${type}/${id}`);
 	};
 
@@ -78,11 +80,9 @@ function BudgetItem(props: Props) {
 				/>
 			</div>
 
-			<div className="item-content-group">
+			<div className="item-content-group" onClick={handleClick}>
 				<div className="item-content">
-					<div className="item-description" onClick={handleClick}>
-						{description}
-					</div>
+					<div className="item-description">{description}</div>
 
 					<div className="amount">
 						<div>{formatAmount(totalAmount, sign)}</div>
@@ -98,6 +98,7 @@ function BudgetItem(props: Props) {
 							className={deleteImgClasses}
 							width="100%"
 							height="100%"
+							data-delete
 						/>
 					</div>
 				</div>
@@ -148,7 +149,6 @@ const Wrapper = styled.div`
 		flex-grow: 1;
 		text-align: left;
 		text-transform: capitalize;
-		cursor: pointer;
 	}
 
 	.amount {
