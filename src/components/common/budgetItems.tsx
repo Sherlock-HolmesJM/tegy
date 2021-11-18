@@ -13,14 +13,14 @@ function BudgetItems({ title, items, color, single }: Props) {
 	if (items.length === 0) return null;
 
 	return (
-		<Wrapper>
+		<Wrapper data-aos="fade-right">
 			<div className="title">
 				<div>{title}</div>
 
 				{single && <Link to="/">Back</Link>}
 			</div>
 
-			<div className="item-group scrollar" data-aos="zoom-in-up">
+			<div className="item-group scrollar">
 				{items.map(budget => (
 					<BudgetItem
 						key={budget.amounts[0].date}

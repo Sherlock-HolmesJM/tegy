@@ -74,7 +74,7 @@ function BudgetItem(props: Props) {
 		setTimeout(() => {
 			setHover("");
 			history.push(`/view/${type}/${id}`);
-		}, 400);
+		}, 350);
 	};
 
 	return (
