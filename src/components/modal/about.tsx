@@ -10,7 +10,7 @@ function About() {
 	return (
 		<WrapperContainer onClick={() => setClose(true)}>
 			<Wrapper ctheme={window.theme}>
-				<div>Tegy: a simple budget tracker</div>
+				<div>Tegy: the simple budget tracker</div>
 
 				<div>
 					Tegy keeps record of the <span>incomes</span> and{" "}

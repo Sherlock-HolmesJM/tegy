@@ -4,11 +4,20 @@
 
 ## Description
 
-    Tegy is a simple budget tracker. It keeps record of your budget in batches, though you can use only one batch, the default batch, if you like. That's all it is. Record all your incomes and expenses. Nothing more.
+    Tegy: the simple budget tracker
 
-    You can use Tegy as your rough record, later, write it down in your book; or use it as your main budget recorder. Either way, with Tegy, you never have to have a messy record.
+    Tegy keeps record of the incomes and
+    expenses of your budget in batches, though
+    you can use only one batch, the default batch, if you like. That's it.
 
-    So, what are you waiting for? Give Tegy a try.
+    You can use Tegy as your rough record, later, write it down in your
+    book; or use it as your main budget recorder. Either way, with Tegy,
+    you'll never have a messy record.
+
+    And you can have multiple budgets with the same account.
+
+    So, what are you waiting for? Do you want to have a clean budget
+    record?
 
 ### Batch
 
