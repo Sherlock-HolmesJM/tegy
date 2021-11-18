@@ -19,7 +19,9 @@ function App() {
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
-		AOS.init();
+		AOS.init({
+			anchorPlacement: "top-top"
+		});
 	}, []);
 
 	useEffect(() => {
