@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { useAppDispatch } from "../../model/hooks";
 import { ModalE, toggledModal } from "../../model/uiSlice";
@@ -9,14 +10,25 @@ import Button from "../common/button";
 
 const Modal: React.FC<{ theme: Theme; title: string }> = props => {
 	const dispatch = useAppDispatch();
+	const [anim, setAnim] = useState("");
 
 	const handleClose = e => {
-		if (e.target.dataset.close) dispatch(toggledModal(ModalE.CLOSE_MODALS));
+		if (e.target.dataset.close) {
+			setAnim("animate__slideOutDown");
+
+			setTimeout(() => {
+				dispatch(toggledModal(ModalE.CLOSE_MODALS));
+				setAnim("");
+			}, 400);
+		}
 	};
 
 	return (
 		<Container onClick={handleClose} data-close>
-			<Box ctheme={props.theme}>
+			<Box
+				ctheme={props.theme}
+				className={`animate__animated ${anim}`}
+				data-aos="zoom-in-down">
 				<Title>{props.title}</Title>
 
 				{props.children}
