@@ -8,14 +8,14 @@ const Loader = () => {
 	if (!isLoading) return null;
 
 	return (
-		<Container>
+		<Container className="animate__animated animate__slideInDown">
 			<HourGlass />
 		</Container>
 	);
 };
 
 const Container = styled.div`
-	position: absolute;
+	position: fixed;
 	top: 1px;
 	left: 1px;
 	display: flex;
