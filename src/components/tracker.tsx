@@ -2,11 +2,6 @@ import { useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 import { ToastContainer } from "react-toastify";
-import BudgetView from "./budgetView";
-import BudgetInput from "./budgetInput";
-import Banner from "./common/banner";
-import SummaryLabel from "./common/summaryLabel";
-import BudgetItems from "./common/budgetItems";
 import {
 	batchLoaded,
 	selectBatch,
@@ -17,12 +12,22 @@ import { useAppDispatch, useAppSelector } from "../model/hooks";
 import { formatAmount } from "../utils/money";
 import { getBatch } from "../services/batchService";
 import Header from "./header";
+import NoBudget from "./empty/noBudget";
+import BudgetView from "./budgetView";
+import BudgetInput from "./budgetInput";
+import Banner from "./common/banner";
+import SummaryLabel from "./common/summaryLabel";
+import BudgetItems from "./common/budgetItems";
 
 function Tracker() {
 	const dispatch = useAppDispatch();
 
 	const batch = useAppSelector(selectBatch);
 	const budget = useAppSelector(selectBudget);
+
+	const noData = batch
+		? batch.income.length === 0 || batch.expense.length === 0
+		: true;
 
 	useEffect(() => {
 		if (!batch) {
@@ -68,18 +73,22 @@ function Tracker() {
 					</Route>
 
 					<Route path="/">
-						<>
-							<BudgetItems
-								title="Income"
-								color="primary"
-								items={batch?.income ?? []}
-							/>
-							<BudgetItems
-								title="Expense"
-								color="secondary"
-								items={batch?.expense ?? []}
-							/>
-						</>
+						{noData ? (
+							<NoBudget />
+						) : (
+							<>
+								<BudgetItems
+									title="Income"
+									color="primary"
+									items={batch?.income ?? []}
+								/>
+								<BudgetItems
+									title="Expense"
+									color="secondary"
+									items={batch?.expense ?? []}
+								/>
+							</>
+						)}
 					</Route>
 				</Switch>
 			</div>
