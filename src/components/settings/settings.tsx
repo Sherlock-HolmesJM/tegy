@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../../model/hooks";
@@ -11,18 +12,27 @@ import Header from "./header";
 
 function Settings() {
 	const dispatch = useAppDispatch();
-
 	const isSetting = useAppSelector(selectModal(ModalE.SETTING));
+	const [anim, setAnim] = useState("");
 
 	if (!isSetting) return null;
 
 	const handleClose = ({ target: { dataset } }: any) => {
-		if (dataset.setting) dispatch(toggledModal(ModalE.SETTING));
+		if (dataset.setting) {
+			setAnim("animate__backOutLeft");
+
+			setTimeout(() => {
+				dispatch(toggledModal(ModalE.SETTING));
+				setAnim("");
+			}, 600);
+		}
 	};
 
 	return (
 		<Modal onClick={handleClose} data-setting>
-			<div className="setting">
+			<div
+				className={`setting animate__animated ${anim}`}
+				data-aos="fade-right">
 				<Header />
 
 				<ul>

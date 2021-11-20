@@ -13,7 +13,10 @@ function BudgetItems({ title, items, color, single }: Props) {
 	if (items.length === 0) return null;
 
 	return (
-		<Wrapper data-aos="fade-right" data-aos-once="true">
+		<Wrapper
+			data-aos="fade-right"
+			data-aos-anchor=".tracker-content"
+			data-aos-once="true">
 			<div className="title">
 				<div>{title}</div>
 
