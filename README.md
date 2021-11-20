@@ -2,7 +2,7 @@
 
 ![img](https://alltogether.swe.org/wp-content/uploads/2021/09/budget_header.jpg)
 
-## Description
+## About
 
     Tegy: the simple budget tracker
 
@@ -18,6 +18,15 @@
 
     So, what are you waiting for? Do you want to have a clean budget
     record?
+    
+## Features
+
+    1. Add budget items
+    2. Delete budget items
+    3. Create batches
+    4. Create budgets
+    5. Switch between batches
+    6. Switch between budgets
 
 ### Batch
 
