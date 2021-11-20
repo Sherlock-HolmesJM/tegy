@@ -129,6 +129,7 @@ const Wrapper = styled.div`
 	width: 100%;
 	background: white;
 	border-radius: 5px;
+	cursor: context-menu;
 	&:last-child {
 		margin: 0;
 	}
