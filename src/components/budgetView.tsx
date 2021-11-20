@@ -2,7 +2,7 @@ import { useParams, Redirect } from "react-router";
 import { selectItem } from "../model/budgetSlice";
 import { useAppSelector } from "../model/hooks";
 import { toItemList } from "../utils/budgetItem";
-import BudgetItems from "./common/budgetItems";
+import BudgetList from "./common/budgetList";
 
 const BudgetView = () => {
 	const param = useParams<ItemFind>();
@@ -16,7 +16,7 @@ const BudgetView = () => {
 	);
 
 	return (
-		<BudgetItems
+		<BudgetList
 			items={list}
 			title={param.type}
 			single

@@ -5,10 +5,11 @@ import { getCurrentUser } from "./authService";
 import { get, getList, getPathSegments, getWriter } from "./httpService";
 import log from "./logger";
 
-export const getBatch = async () => {
-	const { heads } = store.getState().budgets;
+export const getBatch = async (heads?: Heads): Promise<Batch> => {
+	heads = heads ?? store.getState().budgets.heads;
+
 	const paths = getPathSegments(heads);
-	const batch = await get<Batch>(...paths);
+	const batch = await get<CdBatch>(...paths);
 	const income = await getList<BudgetItem>(...paths, "income");
 	const expense = await getList<BudgetItem>(...paths, "expense");
 

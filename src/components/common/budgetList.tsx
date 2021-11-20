@@ -9,7 +9,7 @@ interface Props {
 	single?: boolean;
 }
 
-function BudgetItems({ title, items, color, single }: Props) {
+function BudgetList({ title, items, color, single }: Props) {
 	if (items.length === 0) return null;
 
 	return (
@@ -35,6 +35,8 @@ function BudgetItems({ title, items, color, single }: Props) {
 		</Wrapper>
 	);
 }
+
+export default BudgetList;
 
 const Wrapper = styled.div`
 	margin: 10px;
@@ -65,5 +67,3 @@ const Wrapper = styled.div`
 		}
 	}
 `;
-
-export default BudgetItems;

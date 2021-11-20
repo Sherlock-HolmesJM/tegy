@@ -3,6 +3,7 @@ import { store } from "../model/store";
 import { getBudget } from "../utils/budget";
 import { strip } from "../utils/striper";
 import { getCurrentUser } from "./authService";
+import { getBatch } from "./batchService";
 import { getPathSegments, getWriter, get, getList } from "./httpService";
 import log from "./logger";
 
@@ -80,12 +81,13 @@ export const setBudget = async (user: User, cb?: Callback) => {
 
 export const loadBudget = async (id: string, cb: Callback) => {
 	try {
-		const budget = await get<Budget>(...getPathSegments({ budget: id }));
+		const data = await get<CdBudget>(...getPathSegments({ budget: id }));
 
-		const heads = { batch: budget.head, budget: id };
+		const heads = { batch: data.head, budget: id };
 
-		const batch = await get<Batch>(...getPathSegments(heads));
-		budget.batches = [batch];
+		const batch = await getBatch(heads);
+
+		const budget: Budget = { ...data, batches: [batch] };
 
 		await updateHeads(heads);
 

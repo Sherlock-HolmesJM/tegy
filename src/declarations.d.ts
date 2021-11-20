@@ -26,35 +26,44 @@ declare global {
 		commit: () => Promise<void>;
 	};
 
-	interface Budgets {
-		budgets: Budget[];
-		budgetList: { id: string; name: string }[];
-		heads: Heads;
-	}
-
 	type Heads = {
 		budget: string;
 		batch: string;
 	};
 
-	interface Budget {
-		id: string;
-		name: string;
-		batches: Batch[];
-		batchList: { id: string; name: string }[];
-		head: string;
+	interface CdBudgets {
+		budgetList: { id: string; name: string }[];
+		heads: Heads;
 	}
 
-	interface Batch {
+	interface Budgets extends CdBudgets {
+		budgets: Budget[];
+	}
+
+	interface CdBudget {
 		id: string;
 		name: string;
-		income: BudgetItem[];
-		expense: BudgetItem[];
+		batchList: { id: string; name: string }[];
+		head: string; // id of the current batch -> as in, head batch
+	}
+
+	interface Budget extends CdBudget {
+		batches: Batch[];
+	}
+
+	interface CdBatch {
+		id: string;
+		name: string;
 		total: BatchTotal;
 		date: {
 			start: number;
 			end: number;
 		};
+	}
+
+	interface Batch extends CdBatch {
+		income: BudgetItem[];
+		expense: BudgetItem[];
 	}
 
 	interface BatchTotal {

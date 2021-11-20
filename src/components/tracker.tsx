@@ -17,7 +17,7 @@ import BudgetView from "./budgetView";
 import BudgetInput from "./budgetInput";
 import Banner from "./common/banner";
 import SummaryLabel from "./common/summaryLabel";
-import BudgetItems from "./common/budgetItems";
+import BudgetList from "./common/budgetList";
 
 function Tracker() {
 	const dispatch = useAppDispatch();
@@ -25,8 +25,10 @@ function Tracker() {
 	const batch = useAppSelector(selectBatch);
 	const budget = useAppSelector(selectBudget);
 
+	console.log({ batch });
+
 	const noData = batch
-		? batch.income.length === 0 || batch.expense.length === 0
+		? batch.income.length === 0 && batch.expense.length === 0
 		: true;
 
 	useEffect(() => {
@@ -77,12 +79,12 @@ function Tracker() {
 							<NoBudget />
 						) : (
 							<>
-								<BudgetItems
+								<BudgetList
 									title="Income"
 									color="primary"
 									items={batch?.income ?? []}
 								/>
-								<BudgetItems
+								<BudgetList
 									title="Expense"
 									color="secondary"
 									items={batch?.expense ?? []}
