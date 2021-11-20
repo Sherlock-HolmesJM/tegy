@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 import Moment from "react-moment";
 import Swal from "sweetalert2";
@@ -14,7 +15,6 @@ import {
 	selectBatchTotal
 } from "../../model/budgetSlice";
 import { deleteItem } from "../../services/itemService";
-import { useState } from "react";
 
 interface Props {
 	budget: BudgetItem;
@@ -74,7 +74,7 @@ function BudgetItem(props: Props) {
 		setTimeout(() => {
 			setHover("");
 			history.push(`/view/${type}/${id}`);
-		}, 350);
+		}, 380);
 	};
 
 	return (
@@ -113,6 +113,8 @@ function BudgetItem(props: Props) {
 				</div>
 
 				<div className="item-datetime">
+					<div>{new Date(date).toDateString()}</div>
+					{" -- "}
 					<Moment fromNow>{new Date(date)}</Moment>
 				</div>
 			</div>
@@ -132,7 +134,9 @@ const Wrapper = styled.div`
 	}
 
 	.item-overlay {
+		box-sizing: content-box;
 		position: absolute;
+		top: -5px;
 		height: 100%;
 		width: 0;
 		background: #2e2d2d21;
@@ -146,10 +150,12 @@ const Wrapper = styled.div`
 	@keyframes item-hover {
 		0% {
 			width: 0px;
+			padding: 5px;
 		}
 
 		100% {
-			width: 99%;
+			width: 100%;
+			padding: 5px;
 		}
 	}
 
@@ -211,6 +217,7 @@ const Wrapper = styled.div`
 	}
 
 	.item-datetime {
+		display: flex;
 		font-size: 12px;
 		text-align: left;
 	}
