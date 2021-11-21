@@ -18,19 +18,19 @@ const Login = () => {
 	if (!isLogin) return null;
 
 	const handleSubmit = () => {
-		try {
-			if (!email || !password) throw Error("Empty fields not allowed.");
+		dispatch(async () => {
+			try {
+				if (!email || !password) throw Error("Empty fields not allowed.");
 
-			dispatch(async () => {
 				await authService.login(email, password);
 
 				dispatch(toggledModal(ModalE.LOGIN));
 
 				toast.success("Successfully logged in.");
-			});
-		} catch (error) {
-			log.error(error);
-		}
+			} catch (error) {
+				log.error(error);
+			}
+		});
 	};
 
 	return (

@@ -65,12 +65,10 @@ const BatchModal = () => {
 			const state = getState().budgets;
 
 			dispatch(batchCreated(batch));
-			dispatch(toggledModal(ModalE.BATCH_C));
 
 			postBatch(batch, {
 				error: () => {
 					dispatch(stateLoaded(state));
-					dispatch(toggledModal(ModalE.BATCH_C));
 				}
 			});
 		});
