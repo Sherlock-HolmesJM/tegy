@@ -8,7 +8,7 @@ const Loader = () => {
 	if (!isLoading) return null;
 
 	return (
-		<Container className="animate__animated animate__slideInDown">
+		<Container className="zoom-in">
 			<HourGlass />
 		</Container>
 	);

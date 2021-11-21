@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Container, { Box } from "./base";
 
@@ -6,9 +6,11 @@ function About() {
 	const [isClose, setClose] = useState(false);
 	const [anim, setAnim] = useState("hide");
 
-	if (isClose) return null;
+	useEffect(() => {
+		setTimeout(() => setAnim("animate__fadeInDown"), 4000);
+	}, []);
 
-	setTimeout(() => setAnim("animate__fadeInDown"), 4000);
+	if (isClose) return null;
 
 	return (
 		<WrapperContainer onClick={() => setClose(true)}>
