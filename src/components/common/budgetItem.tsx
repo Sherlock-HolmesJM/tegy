@@ -113,8 +113,7 @@ function BudgetItem(props: Props) {
 				</div>
 
 				<div className="item-datetime">
-					<div>{new Date(date).toDateString()}</div>
-					{" -- "}
+					<div>{new Date(date).toDateString()}</div> <span>--</span>
 					<Moment fromNow>{new Date(date)}</Moment>
 				</div>
 			</div>
@@ -221,6 +220,7 @@ const Wrapper = styled.div`
 		display: flex;
 		font-size: 12px;
 		text-align: left;
+		gap: 3px;
 	}
 `;
 
