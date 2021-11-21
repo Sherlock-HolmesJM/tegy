@@ -8,7 +8,7 @@ const Loader = () => {
 	if (!isLoading) return null;
 
 	return (
-		<Container className="zoom-in">
+		<Container data-aos="zoom-in">
 			<HourGlass />
 		</Container>
 	);
