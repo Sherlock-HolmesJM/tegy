@@ -50,8 +50,7 @@ const CancelButton = ({ modal }: { modal: ModalE }) => {
 };
 
 const Container = styled.div`
-	position: absolute;
-	top: 0;
+	position: fixed;
 	width: 100vw;
 	height: 100vh;
 	display: flex;
