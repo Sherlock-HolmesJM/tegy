@@ -17,8 +17,8 @@ const Modal: React.FC<{ theme: Theme; title: string }> = props => {
 			setAnim("animate__slideOutDown");
 
 			setTimeout(() => {
-				dispatch(toggledModal(ModalE.CLOSE_MODALS));
 				setAnim("");
+				dispatch(toggledModal(ModalE.CLOSE_MODALS));
 			}, 400);
 		}
 	};

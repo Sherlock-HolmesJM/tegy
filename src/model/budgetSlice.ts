@@ -127,7 +127,7 @@ export const {
 	budgetLoaded
 } = budgetSlice.actions;
 
-export const selectBatch = (state: RootState) => {
+export const selectBatch = (state: RootState): Batch => {
 	return getBatch(state.budgets);
 };
 
