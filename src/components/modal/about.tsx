@@ -4,12 +4,15 @@ import Container, { Box } from "./base";
 
 function About() {
 	const [isClose, setClose] = useState(false);
+	const [anim, setAnim] = useState("hide");
 
 	if (isClose) return null;
 
+	setTimeout(() => setAnim("animate__fadeInDown"), 4000);
+
 	return (
 		<WrapperContainer onClick={() => setClose(true)}>
-			<Wrapper ctheme={window.theme}>
+			<Wrapper ctheme={window.theme} className={`animate__animated ${anim}`}>
 				<div>Tegy: the simple budget tracker</div>
 
 				<div>
@@ -45,6 +48,10 @@ const Wrapper = styled(Box)`
 	text-align: justify;
 	gap: 10px;
 	z-index: 3;
+
+	&.hide {
+		display: none;
+	}
 
 	div {
 		color: #1d5970;
