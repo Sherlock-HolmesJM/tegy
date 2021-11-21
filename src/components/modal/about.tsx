@@ -3,9 +3,9 @@ import styled from "styled-components";
 import Container, { Box } from "./base";
 
 function About() {
-	const [close, setClose] = useState(false);
+	const [isClose, setClose] = useState(false);
 
-	if (close) return null;
+	if (isClose) return null;
 
 	return (
 		<WrapperContainer onClick={() => setClose(true)}>
@@ -40,6 +40,8 @@ const WrapperContainer = styled(Container)`
 `;
 
 const Wrapper = styled(Box)`
+	position: absolute;
+	top: 60px;
 	text-align: justify;
 	gap: 10px;
 	z-index: 3;

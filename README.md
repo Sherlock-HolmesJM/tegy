@@ -18,7 +18,7 @@
 
     So, what are you waiting for? Do you want to have a clean budget
     record?
-    
+
 ## Features
 
     1. Add budget items
@@ -27,6 +27,8 @@
     4. Create budgets
     5. Switch between batches
     6. Switch between budgets
+    7. Edit batch
+    8. Edit budget
 
 ### Batch
 

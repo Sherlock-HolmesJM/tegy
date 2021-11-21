@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useAppDispatch } from "../../model/hooks";
 import { ModalE, toggledModal } from "../../model/uiSlice";
