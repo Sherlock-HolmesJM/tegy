@@ -7,7 +7,7 @@ function About() {
 	const [anim, setAnim] = useState("hide");
 
 	useEffect(() => {
-		setTimeout(() => setAnim("animate__fadeIn"), 5000);
+		setTimeout(() => setAnim("animate__fadeIn"), 8000);
 	}, []);
 
 	if (isClose) return null;
