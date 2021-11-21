@@ -16,7 +16,7 @@ export const getBatch = async (heads?: Heads): Promise<Batch> => {
 	return { ...batch, income, expense };
 };
 
-export const createBatch = async (batch: Batch, cb: Callback) => {
+export const postBatch = async (batch: Batch, cb: Callback) => {
 	try {
 		const state = store.getState().budgets;
 		const { batchList } = getBudget(state);
@@ -35,6 +35,24 @@ export const createBatch = async (batch: Batch, cb: Callback) => {
 	}
 };
 
-const batchService = { createBatch, getBatch };
+export const patchBatch = async (batch: Batch, cb: Callback) => {
+	try {
+		const state = store.getState().budgets;
+		const { batchList } = getBudget(state);
+		const writer = getWriter();
+		const { heads } = state;
+
+		writer.update({ batchList }, getPathSegments({ budget: heads.budget }));
+		writer.update(strip(batch, ["income", "expense"]), getPathSegments(heads));
+
+		await writer.commit();
+
+		cb.success && cb.success();
+	} catch (error) {
+		cb.error && cb.error();
+	}
+};
+
+const batchService = { postBatch, getBatch, patchBatch };
 
 export default batchService;

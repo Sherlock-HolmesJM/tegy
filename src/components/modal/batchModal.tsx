@@ -8,7 +8,7 @@ import {
 } from "../../model/budgetSlice";
 import { useAppDispatch, useAppSelector } from "../../model/hooks";
 import { ModalE, selectModal, toggledModal } from "../../model/uiSlice";
-import batchService from "../../services/batchService";
+import { postBatch, patchBatch } from "../../services/batchService";
 import { createBatch } from "../../utils/batch";
 import Button from "../common/button";
 import Input from "../common/input";
@@ -67,7 +67,7 @@ const BatchModal = () => {
 			dispatch(batchCreated(batch));
 			dispatch(toggledModal(ModalE.BATCH_C));
 
-			batchService.createBatch(batch, {
+			postBatch(batch, {
 				error: () => {
 					dispatch(stateLoaded(state));
 					dispatch(toggledModal(ModalE.BATCH_C));
@@ -77,7 +77,6 @@ const BatchModal = () => {
 	};
 
 	const handleUpdate = () => {
-		// get the batch update
 		const b: Batch = {
 			...batch,
 			name,
@@ -87,10 +86,15 @@ const BatchModal = () => {
 			}
 		};
 
-		// dispatch update action
-		dispatch(batchUpdated(b));
+		dispatch((dispatch, getState) => {
+			const oldState = getState().budgets;
 
-		// patch batch in cloud
+			dispatch(batchUpdated(b));
+
+			patchBatch(b, {
+				error: () => dispatch(stateLoaded(oldState))
+			});
+		});
 	};
 
 	const handleDelete = () => {};
