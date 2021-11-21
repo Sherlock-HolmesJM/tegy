@@ -9,7 +9,6 @@ import {
 	selectBudget
 } from "../model/budgetSlice";
 import { useAppDispatch, useAppSelector } from "../model/hooks";
-import { formatAmount } from "../utils/money";
 import { getBatch } from "../services/batchService";
 import Header from "./header";
 import NoBudget from "./empty/noBudget";
@@ -18,6 +17,7 @@ import BudgetInput from "./budgetInput";
 import Banner from "./common/banner";
 import SummaryLabel from "./common/summaryLabel";
 import BudgetList from "./common/budgetList";
+import { animeBalance } from "../utils/tracker";
 
 function Tracker() {
 	const dispatch = useAppDispatch();
@@ -39,7 +39,11 @@ function Tracker() {
 		}
 	}, [batch, dispatch]);
 
-	const total = useAppSelector(selectBatchTotal);
+	const { income: inc, expense: exp } = useAppSelector(selectBatchTotal);
+
+	useEffect(() => {
+		animeBalance("banner-amount", inc - exp);
+	}, [inc, exp]);
 
 	return (
 		<Wrapper>
@@ -55,7 +59,7 @@ function Tracker() {
 					</div>
 
 					<div className="banner-amount">
-						{formatAmount(total.income - total.expense, "+")}
+						{/* {formatAmount(total.income - total.expense, "+")} */}
 					</div>
 
 					<SummaryLabel type="income" name="income" />
