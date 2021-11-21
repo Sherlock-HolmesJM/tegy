@@ -6,7 +6,7 @@ import { ModalE, selectModal, toggledModal } from "../../model/uiSlice";
 import BatchSelect from "../common/batchSelect";
 import BudgetSelect from "../common/budgetSelect";
 import Logout from "../common/logout";
-import { BatchButton } from "../modal/createBatch";
+import { BatchButton } from "../modal/batchModal";
 import { CreateBudgetButton } from "../modal/createBudget";
 import Header from "./header";
 
