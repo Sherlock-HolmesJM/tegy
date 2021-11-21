@@ -4,7 +4,8 @@ import { RootState } from "./store";
 export enum ModalE {
 	LOGIN = 0,
 	SIGN_UP,
-	BATCH,
+	BATCH_C,
+	BATCH_M,
 	BUDGET,
 	SETTING,
 	CLOSE_MODALS

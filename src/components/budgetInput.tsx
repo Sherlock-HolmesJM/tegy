@@ -7,7 +7,7 @@ import uid from "../utils/id";
 import Input from "./common/input";
 import Button from "./common/button";
 import { addItem } from "../services/itemService";
-import { CreateBatchButton } from "./modal/createBatch";
+import { BatchButton } from "./modal/createBatch";
 import BatchSelect from "./common/batchSelect";
 import Select from "./common/select";
 
@@ -50,7 +50,7 @@ const BudgetInput = () => {
 	return (
 		<Wrapper onKeyPress={handleInput} ctheme={{ selectedColor, ...theme }}>
 			<Button className="input-hide" color={theme.primary}>
-				<CreateBatchButton />
+				<BatchButton mode="create" />
 			</Button>
 
 			<div className="input-select input-batch input-hide">

@@ -25,8 +25,6 @@ function Tracker() {
 	const batch = useAppSelector(selectBatch);
 	const budget = useAppSelector(selectBudget);
 
-	console.log({ batch });
-
 	const noData = batch
 		? batch.income.length === 0 && batch.expense.length === 0
 		: true;

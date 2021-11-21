@@ -12,18 +12,23 @@ import Button from "../common/button";
 import Input from "../common/input";
 import { Modal, CancelButton } from "./base";
 
-const CreateBatchButton = () => {
+const BatchButton = ({ mode }: { mode: "create" | "modify" }) => {
 	const dispatch = useAppDispatch();
 
+	const BATCH = mode === "create" ? ModalE.BATCH_C : ModalE.BATCH_M;
+
 	return (
-		<div onClick={() => dispatch(toggledModal(ModalE.BATCH))}>New Batch</div>
+		<div onClick={() => dispatch(toggledModal(BATCH))}>
+			{mode === "create" ? "New Batch" : "Edit Batch"}
+		</div>
 	);
 };
 
 const CreateBatch = () => {
 	const dispatch = useAppDispatch();
 
-	const showModal = useAppSelector(selectModal(ModalE.BATCH));
+	const isCreate = useAppSelector(selectModal(ModalE.BATCH_C));
+	const isUpdate = useAppSelector(selectModal(ModalE.BATCH_M));
 	const { length: count } = useAppSelector(selectBatchList);
 
 	const [date, setDate] = useState({
@@ -35,7 +40,7 @@ const CreateBatch = () => {
 
 	useEffect(() => setName(`batch ${count + 1}`), [count]);
 
-	if (!showModal) return null;
+	if (!isCreate && !isUpdate) return null;
 
 	const handleChange = ({ target }) => {
 		const type = target.dataset.type;
@@ -53,19 +58,25 @@ const CreateBatch = () => {
 			const state = getState().budgets;
 
 			dispatch(batchCreated(batch));
-			dispatch(toggledModal(ModalE.BATCH));
+			dispatch(toggledModal(ModalE.BATCH_C));
 
 			batchService.createBatch(batch, {
 				error: () => {
 					dispatch(stateLoaded(state));
-					dispatch(toggledModal(ModalE.BATCH));
+					dispatch(toggledModal(ModalE.BATCH_C));
 				}
 			});
 		});
 	};
 
+	const handleUpdate = () => {};
+
+	const handleDelete = () => {};
+
 	return (
-		<Modal theme={window.theme} title="Create New Batch">
+		<Modal
+			theme={window.theme}
+			title={isUpdate ? "Modify Batch" : "Create New Batch"}>
 			<Input
 				placeholder="batch name"
 				value={name}
@@ -88,15 +99,29 @@ const CreateBatch = () => {
 			/>
 
 			<div>
-				<Button color={window.theme.primary} onClick={handleCreate}>
-					create
-				</Button>
-				<CancelButton modal={ModalE.BATCH} />
+				{isCreate && (
+					<Button color={window.theme.primary} onClick={handleCreate}>
+						create
+					</Button>
+				)}
+
+				{isUpdate && (
+					<>
+						<Button color={window.theme.primary} onClick={handleUpdate}>
+							update
+						</Button>
+						<Button color={window.theme.secondary} onClick={handleDelete}>
+							delete
+						</Button>
+					</>
+				)}
+
+				<CancelButton modal={isCreate ? ModalE.BATCH_C : ModalE.BATCH_M} />
 			</div>
 		</Modal>
 	);
 };
 
-export { CreateBatchButton };
+export { BatchButton };
 
 export default CreateBatch;

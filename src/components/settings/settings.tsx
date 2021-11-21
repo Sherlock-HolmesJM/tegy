@@ -6,7 +6,7 @@ import { ModalE, selectModal, toggledModal } from "../../model/uiSlice";
 import BatchSelect from "../common/batchSelect";
 import BudgetSelect from "../common/budgetSelect";
 import Logout from "../common/logout";
-import { CreateBatchButton } from "../modal/createBatch";
+import { BatchButton } from "../modal/createBatch";
 import { CreateBudgetButton } from "../modal/createBudget";
 import Header from "./header";
 
@@ -48,14 +48,16 @@ function Settings() {
 					</li>
 				</ul>
 
-				<ul onClick={() => toast.info("Under construction")}>
-					<li>Edit Batch</li>
-					<li>Edit Budget</li>
+				<ul>
+					<li>
+						<BatchButton mode="modify" />
+					</li>
+					<li onClick={() => toast.info("Under construction")}>Edit Budget</li>
 				</ul>
 
 				<ul>
 					<li>
-						<CreateBatchButton />
+						<BatchButton mode="create" />
 					</li>
 					<li>
 						<CreateBudgetButton />
