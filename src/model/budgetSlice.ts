@@ -91,6 +91,15 @@ const budgetSlice = createSlice({
 			budget.batchList.push({ id: payload.id, name: payload.name });
 		},
 
+		batchUpdated: (state, { payload }: PayloadAction<Batch>) => {
+			const batch = getBatch(state);
+			batch.name = payload.name;
+			batch.date = payload.date;
+
+			const budget = getBudget(state);
+			budget.batchList = budget.batches.map(b => ({ id: b.id, name: b.name }));
+		},
+
 		batchLoaded: (state, { payload }: PayloadAction<Batch>) => {
 			getBudget(state).batches.push(payload);
 		},
@@ -121,6 +130,7 @@ export const {
 	totalUpdated,
 	headsUpdated,
 	batchCreated,
+	batchUpdated,
 	batchLoaded,
 	stateLoaded,
 	budgetCreated,

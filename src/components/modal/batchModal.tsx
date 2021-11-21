@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import {
 	batchCreated,
+	batchUpdated,
 	selectBatch,
 	selectBatchList,
 	stateLoaded
@@ -75,7 +76,22 @@ const BatchModal = () => {
 		});
 	};
 
-	const handleUpdate = () => {};
+	const handleUpdate = () => {
+		// get the batch update
+		const b: Batch = {
+			...batch,
+			name,
+			date: {
+				start: new Date(date.start).getTime(),
+				end: new Date(date.end).getTime()
+			}
+		};
+
+		// dispatch update action
+		dispatch(batchUpdated(b));
+
+		// patch batch in cloud
+	};
 
 	const handleDelete = () => {};
 
