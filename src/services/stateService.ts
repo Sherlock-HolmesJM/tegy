@@ -4,7 +4,7 @@ import { getBudget } from "../utils/budget";
 import { strip } from "../utils/striper";
 import { getCurrentUser } from "./authService";
 import { getBatch } from "./batchService";
-import { getPathSegments, getWriter, get, getList } from "./httpService";
+import { getPaths, getWriter, get, getList } from "./httpService";
 import log from "./logger";
 
 export const updateHeads = async ({ batch, budget }: Heads, cb?: Callback) => {
@@ -12,7 +12,7 @@ export const updateHeads = async ({ batch, budget }: Heads, cb?: Callback) => {
 		const writer = getWriter();
 
 		writer.update({ heads: { batch, budget } }, [getCurrentUser().uid]);
-		writer.update({ head: batch }, getPathSegments({ budget: budget }));
+		writer.update({ head: batch }, getPaths({ budget: budget }));
 
 		await writer.commit();
 	} catch (error) {
@@ -32,11 +32,9 @@ export const loadState = async (
 
 		const { heads } = state;
 
-		let budget = await get<Budget>(
-			...getPathSegments({ budget: heads.budget })
-		);
+		let budget = await get<Budget>(...getPaths({ budget: heads.budget }));
 
-		const pathsegments = getPathSegments(heads);
+		const pathsegments = getPaths(heads);
 
 		let batch = await get<Batch>(...pathsegments);
 		const income = await getList<BudgetItem>(...pathsegments, "income");
@@ -65,10 +63,10 @@ export const setBudget = async (user: User, cb?: Callback) => {
 
 		writer.set(strip(state, ["budgets"]), [user.uid]);
 
-		let pathSegments = getPathSegments({ budget: heads.budget });
+		let pathSegments = getPaths({ budget: heads.budget });
 		writer.set(strip(budget, ["batches"]), pathSegments);
 
-		pathSegments = getPathSegments(heads);
+		pathSegments = getPaths(heads);
 		writer.set(strip(batch, ["income", "expense"]), pathSegments);
 
 		await writer.commit();
@@ -81,7 +79,7 @@ export const setBudget = async (user: User, cb?: Callback) => {
 
 export const loadBudget = async (id: string, cb: Callback) => {
 	try {
-		const data = await get<CdBudget>(...getPathSegments({ budget: id }));
+		const data = await get<CdBudget>(...getPaths({ budget: id }));
 
 		const heads = { batch: data.head, budget: id };
 

@@ -1,7 +1,7 @@
 import { store } from "../model/store";
 import { getBatch } from "../utils/batch";
 import { getItem } from "../utils/budgetItem";
-import { getPathSegments, getWriter } from "./httpService";
+import { getPaths, getWriter } from "./httpService";
 import log from "./logger";
 
 export const addItem = async (payload: BudgetItem, cb: Callback) => {
@@ -16,7 +16,7 @@ export const addItem = async (payload: BudgetItem, cb: Callback) => {
 
 		const writer = getWriter();
 
-		let pathSegments = getPathSegments(heads);
+		let pathSegments = getPaths(heads);
 		writer.update({ total: batch.total }, pathSegments);
 
 		pathSegments = [...pathSegments, item.type, item.id];
@@ -39,12 +39,12 @@ export const deleteItem = async (payload: BudgetItem, cb: Callback) => {
 		const item = getItem({ type, id, description }, state, batch);
 
 		const writer = getWriter();
-		const pathSegments = [...getPathSegments(state.heads), type, id];
+		const pathSegments = [...getPaths(state.heads), type, id];
 
 		if (item) writer.update(item, pathSegments);
 		else writer.delete(pathSegments);
 
-		writer.update({ total: batch.total }, getPathSegments(state.heads));
+		writer.update({ total: batch.total }, getPaths(state.heads));
 
 		await writer.commit();
 	} catch (error) {

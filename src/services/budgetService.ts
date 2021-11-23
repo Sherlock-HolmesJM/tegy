@@ -1,7 +1,7 @@
 import { store } from "../model/store";
 import strip from "../utils/striper";
 import { getCurrentUser } from "./authService";
-import { getPathSegments, getWriter } from "./httpService";
+import { getPaths, getWriter } from "./httpService";
 import log from "./logger";
 
 export const createBudget = (budget: Budget) => {
@@ -12,7 +12,7 @@ export const createBudget = (budget: Budget) => {
 
 		writer.update({ heads, budgetList }, [getCurrentUser().uid]);
 
-		const paths = getPathSegments(strip(heads, ["batch"]));
+		const paths = getPaths(strip(heads, ["batch"]));
 
 		writer.set(strip(budget, ["batches"]), paths);
 	} catch (error) {

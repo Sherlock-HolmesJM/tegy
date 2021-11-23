@@ -45,7 +45,7 @@ export const getWriter = (): Writer => {
  * @param heads
  * @returns returns path segments upto a batch document with the condition that, if batch, return path to a batch document; else, return path to a budget document
  */
-export const getPathSegments = (heads: { budget: string; batch?: string }) => {
+export const getPaths = (heads: { budget: string; batch?: string }) => {
 	const { uid } = getCurrentUser();
 
 	return heads.batch

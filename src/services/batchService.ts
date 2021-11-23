@@ -2,13 +2,13 @@ import { store } from "../model/store";
 import { getBudget } from "../utils/budget";
 import strip from "../utils/striper";
 import { getCurrentUser } from "./authService";
-import { get, getList, getPathSegments, getWriter } from "./httpService";
+import { get, getList, getPaths, getWriter } from "./httpService";
 import log from "./logger";
 
 export const getBatch = async (heads?: Heads): Promise<Batch> => {
 	heads = heads ?? store.getState().budgets.heads;
 
-	const paths = getPathSegments(heads);
+	const paths = getPaths(heads);
 	const batch = await get<CdBatch>(...paths);
 	const income = await getList<BudgetItem>(...paths, "income");
 	const expense = await getList<BudgetItem>(...paths, "expense");
@@ -24,8 +24,8 @@ export const postBatch = async (batch: Batch, cb: Callback) => {
 		const { heads } = state;
 
 		writer.update({ heads }, [getCurrentUser().uid]);
-		writer.update({ batchList }, getPathSegments({ budget: heads.budget }));
-		writer.set(strip(batch, ["income", "expense"]), getPathSegments(heads));
+		writer.update({ batchList }, getPaths({ budget: heads.budget }));
+		writer.set(strip(batch, ["income", "expense"]), getPaths(heads));
 
 		await writer.commit();
 		cb.success && cb.success();
@@ -42,8 +42,8 @@ export const patchBatch = async (batch: Batch, cb: Callback) => {
 		const writer = getWriter();
 		const { heads } = state;
 
-		writer.update({ batchList }, getPathSegments({ budget: heads.budget }));
-		writer.update(strip(batch, ["income", "expense"]), getPathSegments(heads));
+		writer.update({ batchList }, getPaths({ budget: heads.budget }));
+		writer.update(strip(batch, ["income", "expense"]), getPaths(heads));
 
 		await writer.commit();
 
@@ -61,7 +61,7 @@ export const removeBatch = async (batch: Batch, cb: Callback) => {
 		const { batchList, head } = getBudget(state);
 		const writer = getWriter();
 
-		const path = getPathSegments({ ...heads, batch: batch.id });
+		const path = getPaths({ ...heads, batch: batch.id });
 
 		[...batch.income, ...batch.expense].forEach(item => {
 			writer.delete([...path, item.type, item.id]);
@@ -69,10 +69,7 @@ export const removeBatch = async (batch: Batch, cb: Callback) => {
 
 		writer.delete(path);
 
-		writer.update(
-			{ batchList, head },
-			getPathSegments({ budget: heads.budget })
-		);
+		writer.update({ batchList, head }, getPaths({ budget: heads.budget }));
 
 		writer.update({ heads }, [getCurrentUser().uid]);
 
