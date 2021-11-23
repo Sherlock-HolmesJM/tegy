@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import {
 	batchCreated,
+	batchRemoved,
 	batchUpdated,
 	selectBatch,
 	selectBatchList,
@@ -8,11 +9,12 @@ import {
 } from "../../model/budgetSlice";
 import { useAppDispatch, useAppSelector } from "../../model/hooks";
 import { ModalE, selectModal, toggledModal } from "../../model/uiSlice";
-import { postBatch, patchBatch } from "../../services/batchService";
 import { createBatch } from "../../utils/batch";
+import { swalDelete } from "../../utils/swal";
 import Button from "../common/button";
 import Input from "../common/input";
 import { Modal, CancelButton } from "./base";
+import batchService from "../../services/batchService";
 
 const BatchModal = () => {
 	const dispatch = useAppDispatch();
@@ -64,7 +66,7 @@ const BatchModal = () => {
 
 			dispatch(batchCreated(batch));
 
-			postBatch(batch, {
+			batchService.postBatch(batch, {
 				error: () => {
 					dispatch(stateLoaded(state));
 				}
@@ -87,13 +89,25 @@ const BatchModal = () => {
 
 			dispatch(batchUpdated(b));
 
-			patchBatch(b, {
+			batchService.patchBatch(b, {
 				error: () => dispatch(stateLoaded(oldState))
 			});
 		});
 	};
 
-	const handleDelete = () => {};
+	const handleDelete = () => {
+		swalDelete(() => {
+			dispatch((dispatch, getState) => {
+				const oldState = getState().budgets;
+
+				dispatch(batchRemoved({ id: batch.id }));
+
+				batchService.removeBatch(batch, {
+					error: () => dispatch(stateLoaded(oldState))
+				});
+			});
+		});
+	};
 
 	return (
 		<Modal

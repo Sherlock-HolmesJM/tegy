@@ -88,6 +88,7 @@ const budgetSlice = createSlice({
 			const budget = getBudget(state);
 			budget.batches.push(payload);
 			state.heads.batch = payload.id;
+			budget.head = payload.id;
 			budget.batchList.push({ id: payload.id, name: payload.name });
 		},
 
@@ -102,6 +103,17 @@ const budgetSlice = createSlice({
 
 		batchLoaded: (state, { payload }: PayloadAction<Batch>) => {
 			getBudget(state).batches.push(payload);
+		},
+
+		batchRemoved: (state, { payload }: PayloadAction<{ id: string }>) => {
+			const budget = getBudget(state);
+
+			budget.batches = budget.batches.filter(b => b.id !== payload.id);
+
+			budget.batchList = budget.batchList.filter(b => b.id !== payload.id);
+
+			budget.head = budget.batchList[0].id;
+			state.heads.batch = budget.batchList[0].id;
 		},
 
 		budgetCreated: (state, { payload }: PayloadAction<Budget>) => {
@@ -128,10 +140,11 @@ export const {
 	itemAdded,
 	itemRemoved,
 	totalUpdated,
-	headsUpdated,
 	batchCreated,
-	batchUpdated,
 	batchLoaded,
+	batchUpdated,
+	batchRemoved,
+	headsUpdated,
 	stateLoaded,
 	budgetCreated,
 	budgetLoaded

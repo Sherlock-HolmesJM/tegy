@@ -50,9 +50,41 @@ export const patchBatch = async (batch: Batch, cb: Callback) => {
 		cb.success && cb.success();
 	} catch (error) {
 		cb.error && cb.error();
+		log.error(error);
 	}
 };
 
-const batchService = { postBatch, getBatch, patchBatch };
+export const removeBatch = async (batch: Batch, cb: Callback) => {
+	try {
+		const state = store.getState().budgets;
+		const { heads } = state;
+		const { batchList, head } = getBudget(state);
+		const writer = getWriter();
+
+		const path = getPathSegments({ ...heads, batch: batch.id });
+
+		[...batch.income, ...batch.expense].forEach(item => {
+			writer.delete([...path, item.type, item.id]);
+		});
+
+		writer.delete(path);
+
+		writer.update(
+			{ batchList, head },
+			getPathSegments({ budget: heads.budget })
+		);
+
+		writer.update({ heads }, [getCurrentUser().uid]);
+
+		await writer.commit();
+
+		cb.success && cb.success();
+	} catch (error) {
+		cb.error && cb.error();
+		log.error(error);
+	}
+};
+
+const batchService = { postBatch, getBatch, patchBatch, removeBatch };
 
 export default batchService;
