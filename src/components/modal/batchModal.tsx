@@ -36,19 +36,17 @@ const BatchModal = () => {
 
 	if (!isCreate && !isUpdate) return null;
 
-	function format(date?: number) {
-		const d = date ? new Date(date) : new Date();
-		return d.toJSON().split("T")[0];
-	}
+	const getName = () => (isUpdate ? batch.name : `batch ${batchCount + 1}`);
 
-	function getName() {
-		return isUpdate ? batch.name : `batch ${batchCount + 1}`;
-	}
-
-	function getDate() {
+	const getDate = () => {
 		const { end, start } = isUpdate ? batch.date : { end: 0, start: 0 };
 		return { end: format(end), start: format(start) };
-	}
+	};
+
+	const format = (date?: number) => {
+		const d = date ? new Date(date) : new Date();
+		return d.toJSON().split("T")[0];
+	};
 
 	const handleChange = ({ target }) => {
 		const type = target.dataset.type;
