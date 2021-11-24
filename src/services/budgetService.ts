@@ -7,22 +7,6 @@ import { updateHeads } from "./stateService";
 import budgetUtil from "../utils/budget";
 import { User } from "@firebase/auth";
 
-// export const postBudget = (budget: Budget) => {
-// 	try {
-// 		const { budgetList, heads } = store.getState().budgets;
-
-// 		const writer = getWriter();
-
-// 		writer.update({ heads, budgetList }, [getCurrentUser().uid]);
-
-// 		const paths = getPaths(strip(heads, ["batch"]));
-
-// 		writer.set(strip(budget, ["batches"]), paths);
-// 	} catch (error) {
-// 		log.error(error);
-// 	}
-// };
-
 export const postBudget = async (user: User, cb?: Callback) => {
 	try {
 		const writer = getWriter();
