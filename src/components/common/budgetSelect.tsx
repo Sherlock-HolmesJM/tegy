@@ -5,7 +5,8 @@ import {
 	selectHeads
 } from "../../model/budgetSlice";
 import { useAppDispatch, useAppSelector } from "../../model/hooks";
-import { loadBudget, updateHeads } from "../../services/stateService";
+import { updateHeads } from "../../services/stateService";
+import budgetService from "../../services/budgetService";
 import { getBudget } from "../../utils/budget";
 import Select from "../common/select";
 
@@ -25,7 +26,7 @@ function BudgetSelect() {
 			const budget = getBudget(state);
 
 			if (!budget) {
-				loadBudget(id, {
+				budgetService.getBudget(id, {
 					success: (budget: Budget) => dispatch(budgetLoaded(budget))
 				});
 			} else {
