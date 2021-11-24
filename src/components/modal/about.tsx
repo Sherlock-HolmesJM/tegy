@@ -10,7 +10,7 @@ function About() {
 		setTimeout(() => setAnim("animate__fadeIn"), 8000);
 	}, []);
 
-	if (isClose) return null;
+	if (isClose || anim === "hide") return null;
 
 	return (
 		<WrapperContainer onClick={() => setClose(true)}>

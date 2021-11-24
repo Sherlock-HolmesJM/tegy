@@ -4,7 +4,7 @@ import { budgetCreated, stateLoaded } from "../../model/budgetSlice";
 import { useAppDispatch, useAppSelector } from "../../model/hooks";
 import { ModalE, selectModal, toggledModal } from "../../model/uiSlice";
 import { getCurrentUser } from "../../services/authService";
-import { setBudget } from "../../services/stateService";
+import { postBudget } from "../../services/budgetService";
 import { createBatch } from "../../utils/batch";
 import uid from "../../utils/id";
 import Button from "../common/button";
@@ -48,7 +48,7 @@ const CreateBudget = () => {
 			dispatch(budgetCreated(budget));
 			dispatch(toggledModal(ModalE.BUDGET));
 
-			setBudget(getCurrentUser(), {
+			postBudget(getCurrentUser(), {
 				error: () => dispatch(stateLoaded(oldSate))
 			});
 		});
