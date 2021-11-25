@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Button from "./common/button";
 import Logout from "./common/logout";
 import Menu from "../asset/menu";
-import { CreateBudgetButton } from "./modal/createBudget";
+import { BudgetButton } from "./modal/budgetModal";
 import BudgetSelect from "./common/budgetSelect";
 
 function Header() {
@@ -18,7 +18,7 @@ function Header() {
 
 			<div className="header-aside">
 				<Button color={primary}>
-					<CreateBudgetButton />
+					<BudgetButton mode="create" />
 				</Button>
 
 				<div className="header-budget-select">

@@ -6,7 +6,8 @@ export enum ModalE {
 	SIGN_UP,
 	BATCH_C,
 	BATCH_M,
-	BUDGET,
+	BUDGET_C,
+	BUDGET_M,
 	SETTING,
 	CLOSE_MODALS
 }

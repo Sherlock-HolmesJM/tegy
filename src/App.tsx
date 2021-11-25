@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import "./App.css";
+import AOS from "aos";
 import { stateLoaded } from "./model/budgetSlice";
 import { useAppDispatch } from "./model/hooks";
 import { ModalE, toggledModal } from "./model/uiSlice";
@@ -10,10 +10,10 @@ import SignUp from "./components/modal/signUp";
 import Tracker from "./components/tracker";
 import { onStateChange } from "./services/authService";
 import { getState } from "./services/stateService";
-import CreateBudget from "./components/modal/createBudget";
+import BudgetModal from "./components/modal/budgetModal";
 import Settings from "./components/settings/settings";
 import About from "./components/modal/about";
-import AOS from "aos";
+import "./App.css";
 
 function App() {
 	const dispatch = useAppDispatch();
@@ -46,7 +46,7 @@ function App() {
 			<Login />
 			<SignUp />
 			<BatchModal />
-			<CreateBudget />
+			<BudgetModal />
 
 			{/* Page */}
 			<Tracker />

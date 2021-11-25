@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { toast } from "react-toastify";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../../model/hooks";
 import { ModalE, selectModal, toggledModal } from "../../model/uiSlice";
@@ -7,7 +6,7 @@ import BatchSelect from "../common/batchSelect";
 import BudgetSelect from "../common/budgetSelect";
 import Logout from "../common/logout";
 import { BatchButton } from "../modal/batchModal";
-import { CreateBudgetButton } from "../modal/createBudget";
+import { BudgetButton } from "../modal/budgetModal";
 import Header from "./header";
 
 function Settings() {
@@ -52,7 +51,9 @@ function Settings() {
 					<li>
 						<BatchButton mode="modify" />
 					</li>
-					<li onClick={() => toast.info("Under construction")}>Edit Budget</li>
+					<li>
+						<BudgetButton mode="modify" />
+					</li>
 				</ul>
 
 				<ul>
@@ -60,7 +61,7 @@ function Settings() {
 						<BatchButton mode="create" />
 					</li>
 					<li>
-						<CreateBudgetButton />
+						<BudgetButton mode="create" />
 					</li>
 				</ul>
 

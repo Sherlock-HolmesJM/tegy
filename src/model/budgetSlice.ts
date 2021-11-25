@@ -132,6 +132,31 @@ const budgetSlice = createSlice({
 
 			state.heads = { budget: id, batch: head };
 			state.budgets.push(payload);
+		},
+
+		budgetModified: (state, { payload }: PayloadAction<Budget>) => {
+			const b = getBudget(state);
+
+			// update budgets
+			const index = state.budgets.indexOf(b);
+			state.budgets[index] = { ...payload };
+
+			// update budgetList
+			state.budgetList.find(b => b.id === payload.id).name = payload.name;
+		},
+
+		budgetRemoved: (state, { payload }: PayloadAction<Budget>) => {
+			// remove from budgets
+			state.budgets = state.budgets.filter(b => b.id !== payload.id);
+
+			// remove from budgetList
+			state.budgetList = state.budgetList.filter(b => b.id !== payload.id);
+
+			// update heads
+			state.heads = {
+				budget: state.budgets[0].id,
+				batch: state.budgets[0].head
+			};
 		}
 	}
 });
@@ -147,7 +172,9 @@ export const {
 	headsUpdated,
 	stateLoaded,
 	budgetCreated,
-	budgetLoaded
+	budgetLoaded,
+	budgetModified,
+	budgetRemoved
 } = budgetSlice.actions;
 
 export const selectBatch = (state: RootState): Batch => {
