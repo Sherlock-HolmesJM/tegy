@@ -13,7 +13,7 @@ import { createBatch } from "../../utils/batch";
 import { swalDelete } from "../../utils/swal";
 import Button from "../common/button";
 import Input from "../common/input";
-import { Modal, CancelButton } from "./base";
+import { Modal } from "./base";
 import batchService from "../../services/batchService";
 
 const BatchModal = () => {
@@ -112,7 +112,8 @@ const BatchModal = () => {
 	return (
 		<Modal
 			theme={window.theme}
-			title={isUpdate ? "Modify Batch" : "Create New Batch"}>
+			title={isUpdate ? "Modify Batch" : "Create New Batch"}
+			modal={isUpdate ? ModalE.BATCH_M : ModalE.BATCH_C}>
 			<Input
 				placeholder="batch name"
 				value={name}
@@ -152,8 +153,6 @@ const BatchModal = () => {
 						delete
 					</Button>
 				)}
-
-				<CancelButton modal={isCreate ? ModalE.BATCH_C : ModalE.BATCH_M} />
 			</div>
 		</Modal>
 	);

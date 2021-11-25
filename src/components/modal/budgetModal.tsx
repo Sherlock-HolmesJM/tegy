@@ -16,7 +16,7 @@ import { createBatch } from "../../utils/batch";
 import uid from "../../utils/id";
 import Button from "../common/button";
 import Input from "../common/input";
-import { Modal, CancelButton } from "./base";
+import { Modal } from "./base";
 
 const BudgetButton = ({ mode }: { mode: "create" | "modify" }) => {
 	const dispatch = useAppDispatch();
@@ -104,7 +104,8 @@ const BudgetModal = () => {
 	return (
 		<Modal
 			theme={window.theme}
-			title={`${isCreate ? "create new" : "modify"} batch`}>
+			title={`${isCreate ? "create new" : "modify"} budget`}
+			modal={isCreate ? ModalE.BUDGET_C : ModalE.BUDGET_M}>
 			<Input
 				value={name}
 				onChange={e => setName(e.target.value)}
@@ -129,8 +130,6 @@ const BudgetModal = () => {
 						delete
 					</Button>
 				)}
-
-				<CancelButton modal={ModalE.BUDGET_C} />
 			</div>
 		</Modal>
 	);

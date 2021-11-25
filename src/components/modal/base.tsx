@@ -2,13 +2,19 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useAppDispatch } from "../../model/hooks";
 import { ModalE, toggledModal } from "../../model/uiSlice";
-import Button from "../common/button";
+import closeIcon from "../../asset/close.webp";
 
 /**
  * NOTE: To create a MODAL, use the ModalWrapper and pass your modal as child.
  */
 
-const Modal: React.FC<{ theme: Theme; title: string }> = props => {
+interface ModalProps {
+	theme: Theme;
+	title: string;
+	modal: ModalE;
+}
+
+const Modal: React.FC<ModalProps> = props => {
 	const dispatch = useAppDispatch();
 	const [anim, setAnim] = useState("");
 
@@ -29,23 +35,20 @@ const Modal: React.FC<{ theme: Theme; title: string }> = props => {
 				ctheme={props.theme}
 				className={`animate__animated ${anim}`}
 				data-aos="zoom-in-down">
-				<Title>{props.title}</Title>
+				<div className="modal-box-header">
+					<Title>{props.title}</Title>
+
+					<img
+						src={closeIcon}
+						alt="X"
+						className="modal-box-close"
+						onClick={() => dispatch(toggledModal(props.modal))}
+					/>
+				</div>
 
 				{props.children}
 			</Box>
 		</Container>
-	);
-};
-
-const CancelButton = ({ modal }: { modal: ModalE }) => {
-	const dispatch = useAppDispatch();
-
-	return (
-		<Button
-			onClick={() => dispatch(toggledModal(modal))}
-			color={window.theme.secondary}>
-			Cancel
-		</Button>
 	);
 };
 
@@ -72,6 +75,17 @@ const Box = styled.div<{ ctheme: Theme }>`
 	border: 1px solid ${props => props.ctheme.primary};
 	box-shadow: 5px 5px 5px #0000002d;
 	gap: 10px;
+
+	.modal-box-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	.modal-box-close {
+		width: 30px;
+		height: 30px;
+		cursor: pointer;
+	}
 `;
 
 const Title = styled.div`
@@ -91,6 +105,6 @@ export const LoginRegister = styled.div`
 	cursor: pointer;
 `;
 
-export { Box, Title, Modal, CancelButton };
+export { Box, Title, Modal };
 
 export default Container;

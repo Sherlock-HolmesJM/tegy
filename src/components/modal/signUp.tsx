@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../model/hooks";
 import { ModalE, selectModal, toggledModal } from "../../model/uiSlice";
 import Button from "../common/button";
 import Input from "../common/input";
-import { LoginRegister, Modal, CancelButton } from "./base";
+import { LoginRegister, Modal } from "./base";
 import authService from "../../services/authService";
 import { toast } from "react-toastify";
 
@@ -33,7 +33,7 @@ function SignUp() {
 	};
 
 	return (
-		<Modal theme={window.theme} title="register">
+		<Modal theme={window.theme} title="register" modal={ModalE.SIGN_UP}>
 			<Input
 				placeholder="email"
 				value={email}
@@ -51,7 +51,6 @@ function SignUp() {
 				<Button onClick={handleSubmit} color={window.theme.primary}>
 					okay
 				</Button>
-				<CancelButton modal={ModalE.SIGN_UP} />
 			</div>
 
 			<LoginRegister onClick={() => dispatch(toggledModal(ModalE.LOGIN))}>
