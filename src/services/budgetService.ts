@@ -6,6 +6,7 @@ import log from "./logger";
 import { updateHeads } from "./stateService";
 import budgetUtil from "../utils/budget";
 import { User } from "@firebase/auth";
+import { getCurrentUser } from "./authService";
 
 export const postBudget = async (user: User, cb?: Callback) => {
 	try {
@@ -32,9 +33,60 @@ export const postBudget = async (user: User, cb?: Callback) => {
 	}
 };
 
-export const patchBudget = async (cb: Callback) => {
+export const patchBudget = async (budget: Budget, cb: Callback) => {
 	try {
-	} catch (error) {}
+		const { heads, budgetList } = store.getState().budgets;
+		const writer = getWriter();
+		const path = getPaths({ budget: heads.budget });
+
+		// update budget
+		writer.update(strip(budget, ["batches"]), path);
+
+		// update budgetList
+		writer.update({ budgetList }, [getCurrentUser().uid]);
+
+		await writer.commit();
+		cb.success && cb.success();
+	} catch (error) {
+		log.error(error);
+		cb?.error && cb.error();
+	}
+};
+
+export const removeBudget = async (budget: Budget, cb: Callback) => {
+	try {
+		const writer = getWriter();
+
+		const path = getPaths({
+			budget: budget.id
+		});
+
+		budget.batches.forEach(batch => {
+			const { id, income, expense } = batch;
+
+			// remove all the items in batch
+			[...expense, ...income].forEach(item => {
+				writer.delete([...path, "batches", id, item.type, item.id]);
+			});
+
+			// remove batch
+			writer.delete([...path, "batches", id]);
+		});
+
+		// remove budget
+		writer.delete(path);
+
+		const { heads, budgetList } = store.getState().budgets;
+
+		// update budgetList and heads
+		writer.update({ budgetList, heads }, [getCurrentUser().uid]);
+
+		await writer.commit();
+		cb.success && cb.success();
+	} catch (error) {
+		log.error(error);
+		cb?.error && cb.error();
+	}
 };
 
 export const getBudget = async (id: string, cb: Callback) => {
@@ -55,6 +107,6 @@ export const getBudget = async (id: string, cb: Callback) => {
 	}
 };
 
-const budgetService = { getBudget, postBudget, patchBudget };
+const budgetService = { getBudget, postBudget, patchBudget, removeBudget };
 
 export default budgetService;

@@ -39,6 +39,8 @@ const BudgetModal = () => {
 
 	useEffect(() => {
 		setName(isModify ? budget.name : "");
+
+		// eslint-disable-next-line
 	}, [isModify]);
 
 	if (!isCreate && !isModify) return null;
@@ -60,13 +62,13 @@ const BudgetModal = () => {
 		};
 
 		dispatch((dispatch, getState) => {
-			const oldSate = getState().budgets;
+			const { budgets } = getState();
 
 			dispatch(budgetCreated(budget));
 			dispatch(toggledModal(ModalE.BUDGET_C));
 
 			budgetService.postBudget(getCurrentUser(), {
-				error: () => dispatch(stateLoaded(oldSate))
+				error: () => dispatch(stateLoaded(budgets))
 			});
 		});
 	};
@@ -76,7 +78,13 @@ const BudgetModal = () => {
 			dispatch((dispatch, getState) => {
 				const { budgets } = getState();
 
-				dispatch(budgetModified({ ...budget, name }));
+				const newBudget = { ...budget, name };
+
+				dispatch(budgetModified(newBudget));
+
+				budgetService.patchBudget(newBudget, {
+					error: () => dispatch(stateLoaded(budgets))
+				});
 			});
 		}
 	};
@@ -86,6 +94,10 @@ const BudgetModal = () => {
 			const { budgets } = getState();
 
 			dispatch(budgetRemoved(budget));
+
+			budgetService.removeBudget(budget, {
+				error: () => dispatch(stateLoaded(budgets))
+			});
 		});
 	};
 
