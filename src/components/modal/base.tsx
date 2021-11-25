@@ -33,8 +33,9 @@ const Modal: React.FC<ModalProps> = props => {
 		<Container onClick={handleClose} data-close>
 			<Box
 				ctheme={props.theme}
-				className={`animate__animated ${anim}`}
-				data-aos="zoom-in-down">
+				className={`animate__animated ${anim} animate__faster`}
+				data-aos="zoom-in-down"
+				data-aos-duration={500}>
 				<div className="modal-box-header">
 					<Title>{props.title}</Title>
 
