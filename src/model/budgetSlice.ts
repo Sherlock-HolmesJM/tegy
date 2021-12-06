@@ -177,12 +177,24 @@ export const {
 	budgetRemoved
 } = budgetSlice.actions;
 
-export const selectBatch = (state: RootState): Batch => {
-	return getBatch(state.budgets);
-};
-
 export const selectItem = (param: ItemFind) => (state: RootState) => {
 	return getItem(param, state.budgets);
+};
+
+export const selectAllItems = (state: RootState): BudgetItem[] => {
+	let list = [];
+
+	state.budgets.budgets.forEach(budget => {
+		budget.batches.forEach(batch => {
+			list = [...list, ...batch.expense, ...batch.income];
+		});
+	});
+
+	return list;
+};
+
+export const selectBatch = (state: RootState): Batch => {
+	return getBatch(state.budgets);
 };
 
 export const selectBatchTotal = (state: RootState) => {
