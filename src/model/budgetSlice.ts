@@ -20,6 +20,7 @@ const budget: Budget = {
 
 export const initialState: Budgets = {
 	budgets: [budget],
+	descriptions: [],
 	heads: {
 		budget: budget.id,
 		batch: budget.head
@@ -50,6 +51,7 @@ const budgetSlice = createSlice({
 				item.amounts = [...item.amounts, ...amounts];
 			} else {
 				batch[type].push(payload);
+				state.descriptions.push(item.description);
 			}
 
 			batch.total = getTotal(batch);
@@ -69,6 +71,9 @@ const budgetSlice = createSlice({
 				item.amounts = item.amounts.filter(a => a.id !== amountId);
 			} else {
 				batch[type] = batch[type].filter(b => b.id !== id);
+				state.descriptions = state.descriptions.filter(
+					d => item.description !== d
+				);
 			}
 
 			batch.total = getTotal(batch);

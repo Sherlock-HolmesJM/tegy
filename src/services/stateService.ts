@@ -23,7 +23,7 @@ export const getState = async (
 	success: (budgets: Budgets) => void
 ) => {
 	try {
-		const state = await get<Budgets>(user.uid);
+		const state = await get<CdBudgets>(user.uid);
 
 		if (!state) throw Error("not found");
 
@@ -40,7 +40,7 @@ export const getState = async (
 		batch = { ...batch, income, expense };
 		budget = { ...budget, batches: [batch] };
 
-		success({ ...state, budgets: [budget] });
+		success({ ...state, budgets: [budget], descriptions: [] });
 	} catch (error) {
 		if (error.message === "not found") {
 			postBudget(user);

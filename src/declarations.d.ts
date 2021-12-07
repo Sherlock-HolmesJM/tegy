@@ -39,6 +39,7 @@ declare global {
 
 	interface Budgets extends CdBudgets {
 		budgets: Budget[];
+		descriptions: string[]; // an array of all descriptions in the account
 	}
 
 	interface CdBudget {
