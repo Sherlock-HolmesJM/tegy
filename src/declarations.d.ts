@@ -29,7 +29,6 @@ declare global {
 	type Heads = {
 		budget: string;
 		batch: string;
-		// a comment
 	};
 
 	interface CdBudgets {
