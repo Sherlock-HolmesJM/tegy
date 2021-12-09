@@ -162,6 +162,10 @@ const budgetSlice = createSlice({
 				budget: state.budgets[0].id,
 				batch: state.budgets[0].head
 			};
+		},
+
+		descriptionsLoaded: (state, { payload }: PayloadAction<string[]>) => {
+			state.descriptions = payload;
 		}
 	}
 });
@@ -179,24 +183,16 @@ export const {
 	budgetCreated,
 	budgetLoaded,
 	budgetModified,
-	budgetRemoved
+	budgetRemoved,
+	descriptionsLoaded
 } = budgetSlice.actions;
 
 export const selectItem = (param: ItemFind) => (state: RootState) => {
 	return getItem(param, state.budgets);
 };
 
-export const selectAllItems = (state: RootState): BudgetItem[] => {
-	let list = [];
-
-	state.budgets.budgets.forEach(budget => {
-		budget.batches.forEach(batch => {
-			list = [...list, ...batch.expense, ...batch.income];
-		});
-	});
-
-	return list;
-};
+export const selectDescriptions = (state: RootState) =>
+	state.budgets.descriptions;
 
 export const selectBatch = (state: RootState): Batch => {
 	return getBatch(state.budgets);

@@ -2,7 +2,11 @@ import { useState, useRef, useEffect } from "react";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../model/hooks";
-import { itemAdded, itemRemoved, selectAllItems } from "../model/budgetSlice";
+import {
+	itemAdded,
+	itemRemoved,
+	selectDescriptions
+} from "../model/budgetSlice";
 import uid from "../utils/id";
 import Input from "./common/input";
 import Button from "./common/button";
@@ -18,7 +22,7 @@ const BudgetInput = () => {
 	const [description, setDescription] = useState("");
 	const [type, setType] = useState<ItemType>("income");
 
-	const items = useAppSelector(selectAllItems).map(item => item.description);
+	const descriptions = useAppSelector(selectDescriptions);
 
 	const { theme } = window;
 	const selectedColor = type === "income" ? theme.primary : theme.secondary;
@@ -72,7 +76,7 @@ const BudgetInput = () => {
 					value={description}
 					placeholder="Description"
 					onChange={setDescription}
-					list={items}
+					list={descriptions}
 				/>
 			</div>
 

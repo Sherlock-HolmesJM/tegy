@@ -19,10 +19,7 @@ export const updateHeads = async ({ batch, budget }: Heads, cb?: Callback) => {
 	}
 };
 
-export const getState = async (
-	user: User,
-	success: (budgets: Budgets) => void
-) => {
+export const getState = async (user: User, cb: Callback) => {
 	try {
 		const state = await get<CdBudgets>(user.uid);
 
@@ -41,7 +38,7 @@ export const getState = async (
 		batch = { ...batch, income, expense };
 		budget = { ...budget, batches: [batch] };
 
-		success({ ...state, budgets: [budget], descriptions: [] });
+		cb.success({ ...state, budgets: [budget], descriptions: [] });
 	} catch (error) {
 		if (error.message === "not found") {
 			postBudget(user);
@@ -50,11 +47,14 @@ export const getState = async (
 	}
 };
 
-export const getDescriptions = (): Promise<string[]> => {
-	return axios
+export const getDescriptions = (cb: Callback) => {
+	axios
 		.get(
 			"https://tegy.herokuapp.com/api/descriptions?docId=" +
 				getCurrentUser().uid
 		)
-		.then(res => res.data);
+		.then(res => cb.success(res.data.descriptions))
+		.catch(e => {
+			log.error(e.message);
+		});
 };

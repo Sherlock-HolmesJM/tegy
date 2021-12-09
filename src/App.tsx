@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import AOS from "aos";
-import { stateLoaded } from "./model/budgetSlice";
+import { descriptionsLoaded, stateLoaded } from "./model/budgetSlice";
 import { useAppDispatch } from "./model/hooks";
 import { ModalE, toggledModal } from "./model/uiSlice";
 import Loader from "./components/common/loader";
@@ -24,14 +24,23 @@ function App() {
 
 	useEffect(() => {
 		return onStateChange(user => {
-			if (user) {
-				getDescriptions().then(console.log).catch(console.error);
-				dispatch(() => {
-					getState(user, budgets => dispatch(stateLoaded(budgets)));
-				});
-			} else {
+			if (!user) {
 				dispatch(toggledModal(ModalE.LOGIN));
+				return;
 			}
+
+			// dispatch a function for auto-spin pipeline
+			dispatch(() => {
+				getState(user, {
+					success: (budgets: Budgets) => {
+						dispatch(stateLoaded(budgets));
+
+						getDescriptions({
+							success: (res: string[]) => dispatch(descriptionsLoaded(res))
+						});
+					}
+				});
+			});
 		});
 	}, [dispatch]);
 
