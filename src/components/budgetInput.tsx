@@ -22,6 +22,8 @@ const BudgetInput = () => {
 	const [description, setDescription] = useState("");
 	const [type, setType] = useState<ItemType>("income");
 
+	const amountRef = useRef<HTMLInputElement>(null);
+
 	const descriptions = useAppSelector(selectDescriptions);
 
 	const { theme } = window;
@@ -50,6 +52,11 @@ const BudgetInput = () => {
 		setType(value as ItemType);
 	};
 
+	const handleDescriptionSelect = value => {
+		setDescription(value);
+		amountRef.current.select();
+	};
+
 	return (
 		<Wrapper onKeyPress={handleInput} ctheme={{ selectedColor, ...theme }}>
 			<Button className="input-hide" color={theme.primary}>
@@ -76,11 +83,13 @@ const BudgetInput = () => {
 					value={description}
 					placeholder="Description"
 					onChange={setDescription}
+					onSelect={handleDescriptionSelect}
 					list={descriptions}
 				/>
 			</div>
 
 			<Input
+				ref={amountRef}
 				type="number"
 				className="input-item input-amount"
 				placeholder="Amount"
@@ -159,11 +168,12 @@ interface InputProps {
 	list: string[];
 	className?: string;
 	placeholder?: string;
-	onChange: (value: string) => void; // function to call when a user clicks on an item
+	onChange: (value: string) => void; // called when a user types on the input box
+	onSelect: (value: string) => void; // called when a user clicks on an item
 }
 
 const InputBox = (props: InputProps) => {
-	const { className, placeholder, list, value, onChange } = props;
+	const { className, placeholder, list, value, onChange, onSelect } = props;
 
 	const [isBlur, setBlur] = useState(true);
 	const ref = useRef<HTMLDivElement>(null);
@@ -181,9 +191,9 @@ const InputBox = (props: InputProps) => {
 			? list.filter(item => item.toLowerCase().includes(value.toLowerCase()))
 			: [];
 
-	const raiseChange = (value: string) => {
+	const raiseSelect = (value: string) => {
 		setBlur(true);
-		onChange(value);
+		onSelect(value);
 	};
 
 	return (
@@ -210,7 +220,7 @@ const InputBox = (props: InputProps) => {
 					<div
 						key={index}
 						className="search-item-container"
-						onClick={() => raiseChange(item)}>
+						onClick={() => raiseSelect(item)}>
 						<SearchIconJr />
 
 						<div className="search-item">{item}</div>

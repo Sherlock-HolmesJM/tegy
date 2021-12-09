@@ -51,7 +51,7 @@ const budgetSlice = createSlice({
 				item.amounts = [...item.amounts, ...amounts];
 			} else {
 				batch[type].push(payload);
-				state.descriptions.push(item.description);
+				state.descriptions.push(description);
 			}
 
 			batch.total = getTotal(batch);

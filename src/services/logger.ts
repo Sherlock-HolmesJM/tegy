@@ -5,7 +5,7 @@ import { setLoading } from "../model/uiSlice";
 const log = {
 	error: error => {
 		const m = typeof error === "object" ? error.message : error;
-		console.log(m);
+		console.log(error);
 		toast.error(m);
 		store.dispatch(setLoading(0));
 	},
