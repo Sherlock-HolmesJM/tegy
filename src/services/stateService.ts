@@ -1,4 +1,5 @@
 import { User } from "@firebase/auth";
+import axios from "axios";
 import { getCurrentUser } from "./authService";
 import { postBudget } from "./budgetService";
 import { getPaths, getWriter, get, getList } from "./httpService";
@@ -47,4 +48,13 @@ export const getState = async (
 			log.neutral();
 		} else log.error(error);
 	}
+};
+
+export const getDescriptions = (): Promise<string[]> => {
+	return axios
+		.get(
+			"https://tegy.herokuapp.com/api/descriptions?docId=" +
+				getCurrentUser().uid
+		)
+		.then(res => res.data);
 };

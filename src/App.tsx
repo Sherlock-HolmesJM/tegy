@@ -9,7 +9,7 @@ import Login from "./components/modal/login";
 import SignUp from "./components/modal/signUp";
 import Tracker from "./components/tracker";
 import { onStateChange } from "./services/authService";
-import { getState } from "./services/stateService";
+import { getDescriptions, getState } from "./services/stateService";
 import BudgetModal from "./components/modal/budgetModal";
 import Settings from "./components/settings/settings";
 import About from "./components/modal/about";
@@ -25,6 +25,7 @@ function App() {
 	useEffect(() => {
 		return onStateChange(user => {
 			if (user) {
+				getDescriptions().then(console.log).catch(console.error);
 				dispatch(() => {
 					getState(user, budgets => dispatch(stateLoaded(budgets)));
 				});
