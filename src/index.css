@@ -19,6 +19,27 @@
   --margin-block: 96px;
   --header-height: 96px;
   --padding-block: 60px;
+
+  --white: #F2F4F7;
+  --black: #000;
+  --black2: #0E0E0E;
+  --black3: #141414;
+  --black-linear-gradient: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000 84.45%);
+
+  --lime5: #B6F961;
+  --lime5-transparent: #C9FF85;
+
+  --green7: #1A897C;
+  --green9: #0D453E;
+  --green9-transparent: rgba(201, 201, 201, 0.05);
+
+  --grey4: #98A2B3;
+  --grey5: #70707B;
+  --grey6: #51525C;
+  --grey700: #3F3F46;
+  --grey800: #26272B;
+
+  --252525: #252525;
 }
 
 * {

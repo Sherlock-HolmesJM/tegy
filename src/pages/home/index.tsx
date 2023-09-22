@@ -1,15 +1,22 @@
 import styled from "@emotion/styled";
+import { Summary } from "./components/Summary";
+import { DataInput } from "./components/DataInput";
+import { DataGroup } from "./components/DataGroup";
 
 const Home = () => {
   return (
     <Main>
-      <section>Summary</section>
-      <section>Input</section>
-      <section>List</section>
+      <Summary />
+      <DataInput />
+      <DataGroup />
     </Main>
   );
 };
 
-const Main = styled.main``;
+const Main = styled.main`
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100% - var(--header-height));
+`;
 
 export default Home;
