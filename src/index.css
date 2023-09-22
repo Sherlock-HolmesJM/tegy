@@ -1,37 +1,48 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+
+  --section-max-width-1: 1700px;
+  --section-max-width-2: min(var(--section-max-width-1) - 160px, 100% - var(--padding-inline) * 2);
+  --padding-inline: 80px;
+  --margin-block: 96px;
+  --header-height: 96px;
+  --padding-block: 60px;
+}
+
 * {
-	box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-	margin: 0;
-	font-family: "Lato", sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	min-width: 280px;
-	/* overflow: hidden; */
+  margin: 0;
+  display: flex;
+  min-width: 320px;
+  min-height: 100vh;
 }
 
-.scrollar::-webkit-scrollbar {
-	width: 3px;
-}
-.scrollar::-webkit-scrollbar-track {
-	background: rgb(255, 255, 255);
-}
-.scrollar::-webkit-scrollbar-thumb {
-	background: rgb(214, 214, 214);
+a {
+  color: inherit;
+  text-decoration: inherit;
 }
 
-.scrollar-m::-webkit-scrollbar {
-	width: 1px;
-}
-.scrollar-m::-webkit-scrollbar-track {
-	background: rgb(255, 255, 255);
-}
-.scrollar-m::-webkit-scrollbar-thumb {
-	background: rgb(203, 206, 203);
-}
 
-code {
-	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-		monospace;
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
 }
