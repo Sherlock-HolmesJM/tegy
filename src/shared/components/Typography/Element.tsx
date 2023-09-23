@@ -1,8 +1,8 @@
-import { FC } from "react"
-import styled from "@emotion/styled"
-import { TypographyProps } from "./types/typography"
-import { usePropReducer } from "./usePropReducer"
-import { css } from "@emotion/react"
+import { FC } from "react";
+import styled from "@emotion/styled";
+import { css } from "@emotion/react";
+import { TypographyProps } from "./types/typography";
+import { usePropReducer } from "./usePropReducer";
 
 export const Typography: FC<TypographyProps> = ({
   children,
@@ -12,25 +12,23 @@ export const Typography: FC<TypographyProps> = ({
   debug,
   ...rest
 }) => {
-  const reducedProps = usePropReducer(typo, content)
+  const reducedProps = usePropReducer(typo, content);
 
-  children = children ?? reducedProps.content
+  children = children ?? reducedProps.content;
 
   if (dangerouslySetInnerHTML) {
     dangerouslySetInnerHTML = {
       __html: dangerouslySetInnerHTML,
-    } as any
+    } as any;
   }
 
+  const style = css(reducedProps.typoObj);
+
   return (
-    <TextElement
-      css={css(reducedProps.typoObj)}
-      {...rest}
-      dangerouslySetInnerHTML={dangerouslySetInnerHTML as any}
-    >
+    <TextElement css={style} {...rest} dangerouslySetInnerHTML={dangerouslySetInnerHTML as any}>
       {children}
     </TextElement>
-  )
-}
+  );
+};
 
-const TextElement = styled("p")``
+const TextElement = styled("p")``;
