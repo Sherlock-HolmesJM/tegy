@@ -15,9 +15,7 @@ export enum ContentTypes {
 }
 
 export type RequestParams = {
-  type: RequestType;
-  endpoint?: RequestEndpoint;
-  url?: string;
+  type?: RequestType;
   data?: any;
   contentType?: ContentTypes;
 };
@@ -36,6 +34,4 @@ export type StandardResponse = {
   error?: any;
 };
 
-const BaseUrl = process.env.BASE_URL;
-
-export const RequestUrl = `${BaseUrl}/api`;
+export const RequestUrl = `${process.env.VITE_API_URL}/api`;

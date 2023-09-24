@@ -1,5 +1,5 @@
 import axios from "axios";
-import { RequestParams, RequestUrl, ContentTypes, StandardResponse } from "./constants";
+import { RequestParams, RequestUrl, ContentTypes, StandardResponse, RequestType } from "./constants";
 import { CookieKeys, cookies } from "./cookie";
 
 export class ApiClient {
@@ -7,8 +7,8 @@ export class ApiClient {
 
   private constructor() {}
 
-  public baseUrl = RequestUrl;
-  public token: string = "";
+  private baseUrl = RequestUrl;
+  private token: string = "";
 
   public static getInstance(): ApiClient {
     if (!ApiClient.instance) ApiClient.instance = new ApiClient();
@@ -16,26 +16,33 @@ export class ApiClient {
     return ApiClient.instance;
   }
 
-  public async request(req: RequestParams): Promise<StandardResponse> {
-    if (!req.endpoint && !req.url) throw new Error("Provide `endpoint` or `url` to make a request.");
+  public async request(url: string, config: RequestParams = {}): Promise<StandardResponse> {
+    if (!url) throw new Error("Provide `url` to make a request.");
+    config.type = config.type || "GET";
 
-    const url = req.endpoint ? this.baseUrl + "/" + req.endpoint : req.url;
+    const isRaw = url.includes("http") || url.includes("https");
+
+    if (!isRaw) url = this.baseUrl + "/" + url;
 
     if (!this.token) this.token = cookies.get(CookieKeys.ACCESS_TOKEN) ?? "";
 
+    this.log(url, config.type, config.data, "sent");
+
     try {
       const res = await axios({
-        method: req.type,
+        method: config.type,
         url,
-        data: req.type !== "GET" ? req.data : undefined,
-        params: req.type === "GET" ? req.data : undefined,
+        data: config.type !== "GET" ? config.data : undefined,
+        params: config.type === "GET" ? config.data : undefined,
         headers: this.getHeaders(),
       });
 
+      this.log(url, config.type, { data: [{ name: "justice" }] }, "success");
+
       return res.data as StandardResponse;
     } catch (e: any) {
-      const data = e.response?.data ?? { message: e.message };
-      throw { ...data, status: e.response?.status };
+      this.log(url, config.type, e, "error");
+      throw e;
     }
   }
 
@@ -44,13 +51,38 @@ export class ApiClient {
   // }
 
   private getHeaders(contentType: ContentTypes = ContentTypes.JSON): any {
-    // if (!this.token) return { Accept: "*/*" };
+    if (!this.token) return { "Content-Type": contentType };
 
     return {
       "Content-Type": contentType,
       "x-auth-token": this.token,
     };
   }
+
+  private log(url: string, type: RequestType, data: any, state: "sent" | "success" | "error") {
+    if (process.env.NODE_ENV === "production") return;
+
+    console.log(
+      `${LogPrefix[state]} %c${type} %crequest to: %c${url}\n✉%c:`,
+      LogColors[state],
+      "color:orange;",
+      LogColors[state],
+      "color:orange;",
+      data
+    );
+  }
 }
+
+const LogPrefix = {
+  sent: "🚀",
+  success: "✅ %csuccess",
+  error: "⛔ %cerror",
+};
+
+const LogColors = {
+  sent: "color:skyblue;",
+  success: "color:green;",
+  error: "color:red;",
+};
 
 export const apiClient = ApiClient.getInstance();

@@ -6,6 +6,7 @@ import App from "./App";
 import ErrorPage from "./pages/error-page";
 import Home from "./pages/home";
 import Register from "./pages/register";
+import Playground from "./pages/playground";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +18,7 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
         children: [
           { index: true, element: <Home /> },
-          { path: "settings", element: <div>Settings page</div> },
+          { path: "/playground", element: <Playground /> },
         ],
       },
     ],
