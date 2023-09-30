@@ -1,25 +1,25 @@
-import { TypeScaleStr, ResponsiveProp, FontWeightKey, FontFamilyKey } from "./types"
-import { FontFamilies, FontWeights } from "./constants"
-import { DeviceBoolean } from "@/shared/styles"
+import { TypeScaleStr, ResponsiveProp, FontWeightKey, FontFamilyKey } from "./types";
+import { FontFamilies, FontWeights } from "./constants";
+import { DeviceBoolean } from "@/shared/styles";
 
 export const typographyProps = (typo?: TypeScaleStr, fontFamily?: FontFamilyKey) => {
-  const scales = getScaleFromType(typo)
+  const scales = getScaleFromType(typo);
 
   return {
     ...scales,
     fontFamily: fontFamily ? FontFamilies[fontFamily] : scales.fontFamily,
-  }
-}
+  };
+};
 
 export const getScaleFromType = (type: TypeScaleStr = "10r10") => {
-  let [typo, ff] = type.split("-") as [TypeScaleStr, FontFamilyKey | undefined]
+  let [typo, ff] = type.split("-") as [TypeScaleStr, FontFamilyKey | undefined];
 
-  const [fs, lh] = getNumsFromStr(type) // fontSize, lineHeight (lh = optional)
+  const [fs, lh] = getNumsFromStr(type); // fontSize, lineHeight (lh = optional)
 
-  const weight = typo.replace(fs as any, "").replace(lh as any, "") as FontWeightKey
+  const weight = typo.replace(fs as any, "").replace(lh as any, "") as FontWeightKey;
 
   // fontSize>=24 is title,and should use Clash Display Font Family.
-  if (!ff) ff = fs < 24 ? "inter" : "clashDisplay"
+  if (!ff) ff = fs < 24 ? "inter" : "clashDisplay";
 
   return {
     // fontSize: fontSize / 16 + "rem", // 16 is based on 16px set on the body element.
@@ -28,44 +28,44 @@ export const getScaleFromType = (type: TypeScaleStr = "10r10") => {
     fontWeight: FontWeights[weight],
     fontFamily: FontFamilies[ff],
     // as: tag,
-  }
-}
+  };
+};
 
 export const reduceProp = <Type>(device: DeviceBoolean, prop?: Type | ResponsiveProp<Type>) => {
-  let value = undefined as Type | undefined
+  let value = undefined as Type | undefined;
 
-  if (typeof prop === "object" && isResponsiveProp(prop)) {
-    const { xs, sm, md, lg } = prop as ResponsiveProp<Type>
+  if (typeof prop === "object" && isResponsiveProp(prop as any)) {
+    const { xs, sm, md, lg } = prop as ResponsiveProp<Type>;
 
-    if (device.xs) value = xs ?? sm ?? md ?? lg
-    else if (device.sm) value = sm ?? md ?? lg
-    else if (device.md) value = md ?? lg
-    else value = lg
+    if (device.xs) value = xs ?? sm ?? md ?? lg;
+    else if (device.sm) value = sm ?? md ?? lg;
+    else if (device.md) value = md ?? lg;
+    else value = lg;
 
     // else value = lg ?? md ?? sm ?? xs
   } else {
-    value = prop as Type
+    value = prop as Type;
   }
 
   // Note: value is the smallest available at each breakpoint or the single value provided.
-  return value
-}
+  return value;
+};
 
-export const isResponsiveProp = (obj: any) => {
-  const keys = ["lg", "md", "sm", "xs"].map((key) => Object.hasOwn(obj, key))
+export const isResponsiveProp = (obj: Record<string, any>) => {
+  const keys = ["lg", "md", "sm", "xs"].map((key) => obj.hasOwnProperty(key));
 
-  if (keys.some((isTrue) => isTrue)) return true
+  if (keys.some((isTrue) => isTrue)) return true;
 
-  return false
-}
+  return false;
+};
 
 const getNumsFromStr = (str: string) => {
-  const res = str.match(/\d+/g)
+  const res = str.match(/\d+/g);
 
-  if (!res) return []
+  if (!res) return [];
 
-  return res.map((value) => +value)
-}
+  return res.map((value) => +value);
+};
 
 /**
  * const getTagToRender = (fontSize: number) => {

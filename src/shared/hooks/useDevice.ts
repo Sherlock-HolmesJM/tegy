@@ -1,30 +1,29 @@
-import { useState } from "react"
-import { sizes as mediaSizes } from "@/shared/styles"
-import { useIsomorphicLayoutEffect } from "./usehooks-ts/useIsomorphicLayoutEffect"
+import { useLayoutEffect, useState } from "react";
+import { sizes as mediaSizes } from "@/shared/styles";
 
 interface Config {
-  sizes?: typeof mediaSizes
-  media?: "max-width" | "min-width" | "exact"
+  sizes?: typeof mediaSizes;
+  media?: "max-width" | "min-width" | "exact";
 }
 
 export const useDevice = (config?: Config) => {
-  const s = typeof window !== "undefined" ? window.screen : { width: 0, height: 0 }
+  const s = typeof window !== "undefined" ? window.screen : { width: 0, height: 0 };
 
-  const [screen, setScreen] = useState({ width: s.width, height: s.height })
+  const [screen, setScreen] = useState({ width: s.width, height: s.height });
 
-  const { sizes = mediaSizes, media = "max-width" } = config ?? {}
+  const { sizes = mediaSizes, media = "max-width" } = config ?? {};
 
   const handleSize = () => {
-    setScreen({ width: window.screen.width, height: window.screen.height })
-  }
+    setScreen({ width: window.screen.width, height: window.screen.height });
+  };
 
-  useIsomorphicLayoutEffect(() => {
-    handleSize()
+  useLayoutEffect(() => {
+    handleSize();
 
-    window.addEventListener("resize", handleSize)
+    window.addEventListener("resize", handleSize);
 
-    return () => window.removeEventListener("resize", handleSize)
-  }, [])
+    return () => window.removeEventListener("resize", handleSize);
+  }, []);
 
   // Note: this outcome is based on css @media (max-width: xxx)  logic. Default Logic.
   let matches = {
@@ -37,7 +36,7 @@ export const useDevice = (config?: Config) => {
     xl: screen.width > 0 && screen.width <= sizes.xl,
     media,
     ...screen,
-  }
+  };
 
   if (media === "exact") {
     matches = {
@@ -47,7 +46,7 @@ export const useDevice = (config?: Config) => {
       md: screen.width > sizes.sm && screen.width <= sizes.md,
       lg: screen.width > sizes.md && screen.width <= sizes.lg,
       xl: screen.width > sizes.lg && screen.width <= sizes.xl,
-    }
+    };
   }
   // Note: this outcome is based on css @media screen and (min-width: xxx)  logic.
   else if (media === "min-width") {
@@ -58,10 +57,10 @@ export const useDevice = (config?: Config) => {
       md: screen.width > 0 && screen.width > sizes.sm,
       lg: screen.width > 0 && screen.width > sizes.md,
       xl: screen.width > 0 && screen.width > sizes.lg,
-    }
+    };
   }
 
-  return matches
-}
+  return matches;
+};
 
-export default useDevice
+export default useDevice;
