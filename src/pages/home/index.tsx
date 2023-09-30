@@ -2,10 +2,19 @@ import styled from "@emotion/styled";
 import { Summary } from "./components/Summary";
 import { DataInput } from "./components/DataInput";
 import { DataGroup } from "./components/DataGroup";
+import { apiClient } from "@/shared/services";
 
 const Home = () => {
+  const handleRequest = async () => {
+    try {
+      await apiClient.request("budgetsf");
+    } catch (error) {
+      // console.log(error);
+    }
+  };
+
   return (
-    <Main>
+    <Main onClick={handleRequest}>
       <Summary />
       <DataInput />
       <DataGroup />

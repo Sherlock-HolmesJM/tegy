@@ -1,5 +1,5 @@
 import axios from "axios";
-import { RequestParams, RequestUrl, ContentTypes, StandardResponse, RequestType } from "./constants";
+import { RequestParams, RequestUrl, ContentTypes, StandardResponse } from "./constants";
 import { CookieKeys, cookies } from "./cookie";
 
 export class ApiClient {
@@ -26,7 +26,7 @@ export class ApiClient {
 
     if (!this.token) this.token = cookies.get(CookieKeys.ACCESS_TOKEN) ?? "";
 
-    this.log(url, config.type, config.data, "sent");
+    this.log(url, config, undefined, "sent");
 
     try {
       const res = await axios({
@@ -37,11 +37,11 @@ export class ApiClient {
         headers: this.getHeaders(),
       });
 
-      this.log(url, config.type, { data: [{ name: "justice" }] }, "success");
+      this.log(url, config, res.data, "success");
 
       return res.data as StandardResponse;
     } catch (e: any) {
-      this.log(url, config.type, e, "error");
+      this.log(url, config, e, "error");
       throw e;
     }
   }
@@ -59,30 +59,57 @@ export class ApiClient {
     };
   }
 
-  private log(url: string, type: RequestType, data: any, state: "sent" | "success" | "error") {
+  private log(url: string, config: RequestParams, data: any, state: RequestState) {
     if (process.env.NODE_ENV === "production") return;
 
-    console.log(
-      `${LogPrefix[state]} %c${type} %crequest to: %c${url}\n✉%c:`,
-      LogColors[state],
-      "color:orange;",
-      LogColors[state],
-      "color:orange;",
-      data
-    );
+    const log = logger[state];
+    log(url, config, data);
   }
 }
 
-const LogPrefix = {
-  sent: "🚀",
-  success: "✅ %csuccess",
-  error: "⛔ %cerror",
-};
+type RequestState = "sent" | "success" | "error";
 
-const LogColors = {
-  sent: "color:skyblue;",
-  success: "color:green;",
-  error: "color:red;",
+const logger: Record<RequestState, (url: string, config: RequestParams, data: any) => void> = {
+  sent: (url: string, config: RequestParams) => {
+    console.log(
+      `🚀 %c${config.type} %crequest to: %c${url}\n✉%c:`,
+      "color:orange;",
+      "color:black;",
+      "color:green;",
+      "color:black;",
+      `params: ${config.data}`
+    );
+  },
+
+  success: (url: string, config: RequestParams, data: any) => {
+    console.log(
+      `✅ %csuccess %c${config.type} %crequest to: %c${url}\n✉%c:`,
+      "color:green;font-size:15px;",
+      "color:orange;",
+      "color:black;",
+      "color:green;",
+      "color:black;",
+      `params: ${config.data}`,
+      "\n",
+      " response 👉",
+      data
+    );
+  },
+
+  error: (url: string, config: RequestParams, error: any) => {
+    console.log(
+      `⛔ %cerror %c${config.type} %crequest to: %c${url}\n✉%c:`,
+      "color:red;font-size:15px;",
+      "color:orange;",
+      "color:black;",
+      "color:green;",
+      "color:black;",
+      `params: ${config.data}`,
+      "\n",
+      " message 👉",
+      error?.message
+    );
+  },
 };
 
 export const apiClient = ApiClient.getInstance();
